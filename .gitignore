@@ -1,0 +1,38 @@
+# Local credentials and agent state
+/.aws/
+/.codex/
+/.agents/
+.env
+.env.*
+!.env.example
+
+# Research outputs; keep the directory guidance
+/scratch/*
+!/scratch/AGENTS.md
+!/scratch/README.md
+/runs/
+
+# Python environments and generated files
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+# ROS workspaces and recorded data
+build/
+install/
+log/
+*.bag
+*.db3
+*.mcap
+
+# Local editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
