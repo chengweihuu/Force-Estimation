@@ -1,0 +1,52 @@
+/**:
+  ros__parameters:
+    pid_gains:
+      position:
+        shoulder_pan_joint:
+          p: 594.5792405108447
+          i: 0.0
+          d: 59.45792405108447
+          u_clamp_max: 150.0
+          u_clamp_min: -150.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0
+        shoulder_lift_joint:
+          p: 3016.753790265683
+          i: 0.0
+          d: 159.17783301194027
+          u_clamp_max: 150.0
+          u_clamp_min: -150.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0
+        elbow_joint:
+          p: 1580.8552769377543
+          i: 0.0
+          d: 67.040649521717
+          u_clamp_max: 150.0
+          u_clamp_min: -150.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0
+        wrist_1_joint:
+          p: 140.1710995652424
+          i: 0.0
+          d: 3.1666936162434047
+          u_clamp_max: 28.0
+          u_clamp_min: -28.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0
+        wrist_2_joint:
+          p: 15.155613645268161
+          i: 0.0
+          d: 0.4823200283691869
+          u_clamp_max: 28.0
+          u_clamp_min: -28.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0
+        wrist_3_joint:
+          p: 2.052846874999998
+          i: 0.0
+          d: 0.005284687499999792
+          u_clamp_max: 28.0
+          u_clamp_min: -28.0
+          i_clamp_max: 0.0
+          i_clamp_min: 0.0

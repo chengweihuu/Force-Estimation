@@ -1,0 +1,100 @@
+{
+  "source": "source.json",
+  "source_format": "URDF/Xacro + UR5 YAML",
+  "conversion": "Explicit source-parameter mapping; no Xacro expansion or generic URDF converter",
+  "joint_order": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "link_order": [
+    "shoulder",
+    "upper_arm",
+    "forearm",
+    "wrist_1",
+    "wrist_2",
+    "wrist_3"
+  ],
+  "tool_site": "tool0",
+  "wrench_point": "tool0",
+  "wrench_frame": "world",
+  "wrench_order": [
+    "Fx",
+    "Fy",
+    "Fz",
+    "Mx",
+    "My",
+    "Mz"
+  ],
+  "units": {
+    "position": "m",
+    "angle": "rad",
+    "mass": "kg",
+    "inertia": "kg m^2",
+    "torque": "N m"
+  },
+  "actuation": "Ideal joint torque motors, gear=1; ctrl in N m. This is not a UR controller/current-loop model.",
+  "drive_measurement": "qfrc_actuator, subsequently restricted through the declared measurement packet",
+  "friction": "Viscous joint damping [1,1,1,0.1,0.1,0.1] N m s/rad; zero frictionloss.",
+  "armature": 0,
+  "physics_dt_s": 0.0005,
+  "joint_limits_rad": {
+    "shoulder_pan_joint": [
+      -6.283185307179586,
+      6.283185307179586
+    ],
+    "shoulder_lift_joint": [
+      -6.283185307179586,
+      6.283185307179586
+    ],
+    "elbow_joint": [
+      -3.141592653589793,
+      3.141592653589793
+    ],
+    "wrist_1_joint": [
+      -6.283185307179586,
+      6.283185307179586
+    ],
+    "wrist_2_joint": [
+      -6.283185307179586,
+      6.283185307179586
+    ],
+    "wrist_3_joint": [
+      -6.283185307179586,
+      6.283185307179586
+    ]
+  },
+  "velocity_limits_rad_s": {
+    "shoulder_pan_joint": 3.141592653589793,
+    "shoulder_lift_joint": 3.141592653589793,
+    "elbow_joint": 3.141592653589793,
+    "wrist_1_joint": 3.141592653589793,
+    "wrist_2_joint": 3.141592653589793,
+    "wrist_3_joint": 3.141592653589793
+  },
+  "velocity_limits_note": "For trajectory prechecks; MJCF has no equivalent direct joint velocity clamp.",
+  "geometry": "Source collision STL meshes and transforms retained; those meshes also provide simple visuals. DAE visuals not converted.",
+  "mesh_collision_note": "MuJoCo mesh contacts use convex hulls; no external contact task is part of this adaptation probe.",
+  "contact_exclusions": [
+    {
+      "body1": "base_link_inertia",
+      "body2": "shoulder_link",
+      "reason": "Adjacent",
+      "source_commit": "f6997bd4a0eee8d58198b696caf034009ab4de1e",
+      "source_url": "https://raw.githubusercontent.com/UniversalRobots/Universal_Robots_ROS2_Driver/f6997bd4a0eee8d58198b696caf034009ab4de1e/ur_moveit_config/srdf/ur_macro.srdf.xacro",
+      "source_line": 45,
+      "source_excerpt": "<disable_collisions link1=\"base_link_inertia\" link2=\"shoulder_link\" reason=\"Adjacent\" />",
+      "engine_reason": "Static-parent exception to MuJoCo parent-child collision filtering",
+      "engine_reference": "https://mujoco.readthedocs.io/en/3.3.7/overview.html#surprising-collisions"
+    }
+  ],
+  "inertia": "Explicit source inertials; never inferred from meshes. Cylinder approximations remain as documented upstream.",
+  "applies_to": [
+    "../ur5.xml",
+    "../scene.xml"
+  ],
+  "variant_parameters": "For ROS scenes use the selected control directory design.json; six-axis backlash is documented in backlash_six_axis.json. This legacy adaptation has no drive armature."
+}

@@ -1,0 +1,164 @@
+{
+  "base_config": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/base.json",
+  "threshold_file": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/thresholds.json",
+  "D": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "rtol": 1e-08,
+  "atol": 1e-09,
+  "KF_cap": 6183,
+  "physics_cap": 96000,
+  "ik_max_iterations": 30,
+  "ik_max_increment_rad": 0.1,
+  "ik_position_tolerance_m": 1e-09,
+  "ik_rotation_tolerance_rad": 1e-09,
+  "reference_velocity_tolerance_rad_s": 0.0001,
+  "reference_acceleration_tolerance_rad_s2": 0.001,
+  "tracking_position_max_m": 0.002,
+  "tracking_rotation_max_rad": 0.01,
+  "tracking_velocity_rmse_max_m_s": 0.003,
+  "offset_world_m": [
+    0,
+    0.1,
+    0
+  ],
+  "wrench": [
+    0,
+    0,
+    -9.81,
+    -0.981,
+    0,
+    0
+  ],
+  "load_physics_index": 40960,
+  "control_scale": 32.0,
+  "integral_rate_s_inv": 2.0,
+  "integral_limit_fraction": 0.2,
+  "torque_limits_Nm": [
+    150,
+    150,
+    150,
+    28,
+    28,
+    28
+  ],
+  "static_state_cap": 751,
+  "seeds": [
+    8801,
+    8802,
+    8803
+  ],
+  "plot_seed": 8801,
+  "noise_std_Nm": 0.05,
+  "calibration": {
+    "base_config": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/base.json",
+    "threshold_file": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/thresholds.json",
+    "speed_abs": 0.05,
+    "duration_s": 8,
+    "core_start_s": 3,
+    "core_end_s": 7,
+    "windows": [
+      50
+    ],
+    "history_count": 128,
+    "D": [
+      1,
+      1,
+      1,
+      1,
+      1,
+      1
+    ],
+    "sigma_Nm": [
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05,
+      0.05
+    ],
+    "rtol": 1e-08,
+    "atol": 1e-09,
+    "new_physics_cap": 1536000,
+    "cases": [
+      {
+        "name": "J1_positive",
+        "joint": 1,
+        "speed": 0.05,
+        "seed": 8850
+      },
+      {
+        "name": "J1_negative",
+        "joint": 1,
+        "speed": -0.05,
+        "seed": 8851
+      },
+      {
+        "name": "J2_positive",
+        "joint": 2,
+        "speed": 0.05,
+        "seed": 8852
+      },
+      {
+        "name": "J2_negative",
+        "joint": 2,
+        "speed": -0.05,
+        "seed": 8853
+      },
+      {
+        "name": "J3_positive",
+        "joint": 3,
+        "speed": 0.05,
+        "seed": 8854
+      },
+      {
+        "name": "J3_negative",
+        "joint": 3,
+        "speed": -0.05,
+        "seed": 8855
+      },
+      {
+        "name": "J4_positive",
+        "joint": 4,
+        "speed": 0.05,
+        "seed": 8856
+      },
+      {
+        "name": "J4_negative",
+        "joint": 4,
+        "speed": -0.05,
+        "seed": 8857
+      },
+      {
+        "name": "J5_positive",
+        "joint": 5,
+        "speed": 0.05,
+        "seed": 8858
+      },
+      {
+        "name": "J5_negative",
+        "joint": 5,
+        "speed": -0.05,
+        "seed": 8859
+      },
+      {
+        "name": "J6_positive",
+        "joint": 6,
+        "speed": 0.05,
+        "seed": 8860
+      },
+      {
+        "name": "J6_negative",
+        "joint": 6,
+        "speed": -0.05,
+        "seed": 8861
+      }
+    ]
+  },
+  "scope": "Known equivalent-current coefficients and viscous friction; core-method exploratory comparison, no parameter identification"
+}

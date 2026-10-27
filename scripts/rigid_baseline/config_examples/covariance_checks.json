@@ -1,0 +1,55 @@
+{
+  "model_api": "/workspace/scripts/rigid_baseline/model_comparison/models.py",
+  "replay_api": "/workspace/scripts/rigid_baseline/model_comparison/replay.py",
+  "model_binding": "/workspace/scripts/rigid_baseline/config_examples/model_comparison.json",
+  "historical_feedback": "/workspace/runs/H-020/R-20261020T031820Z-oraclekf/experiments/motion/measurements.npz",
+  "historical_reference": "/workspace/runs/H-023/R-20261020T082934Z-three/rigid_terms/motion/reference.npz",
+  "historical_terms": {
+    "rigid": "/workspace/runs/H-023/R-20261020T082934Z-three/rigid_terms/motion/model_terms.npz",
+    "pinn": "/workspace/runs/H-023/R-20261020T082934Z-three/pinn_terms/motion/model_terms.npz"
+  },
+  "historical_replays": {
+    "oracle": "/workspace/runs/H-023/R-20261020T082934Z-three/replay/motion/oracle.npz",
+    "rigid": "/workspace/runs/H-023/R-20261020T082934Z-three/replay/motion/rigid.npz",
+    "pinn": "/workspace/runs/H-023/R-20261020T082934Z-three/replay/motion/pinn.npz"
+  },
+  "allowed_seeds": [
+    20261018,
+    20261019,
+    20261020
+  ],
+  "wrench_scale": [
+    3,
+    3,
+    3,
+    0.3,
+    0.3,
+    0.3
+  ],
+  "records": [
+    {
+      "id": "seed20261018",
+      "seed": 20261018,
+      "split": "train",
+      "feedback": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/feedback_1kHz.csv",
+      "collection_config": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/config.json",
+      "collection_checks": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/collection_checks.json"
+    },
+    {
+      "id": "seed20261019",
+      "seed": 20261019,
+      "split": "train",
+      "feedback": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/feedback_1kHz.csv",
+      "collection_config": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/config.json",
+      "collection_checks": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/collection_checks.json"
+    },
+    {
+      "id": "seed20261020",
+      "seed": 20261020,
+      "split": "validation",
+      "feedback": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/feedback_1kHz.csv",
+      "collection_config": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/config.json",
+      "collection_checks": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/collection_checks.json"
+    }
+  ]
+}

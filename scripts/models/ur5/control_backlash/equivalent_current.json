@@ -1,0 +1,30 @@
+{
+  "joint_names": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "K_equivalent_Nm_A": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "parameter_source": "simulation assumption, joint-side equivalent constant, not UR5 calibration",
+  "noise_enabled": false,
+  "source": "drive-joint qfrc_actuator at gear=1; never use gap constraint force as motor current",
+  "gap_joint_by_drive": {
+    "shoulder_pan_joint": "shoulder_pan_gap",
+    "shoulder_lift_joint": "shoulder_lift_gap",
+    "elbow_joint": "elbow_gap",
+    "wrist_1_joint": "wrist_1_gap",
+    "wrist_2_joint": "wrist_2_gap",
+    "wrist_3_joint": "wrist_3_gap"
+  },
+  "position_coordinate": "load-side sum of drive and gap"
+}

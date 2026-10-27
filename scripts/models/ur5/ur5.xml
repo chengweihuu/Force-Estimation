@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='utf-8'?>
+<mujoco model="ur5">
+  <compiler angle="radian" autolimits="true" inertiafromgeom="false" fusestatic="false" />
+  <option timestep="0.0005" integrator="implicitfast" gravity="0 0 -9.81" />
+  <default>
+    <joint type="hinge" axis="0 0 1" damping="0" frictionloss="0" armature="0" />
+    <geom type="mesh" rgba="0.65 0.7 0.75 1" contype="1" conaffinity="1" />
+  </default>
+  <asset>
+    <mesh name="base" file="vendor/ur_description/meshes/ur5/collision/base.stl" />
+    <mesh name="shoulder" file="vendor/ur_description/meshes/ur5/collision/shoulder.stl" />
+    <mesh name="upper_arm" file="vendor/ur_description/meshes/ur5/collision/upperarm.stl" />
+    <mesh name="forearm" file="vendor/ur_description/meshes/ur5/collision/forearm.stl" />
+    <mesh name="wrist_1" file="vendor/ur_description/meshes/ur5/collision/wrist1.stl" />
+    <mesh name="wrist_2" file="vendor/ur_description/meshes/ur5/collision/wrist2.stl" />
+    <mesh name="wrist_3" file="vendor/ur_description/meshes/ur5/collision/wrist3.stl" />
+  </asset>
+  <worldbody>
+    <body name="base_link">
+      <site name="base" quat="6.123233995736766e-17 0 0 1" size="0.005" />
+      <body name="base_link_inertia" quat="6.123233995736766e-17 0 0 1">
+        <inertial pos="0 0 0" mass="4.0" diaginertia="0.0044333315599999999 0.0044333315599999999 0.0071999999999999998" />
+        <geom name="base_collision" mesh="base" quat="6.123233995736766e-17 0 0 1" />
+        <body name="shoulder_link" pos="0 0 0.089159000000000002" quat="1 0 0 0">
+          <joint name="shoulder_pan_joint" range="-6.2831853071795862 6.2831853071795862" damping="1" />
+          <inertial mass="3.7" pos="0 -0.0019300000000000001 -0.025610000000000001" quat="1 0 0 0" diaginertia="0.014972358333333331 0.014972358333333331 0.010406250000000001" />
+          <geom name="shoulder_collision" mesh="shoulder" pos="0 0 0" quat="6.123233995736766e-17 0 0 1" />
+          <body name="upper_arm_link" pos="0 0 0" quat="0.70710678111403247 0.70710678125906257 0 0">
+            <joint name="shoulder_lift_joint" range="-6.2831853071795862 6.2831853071795862" damping="1" />
+            <inertial mass="8.393" pos="-0.21249999999999999 0 0.11336" quat="0.70710678118654735 0 0.70710678118654768 0" diaginertia="0.13388583541666665 0.13388583541666665 0.0151074" />
+            <geom name="upper_arm_collision" mesh="upper_arm" pos="0 0 0.13585" quat="0.50000000000000011 0.5 -0.49999999999999989 -0.5" />
+            <body name="forearm_link" pos="-0.42499999999999999 0 0" quat="1 0 0 0">
+              <joint name="elbow_joint" range="-3.1415926535897931 3.1415926535897931" damping="1" />
+              <inertial mass="2.33" pos="-0.24224999999999999 0 0.026499999999999999" quat="0.70710678118654735 0 0.70710678118654768 0" diaginertia="0.031216803515624995 0.031216803515624995 0.0040949999999999997" />
+              <geom name="forearm_collision" mesh="forearm" pos="0 0 0.016500000000000001" quat="0.50000000000000011 0.5 -0.49999999999999989 -0.5" />
+              <body name="wrist_1_link" pos="-0.39224999999999999 0 0.10915" quat="1 0 0 0">
+                <joint name="wrist_1_joint" range="-6.2831853071795862 6.2831853071795862" damping="0.1" />
+                <inertial mass="1.219" pos="0 -0.01634 -0.0018" quat="1 0 0 0" diaginertia="0.0020138895833333331 0.0020138895833333331 0.0021941999999999999" />
+                <geom name="wrist_1_collision" mesh="wrist_1" pos="0 0 -0.092999999999999999" quat="0.70710678118654757 0.70710678118654746 0 0" />
+                <body name="wrist_2_link" pos="0 -0.094649999999999998 -1.941303950897609e-11" quat="0.70710678111403247 0.70710678125906257 0 0">
+                  <joint name="wrist_2_joint" range="-6.2831853071795862 6.2831853071795862" damping="0.1" />
+                  <inertial mass="1.219" pos="0 0.01634 -0.0018" quat="1 0 0 0" diaginertia="0.0018310395833333333 0.0018310395833333333 0.0021941999999999999" />
+                  <geom name="wrist_2_collision" mesh="wrist_2" pos="0 0 -0.095000000000000001" quat="1 0 0 0" />
+                  <body name="wrist_3_link" pos="0 0.082299999999999998 -1.6880012166811751e-11" quat="0.70710678111403247 -0.70710678125906257 8.6595605623549329e-17 8.8805276848156759e-27">
+                    <joint name="wrist_3_joint" range="-6.2831853071795862 6.2831853071795862" damping="0.1" />
+                    <inertial mass="0.1879" pos="0 0 -0.0011590000000000001" quat="1 0 0 0" diaginertia="8.0624758333333322e-05 8.0624758333333322e-05 0.00013211718749999999" />
+                    <geom name="wrist_3_collision" mesh="wrist_3" pos="0 0 -0.081799999999999998" quat="0.70710678118654757 0.70710678118654746 0 0" />
+                    <site name="flange" pos="0 0 0" quat="0.50000000000000011 -0.49999999999999989 -0.5 -0.5" size="0.005" />
+                    <site name="tool0" pos="0 0 0" quat="1 0 -1.1102230246251565e-16 1.1102230246251565e-16" size="0.005" />
+                    <site name="ft_frame" pos="0 0 0" quat="6.123233995736766e-17 1 0 0" size="0.005" />
+                  </body>
+                </body>
+              </body>
+            </body>
+          </body>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <contact>
+    <exclude body1="base_link_inertia" body2="shoulder_link" />
+  </contact>
+  <actuator>
+    <motor name="shoulder_pan_joint_motor" joint="shoulder_pan_joint" gear="1" ctrllimited="true" ctrlrange="-150 150" forcelimited="true" forcerange="-150 150" />
+    <motor name="shoulder_lift_joint_motor" joint="shoulder_lift_joint" gear="1" ctrllimited="true" ctrlrange="-150 150" forcelimited="true" forcerange="-150 150" />
+    <motor name="elbow_joint_motor" joint="elbow_joint" gear="1" ctrllimited="true" ctrlrange="-150 150" forcelimited="true" forcerange="-150 150" />
+    <motor name="wrist_1_joint_motor" joint="wrist_1_joint" gear="1" ctrllimited="true" ctrlrange="-28 28" forcelimited="true" forcerange="-28 28" />
+    <motor name="wrist_2_joint_motor" joint="wrist_2_joint" gear="1" ctrllimited="true" ctrlrange="-28 28" forcelimited="true" forcerange="-28 28" />
+    <motor name="wrist_3_joint_motor" joint="wrist_3_joint" gear="1" ctrllimited="true" ctrlrange="-28 28" forcelimited="true" forcerange="-28 28" />
+  </actuator>
+</mujoco>

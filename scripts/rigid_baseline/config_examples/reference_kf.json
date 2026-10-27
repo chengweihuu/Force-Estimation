@@ -1,0 +1,191 @@
+{
+  "model": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/model_snapshot.mjb",
+  "physics_dt_s": 6.25e-05,
+  "observer_dt_s": 0.001,
+  "control_dt_s": 0.001,
+  "derivative_epsilon_s": 1e-06,
+  "initial_q_rad": [
+    0,
+    -1.2,
+    1.6,
+    -1.8,
+    -1.1,
+    0
+  ],
+  "controller": {
+    "definition": "M*a_ref+h+B*v+kp*(qref-q)+kd*(vref-v); actual motor torque includes damping compensation; any clipping fails",
+    "kp_Nm_rad": [
+      200,
+      200,
+      150,
+      25,
+      20,
+      5
+    ],
+    "kd_Nm_s_rad": [
+      30,
+      30,
+      20,
+      1.5,
+      1,
+      0.05
+    ]
+  },
+  "trajectory": {
+    "definition": "q_ref=q_initial+A*(1-cos(2*pi*f*t)); analytic v_ref and a_ref; all six axes excited",
+    "amplitude_rad": [
+      0.05,
+      0.08,
+      0.06,
+      0.05,
+      0.04,
+      0.03
+    ],
+    "frequency_Hz": 0.3
+  },
+  "force": {
+    "frame": "world",
+    "point": "tool0",
+    "order": [
+      "Fx",
+      "Fy",
+      "Fz",
+      "Mx",
+      "My",
+      "Mz"
+    ],
+    "axis": 2,
+    "amplitude_N": 3,
+    "frequency_Hz": 0.5,
+    "start_s": 1,
+    "definition": "External environment-on-robot wrench at tool0; force is recomputed and applied at every physics step; reference is inaccessible to observer"
+  },
+  "observer": {
+    "state": "p[6], world_wrench_at_tool0[6]",
+    "process": "S=0 random walk; this and nonzero Qw are explicit exploratory choices, not claimed author parameters",
+    "Qp_continuous_diag": [
+      1e-07,
+      1e-07,
+      1e-07,
+      1e-09,
+      1e-09,
+      1e-09
+    ],
+    "Qw_continuous_diag": [
+      1,
+      1,
+      1,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "assumed_velocity_std_rad_s": [
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001
+    ],
+    "initial_wrench_variance": [
+      25,
+      25,
+      25,
+      1,
+      1,
+      1
+    ],
+    "gmo_gain_s_inv": [
+      50,
+      50,
+      50,
+      50,
+      50,
+      50
+    ],
+    "covariance_notes": "Qp=T*diag(torque_noise_std^2) for independent sample-and-held torque error; R=M*Sigma_v*M.T; same covariance settings in ideal and noisy cases. Process/measurement correlation is not modeled. Joseph update; no covariance clipping or regularization."
+  },
+  "noise": {
+    "seed": 0,
+    "q_std_rad": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "v_std_rad_s": [
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001
+    ],
+    "torque_std_Nm": [
+      0.01,
+      0.01,
+      0.01,
+      0.001,
+      0.001,
+      0.001
+    ],
+    "definition": "Independent zero-mean Gaussian measurement noise at sample time, only in the explicitly noisy case; controller receives ideal simulated q/v"
+  },
+  "cases": {
+    "static": {
+      "duration_s": 1,
+      "motion": false,
+      "force": "none",
+      "noise": false
+    },
+    "motion": {
+      "duration_s": 4,
+      "motion": true,
+      "force": "none",
+      "noise": false
+    },
+    "sine": {
+      "duration_s": 6,
+      "motion": true,
+      "force": "sine",
+      "noise": false
+    },
+    "step": {
+      "duration_s": 6,
+      "motion": true,
+      "force": "step",
+      "noise": false
+    }
+  },
+  "evaluation": {
+    "steady_start_s": 2,
+    "no_force_settle_s": 0.2,
+    "step_fractions": [
+      0.1,
+      0.9
+    ],
+    "relative_algebra_tolerance": 1e-08,
+    "relative_derivative_tolerance": 0.0001,
+    "jacobian_characteristic_length_m": 0.5,
+    "performance_acceptance": "Descriptive exploratory metrics only; no claimed force-accuracy acceptance threshold or SN7B equivalence. No time alignment or parameter tuning on these runs."
+  },
+  "kf_source": "/workspace/scripts/rigid_baseline/reference_kf/momentum_observer.py",
+  "damping": [
+    1,
+    1,
+    1,
+    0.1,
+    0.1,
+    0.1
+  ],
+  "joint_names": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ]
+}

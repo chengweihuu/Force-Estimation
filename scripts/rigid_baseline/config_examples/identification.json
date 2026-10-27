@@ -1,0 +1,146 @@
+{
+  "old": {
+    "version": 1,
+    "physics_dt_s": 6.25e-05,
+    "control_dt_s": 0.0005,
+    "feedback_dt_s": 0.001,
+    "duration_s": 17,
+    "core_interval_s": [
+      3,
+      13
+    ],
+    "known_integrator_B": [
+      1,
+      1,
+      1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "filter": {
+      "order": 4,
+      "cutoff_Hz": 20,
+      "padtype": "odd",
+      "padlen": 150,
+      "edge_order": 2
+    },
+    "train_seeds": [
+      20261018,
+      20261019
+    ],
+    "validation_seed": 20261020,
+    "test_seed": 20261021,
+    "model": {
+      "widths": [
+        128,
+        128,
+        128
+      ],
+      "diagonal_floor": 0.0001,
+      "mass_floor": 0.0
+    },
+    "physical_friction_initial": 0.1,
+    "training": {
+      "seed": 0,
+      "learning_rate": 0.0005,
+      "max_updates": 12,
+      "internal_wall_seconds": 800,
+      "checkpoint_every": 4,
+      "chunk_size": 1024
+    },
+    "selfcheck": {
+      "qv_control_atol": 1e-10,
+      "qacc_atol": 1e-07,
+      "truth_force_atol": 1e-09,
+      "adjoint_rtol": 1e-08,
+      "network_fd_rtol": 0.0001,
+      "network_fd_atol": 1e-07,
+      "inertia_perturbation_kg_m2": 0.0001,
+      "gradient_slice_start_physics_index": 64000,
+      "gradient_slice_steps": 4096
+    },
+    "accuracy_acceptance_thresholds": null,
+    "truth_boundary": "Only q,v,dv,actual tau,h and fixed numerical B enter learner; all true dynamics and qacc diagnostic only. Physical friction learned independently.",
+    "signal_rates_note": "Training uses 16 kHz state/torque records in addition to 1 kHz external feedback; not a 1 kHz-only method."
+  },
+  "records": [
+    {
+      "folder": "collect18",
+      "seed": 20261018,
+      "split": "train"
+    },
+    {
+      "folder": "collect19",
+      "seed": 20261019,
+      "split": "train"
+    },
+    {
+      "folder": "collect20",
+      "seed": 20261020,
+      "split": "validation"
+    }
+  ],
+  "root": "/workspace/runs/H-010/R-20261019T014000Z-loss",
+  "reference": "/workspace/runs/H-014/R-20261019T044152Z-decomp/reference",
+  "bindings": [
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/training_packet.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/26"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/model_snapshot.mjb",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/30"
+    },
+    {
+      "path": "/workspace/runs/H-014/R-20261019T044152Z-decomp/reference/reference_20261018.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/31"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/training_packet.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/34"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/model_snapshot.mjb",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/38"
+    },
+    {
+      "path": "/workspace/runs/H-014/R-20261019T044152Z-decomp/reference/reference_20261019.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/39"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/training_packet.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/42"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/model_snapshot.mjb",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/46"
+    },
+    {
+      "path": "/workspace/runs/H-014/R-20261019T044152Z-decomp/reference/reference_20261020.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/47"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect18/diagnostics_1kHz.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/29"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect19/diagnostics_1kHz.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/37"
+    },
+    {
+      "path": "/workspace/runs/H-010/R-20261019T014000Z-loss/collect20/diagnostics_1kHz.npz",
+      "snapshot": "/workspace/runs/H-015/R-20261019T045641Z-repair/inputs/45"
+    }
+  ],
+  "joints": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "pinn_checkpoint": "/workspace/runs/H-017/R-20261020T005355Z-continue/oracle_gravity/checkpoint_e100.json",
+  "pinn_physical": "/workspace/runs/H-017/R-20261020T005355Z-continue/report/full_core_diagnostics.json",
+  "pinn_components": "/workspace/runs/H-019/R-20261020T024347Z-projection/build"
+}

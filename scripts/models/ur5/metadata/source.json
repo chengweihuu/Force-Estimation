@@ -1,0 +1,159 @@
+{
+  "robot": "UR5",
+  "upstream_repository": "https://github.com/UniversalRobots/Universal_Robots_ROS2_Description",
+  "upstream_branch_at_selection": "jazzy",
+  "upstream_commit": "c2ae8652b6e9c1f9f3fedac48d63bef93d3cb9ba",
+  "acquired_at_utc": "2026-10-17T11:59:00.979473+00:00",
+  "local_source_directory": "scripts/models/ur5/vendor/ur_description",
+  "upstream_format": "URDF/Xacro with YAML configuration and DAE/STL meshes",
+  "model_selector": {
+    "ur_type": "ur5"
+  },
+  "license_files": [
+    "LICENSE",
+    "package.xml"
+  ],
+  "local_modifications": [],
+  "known_limitations": [
+    "Default kinematics are nominal and are not calibration of a particular physical robot.",
+    "UR5 inertia tensors are labelled as generated using a cylinder approximation.",
+    "The upstream base mass has an explicit uncertainty comment.",
+    "Friction, motor-current measurement and backlash are not identified by these model files.",
+    "The upstream elbow position limit is deliberately reduced for motion planning; preserve this distinction from physical limits.",
+    "Joint-limit YAML uses Xacro !degrees tags; a plain yaml.safe_load call does not implement their conversion.",
+    "The wrist_3 joint type is selected by Xacro from has_position_limits; the acquired UR5 configuration selects revolute.",
+    "Explicit MJCF adaptation and the fixed-base adjacent collision exclusion are documented in adaptation.json; this source record does not establish physical UR5 accuracy."
+  ],
+  "file_count": 23,
+  "total_bytes": 6963484,
+  "files": [
+    {
+      "path": "LICENSE",
+      "bytes": 1459,
+      "upstream_git_blob_sha1": "574ef07902908574cba9a471d7e5eb0b684691e4"
+    },
+    {
+      "path": "config/ur5/default_kinematics.yaml",
+      "bytes": 639,
+      "upstream_git_blob_sha1": "0db61890ab834d78e15811a9b13ba99b7c1b299e"
+    },
+    {
+      "path": "config/ur5/joint_limits.yaml",
+      "bytes": 2867,
+      "upstream_git_blob_sha1": "e6093ea65bb0ab5d4ab2bc69f1b8bf585dd9f03c"
+    },
+    {
+      "path": "config/ur5/physical_parameters.yaml",
+      "bytes": 2774,
+      "upstream_git_blob_sha1": "52eb5850799f8752a9b0652a3216912feae2de0f"
+    },
+    {
+      "path": "config/ur5/visual_parameters.yaml",
+      "bytes": 2151,
+      "upstream_git_blob_sha1": "b3c6493160fe3cc43fabe72e166845256aa4be2a"
+    },
+    {
+      "path": "meshes/ur5/collision/base.stl",
+      "bytes": 11834,
+      "upstream_git_blob_sha1": "21c8a11937c4f19944e33049c6450b8a15e7e360"
+    },
+    {
+      "path": "meshes/ur5/collision/forearm.stl",
+      "bytes": 52584,
+      "upstream_git_blob_sha1": "ffbed4536ef7c23c7691736124e161a226546bb9"
+    },
+    {
+      "path": "meshes/ur5/collision/shoulder.stl",
+      "bytes": 33784,
+      "upstream_git_blob_sha1": "5088831c10deb4656b129feee4bd533824e7c152"
+    },
+    {
+      "path": "meshes/ur5/collision/upperarm.stl",
+      "bytes": 58884,
+      "upstream_git_blob_sha1": "734386e871f9114d9be2567a68c66179ea8f16b5"
+    },
+    {
+      "path": "meshes/ur5/collision/wrist1.stl",
+      "bytes": 35184,
+      "upstream_git_blob_sha1": "a960c0c571ba7366ed2a72e94ee733bcaf034485"
+    },
+    {
+      "path": "meshes/ur5/collision/wrist2.stl",
+      "bytes": 35184,
+      "upstream_git_blob_sha1": "9b089de4c6077cc743130865040b934248cc5b4d"
+    },
+    {
+      "path": "meshes/ur5/collision/wrist3.stl",
+      "bytes": 22384,
+      "upstream_git_blob_sha1": "96c71f0413dfe4311bd253a8747824f29982aed4"
+    },
+    {
+      "path": "meshes/ur5/visual/base.dae",
+      "bytes": 157910,
+      "upstream_git_blob_sha1": "8c23e57744c050d913de310817c0d366ab0105eb"
+    },
+    {
+      "path": "meshes/ur5/visual/forearm.dae",
+      "bytes": 1469403,
+      "upstream_git_blob_sha1": "920b3dfec87dee02c416d59b0f9bbbc77100d59d"
+    },
+    {
+      "path": "meshes/ur5/visual/shoulder.dae",
+      "bytes": 1007765,
+      "upstream_git_blob_sha1": "325a7156f9a61fc3df6ea5be429fc710c1fdd52b"
+    },
+    {
+      "path": "meshes/ur5/visual/upperarm.dae",
+      "bytes": 2004987,
+      "upstream_git_blob_sha1": "852afbcaad6e400a7fdce56aead30d05c34ffd3a"
+    },
+    {
+      "path": "meshes/ur5/visual/wrist1.dae",
+      "bytes": 948689,
+      "upstream_git_blob_sha1": "892ba632240e19a379d7a8bda86aee38fa21b6ab"
+    },
+    {
+      "path": "meshes/ur5/visual/wrist2.dae",
+      "bytes": 947502,
+      "upstream_git_blob_sha1": "bd32a7a35090615b6cba750694d4eb27dc637624"
+    },
+    {
+      "path": "meshes/ur5/visual/wrist3.dae",
+      "bytes": 123930,
+      "upstream_git_blob_sha1": "9a2096da904ea00b2440695a8e752971b0a96ec7"
+    },
+    {
+      "path": "package.xml",
+      "bytes": 3488,
+      "upstream_git_blob_sha1": "a0ecebcd8768c61fb7f6672eba9af0a311493728"
+    },
+    {
+      "path": "urdf/inc/ur_common.xacro",
+      "bytes": 20802,
+      "upstream_git_blob_sha1": "287c9b37895ccf53b4424f3a4df7a3ee21c6d47e"
+    },
+    {
+      "path": "urdf/ur.urdf.xacro",
+      "bytes": 2153,
+      "upstream_git_blob_sha1": "3600a38d19431882e8c50bffb4ee726877b2b0e8"
+    },
+    {
+      "path": "urdf/ur_macro.xacro",
+      "bytes": 17127,
+      "upstream_git_blob_sha1": "141d99217ac24fc379247ccbcb00bdb47a4c9ce3"
+    }
+  ],
+  "license": {
+    "acquired_ur5_subset": "BSD-3-Clause",
+    "declaration": "package.xml and LICENSE; the separately licensed UR8LONG/UR15/UR18/UR20/UR30 meshes are not included"
+  },
+  "joint_names": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "adaptation_record": "adaptation.json"
+}

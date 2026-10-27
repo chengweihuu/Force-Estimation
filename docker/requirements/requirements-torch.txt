@@ -1,0 +1,2 @@
+# Install from https://download.pytorch.org/whl/cpu, not the CUDA distribution.
+torch==2.9.1+cpu

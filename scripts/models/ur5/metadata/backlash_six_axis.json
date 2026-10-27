@@ -1,0 +1,98 @@
+{
+  "implementation": "MuJoCo two co-located hinge joints on each of six links",
+  "model": "../scene_backlash.xml",
+  "enabled_axes": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "gap_joint_by_drive": {
+    "shoulder_pan_joint": "shoulder_pan_gap",
+    "shoulder_lift_joint": "shoulder_lift_gap",
+    "elbow_joint": "elbow_gap",
+    "wrist_1_joint": "wrist_1_gap",
+    "wrist_2_joint": "wrist_2_gap",
+    "wrist_3_joint": "wrist_3_gap"
+  },
+  "full_gap_arcmin": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "full_gap_rad": [
+    0.0002908882086657216,
+    0.0002908882086657216,
+    0.0002908882086657216,
+    0.0002908882086657216,
+    0.0002908882086657216,
+    0.0002908882086657216
+  ],
+  "half_gap_rad": [
+    0.0001454441043328608,
+    0.0001454441043328608,
+    0.0001454441043328608,
+    0.0001454441043328608,
+    0.0001454441043328608,
+    0.0001454441043328608
+  ],
+  "drive_armature_kgm2": [
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001,
+    0.0001
+  ],
+  "drive_damping_Nms_rad": [
+    1,
+    1,
+    1,
+    0.1,
+    0.1,
+    0.1
+  ],
+  "gap_damping_Nms_rad": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "limit_solref": [
+    0.000125,
+    1
+  ],
+  "limit_solimp": [
+    0.99,
+    0.99,
+    0.001
+  ],
+  "limit_design_note": "Time constant = 2 physical steps (62.5 us each); stiffens the limit relative to the old large-gap J6 fixture. Soft penetration remains possible; not measured tooth compliance.",
+  "parameter_source": "All six widths equal: explicit simulation assumption at manufacturer lost-motion scale, NOT measured UR5 backlash; armatures also assumptions.",
+  "physical_scope": "A dead-zone with soft stops, not a complete strain-wave elastic/hysteretic transmission model.",
+  "position_command": "drive-side",
+  "position_output": "load-side q_drive+q_gap",
+  "velocity_output": "v_drive+v_gap",
+  "current_source": "drive-side actuator force / K_eq, gear=1",
+  "references": [
+    {
+      "url": "https://www.harmonicdrive.net/media/2650/hd-ebook-version2.pdf",
+      "meaning": "zero tooth backlash; low-torque lost motion <1 arcmin; not UR5-specific"
+    },
+    {
+      "url": "https://www.nabtesco.de/en/service/faq/glossar/backlash",
+      "meaning": "cycloidal mechanical backlash 0.1-0.3 arcmin, lost motion 0.3-0.6 arcmin; not UR5-specific"
+    },
+    {
+      "url": "https://mujoco.readthedocs.io/en/3.12.0/modeling.html#backlash",
+      "meaning": "native two-hinge modeling mechanism"
+    }
+  ]
+}

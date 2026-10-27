@@ -1,0 +1,13 @@
+{
+  "logs": "/workspace/runs/H-020/R-20261020T031820Z-oraclekf/experiments",
+  "kf_config": "/workspace/scripts/rigid_baseline/config_examples/reference_kf.json",
+  "oracle_code": "/workspace/scripts/rigid_baseline/reference_kf/oracle_kf.py",
+  "rigid_code": "/workspace/scripts/rigid_baseline/identification/rigid.py",
+  "theta": "/workspace/runs/H-022/R-20261020T072219Z-recovery/solve/theta.npy",
+  "adapter": "/workspace/scripts/rigid_baseline/model_comparison/pinn_support/adapter.py",
+  "structured": "/workspace/scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py",
+  "old_plan": "/workspace/scripts/data_collection/supervision_settings.json",
+  "normalization": "/workspace/runs/H-010/R-20261019T014000Z-loss/learn/normalization.json",
+  "weights": "/workspace/runs/H-017/R-20261020T005355Z-continue/oracle_gravity/weights_e100.pt",
+  "checkpoint": "/workspace/runs/H-017/R-20261020T005355Z-continue/oracle_gravity/checkpoint_e100.json"
+}

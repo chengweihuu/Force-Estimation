@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "physics_dt_s": 6.25e-05,
+  "control_dt_s": 0.0005,
+  "feedback_dt_s": 0.001,
+  "duration_s": 17,
+  "core_interval_s": [
+    3,
+    13
+  ],
+  "known_integrator_B": [
+    1,
+    1,
+    1,
+    0.1,
+    0.1,
+    0.1
+  ],
+  "filter": {
+    "order": 4,
+    "cutoff_Hz": 20,
+    "padtype": "odd",
+    "padlen": 150,
+    "edge_order": 2
+  },
+  "train_seeds": [
+    20261018,
+    20261019
+  ],
+  "validation_seed": 20261020,
+  "test_seed": 20261021,
+  "model": {
+    "widths": [
+      128,
+      128,
+      128
+    ],
+    "diagonal_floor": 0.0001,
+    "mass_floor": 0.0
+  },
+  "physical_friction_initial": 0.1,
+  "training": {
+    "seed": 0,
+    "learning_rate": 0.0005,
+    "max_updates": 12,
+    "internal_wall_seconds": 800,
+    "checkpoint_every": 4,
+    "chunk_size": 1024
+  },
+  "selfcheck": {
+    "qv_control_atol": 1e-10,
+    "qacc_atol": 1e-07,
+    "truth_force_atol": 1e-09,
+    "adjoint_rtol": 1e-08,
+    "network_fd_rtol": 0.0001,
+    "network_fd_atol": 1e-07,
+    "inertia_perturbation_kg_m2": 0.0001,
+    "gradient_slice_start_physics_index": 64000,
+    "gradient_slice_steps": 4096
+  },
+  "accuracy_acceptance_thresholds": null,
+  "truth_boundary": "Only q,v,dv,actual tau,h and fixed numerical B enter learner; all true dynamics and qacc diagnostic only. Physical friction learned independently.",
+  "signal_rates_note": "Training uses 16 kHz state/torque records in addition to 1 kHz external feedback; not a 1 kHz-only method."
+}

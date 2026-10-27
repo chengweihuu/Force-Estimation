@@ -1,0 +1,11 @@
+# Only installation inputs enter the build context; no documentation or project data.
+*
+!Dockerfile
+!entrypoint.sh
+!requirements/
+!requirements/requirements-main.txt
+!requirements/requirements-torch.txt
+!requirements/requirements-rigid.txt
+!checks/
+!checks/check-environment.py
+!checks/check-rigid-environment.py

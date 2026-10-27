@@ -1,0 +1,7 @@
+<mujoco model="ur5_ground_viscous">
+  <include file="ur5.xml"/>
+  <worldbody>
+    <light pos="0 0 2" dir="0 0 -1"/>
+    <geom name="ground" type="plane" pos="0 0 0" size="2 2 0.1" contype="1" conaffinity="1" rgba="0.35 0.4 0.45 1"/>
+  </worldbody>
+</mujoco>

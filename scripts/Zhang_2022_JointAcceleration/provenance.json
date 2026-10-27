@@ -1,0 +1,17 @@
+{
+  "paper": "A Joint Acceleration Estimation Method Based on a High-Order Disturbance Observer",
+  "authors": ["Jiexin Zhang", "Pingyun Nie", "Yuhang Chen", "Bo Zhang"],
+  "year": 2022,
+  "doi": "10.1109/LRA.2022.3220501",
+  "implementation": "Local paper-based UR5 reimplementation, not an upstream code distribution",
+  "upstream_commit": null,
+  "upstream_code_license": "Not applicable: no official code was copied",
+  "status": "Exploratory reference implementation; not formal evidence",
+  "maintenance_date": "2026-10-24",
+  "preserved": ["observer equations", "original gains and physical model", "causal timing", "noise seed mapping", "evaluation windows and comparison tolerances"],
+  "maintenance_changes": ["moved paper-specific code into scripts", "combined frequency-only wrappers into one configuration-driven pipeline", "regenerate no-force baseline within each new run", "fresh explicit workflow request builder", "removed historical output dependencies"],
+  "reference": "reproductions/Zhang_2022_JointAcceleration/Zhang_2022_JointAcceleration_source.md",
+  "conclusion": "docs/conclusion/record/Zhang_关节加速度估计结论.md",
+  "formal_protocol_or_experiment": null,
+  "differences_from_paper": ["UR5 instead of the original robot", "local gains, not fully specified author gains", "direct simulated velocity and instantaneous qacc reference", "no output low-pass filter or equal-noise gain tuning", "stable external-positive GM sign consistent with equation 17", "explicit synchronous Euler and independent model queries"]
+}

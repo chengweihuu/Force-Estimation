@@ -1,0 +1,42 @@
+{
+  "paper": "Actuator Failure Detection and Isolation Using Generalized Momenta",
+  "authors": [
+    "Alessandro De Luca",
+    "Raffaella Mattone"
+  ],
+  "year": 2003,
+  "doi": "10.1109/ROBOT.2003.1241665",
+  "implementation": "Local UR5 reimplementation, not author code",
+  "status": "Organized exploratory scripts; no promotion to src or claim-level evidence",
+  "observer_source": "scratch/H-076/gmo.py",
+  "experiments": [
+    {
+      "source": "scratch/H-076/execute.py",
+      "entry": "external_torque.py",
+      "reference_run": "runs/H-076/R-20261023T134007Z-ur5gmo"
+    },
+    {
+      "source": "scratch/H-077/execute.py",
+      "entry": "signed_joint_torques.py",
+      "reference_run": "runs/H-077/R-20261023T135156Z-sixjoint"
+    },
+    {
+      "source": "scratch/H-078/execute.py",
+      "entry": "actuator_loss.py",
+      "reference_run": "runs/H-078/R-20261023T140848Z-actuatorloss"
+    }
+  ],
+  "shared_dependencies": [
+    "scripts/rigid_baseline/reference_kf/oracle_kf.py: Model only",
+    "scripts/simulation/ur5_helpers.py: trajectory, require, moving_mask, valid"
+  ],
+  "historical_files": "Historical scratch and runs removed after conclusion consolidation at user request. Source paths above are provenance labels, not runtime dependencies.",
+  "runtime_assets": {
+    "model": "scripts/models/ur5/nominal_16khz.mjb",
+    "healthy_regression": [
+      "reference_data/measurements.npz",
+      "reference_data/estimates.npz"
+    ],
+    "purpose": "Minimal unchanged runtime/regression inputs preserved before cleanup; not complete historical experiment archives."
+  }
+}

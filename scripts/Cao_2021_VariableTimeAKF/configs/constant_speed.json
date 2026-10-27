@@ -1,0 +1,115 @@
+{
+  "base_config": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/base.json",
+  "threshold_file": "/workspace/scripts/Cao_2021_VariableTimeAKF/configs/thresholds.json",
+  "speed_abs": 0.05,
+  "duration_s": 8,
+  "core_start_s": 3,
+  "core_end_s": 7,
+  "windows": [
+    5,
+    10,
+    20,
+    30,
+    40,
+    50,
+    75,
+    100
+  ],
+  "history_count": 128,
+  "D": [
+    1,
+    1,
+    1,
+    1,
+    1,
+    1
+  ],
+  "sigma_Nm": [
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05,
+    0.05
+  ],
+  "rtol": 1e-08,
+  "atol": 1e-09,
+  "new_physics_cap": 1536000,
+  "prior_physics_steps": 192000,
+  "prior_wall_ms": 20791,
+  "pilot_case": "J2_positive",
+  "cases": [
+    {
+      "name": "J1_positive",
+      "joint": 1,
+      "speed": 0.05,
+      "seed": 8520
+    },
+    {
+      "name": "J1_negative",
+      "joint": 1,
+      "speed": -0.05,
+      "seed": 8521
+    },
+    {
+      "name": "J2_positive",
+      "joint": 2,
+      "speed": 0.05,
+      "seed": 8522
+    },
+    {
+      "name": "J2_negative",
+      "joint": 2,
+      "speed": -0.05,
+      "seed": 8523
+    },
+    {
+      "name": "J3_positive",
+      "joint": 3,
+      "speed": 0.05,
+      "seed": 8524
+    },
+    {
+      "name": "J3_negative",
+      "joint": 3,
+      "speed": -0.05,
+      "seed": 8525
+    },
+    {
+      "name": "J4_positive",
+      "joint": 4,
+      "speed": 0.05,
+      "seed": 8526
+    },
+    {
+      "name": "J4_negative",
+      "joint": 4,
+      "speed": -0.05,
+      "seed": 8527
+    },
+    {
+      "name": "J5_positive",
+      "joint": 5,
+      "speed": 0.05,
+      "seed": 8528
+    },
+    {
+      "name": "J5_negative",
+      "joint": 5,
+      "speed": -0.05,
+      "seed": 8529
+    },
+    {
+      "name": "J6_positive",
+      "joint": 6,
+      "speed": 0.05,
+      "seed": 8530
+    },
+    {
+      "name": "J6_negative",
+      "joint": 6,
+      "speed": -0.05,
+      "seed": 8531
+    }
+  ]
+}

@@ -1,0 +1,69 @@
+{
+  "joint_names": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "q_hold_rad": [
+    0.0,
+    -1.185,
+    1.5850000000000002,
+    -1.792,
+    -1.108,
+    0.0
+  ],
+  "kp_Nm_per_rad": [
+    594.5792405108447,
+    3016.753790265683,
+    1580.8552769377543,
+    140.1710995652424,
+    15.155613645268161,
+    2.052846874999998
+  ],
+  "kd_Nms_per_rad": [
+    59.45792405108447,
+    159.17783301194027,
+    67.040649521717,
+    3.1666936162434047,
+    0.4823200283691869,
+    0.005284687499999792
+  ],
+  "ki": 0,
+  "gravity_Nm": [
+    0.0,
+    -30.167537902656832,
+    -15.808552769377544,
+    -1.401710995652424,
+    0.15155613645268162,
+    0.0
+  ],
+  "physics_dt_s": 6.25e-05,
+  "control_config_Hz": 2000,
+  "feedback_config_Hz": 125,
+  "gain_rule": "J1-J5 unchanged; J6 Kp=alpha*(B+Kd)-M66*alpha^2, alpha=sqrt(original_Kp/M66)=20/s; Kd unchanged. Local scalar design only.",
+  "gravity_compensation": "none; PD supports gravity via position error",
+  "model": "../scene_backlash.xml",
+  "current_ROS_interface": "equivalent current from drive effort, not constraint torque",
+  "gain_design_reference_M_diagonal_kgm2": [
+    1.4864481012771118,
+    2.099739014510833,
+    0.7107621984537079,
+    0.017885192615060497,
+    0.0038374000421732366,
+    0.00013211718749999481
+  ],
+  "position_command_coordinate": "drive-side on all six axes; link angle = drive angle + passive gap",
+  "gain_reference_note": "Same PID gains as ../control; originally designed on the rigid model, not retuned or validated for the 12-DOF backlash model.",
+  "j6_gain_design": {
+    "alpha_per_s": 20.0,
+    "B_Nms_rad": 0.1,
+    "M66_kgm2": 0.00013211718749999481,
+    "old_Kp_Nm_rad": 0.05284687499999793,
+    "new_Kp_Nm_rad": 2.052846874999998,
+    "Kd_Nms_rad": 0.005284687499999792,
+    "other_scalar_pole_per_s": -776.9037904322927
+  }
+}

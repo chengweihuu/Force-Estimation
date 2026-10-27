@@ -1,0 +1,191 @@
+{
+  "paper": "Contact force and torque sensing for serial manipulator based on an adaptive Kalman filter with variable time period",
+  "doi": "10.1016/j.rcim.2021.102210",
+  "implementation": "Local reimplementation; not author-provided software",
+  "status": "Historical source plus organized completed core-method comparison; exploratory reproduction, not formal evidence",
+  "recovery": "Recovered from this project session original apply_patch and literal shell heredoc writes; applied recorded constant_speed_v2, akf_comparison and controlled_collection string edits. Historical source/data snapshots were already deleted; no byte-for-byte comparison against those deleted snapshots was possible.",
+  "recovery_session_id": "01a149ac-56de-7ed1-bf7e-b08f82031e65",
+  "scope": "Source and five directly recorded configuration objects only. No raw data, Run requests, output tables or scientific results restored.",
+  "shared_code": "../rigid_baseline/reference_kf and ../simulation remain in place",
+  "files": [
+    {
+      "file": "akf_comparison.py",
+      "original_path": "scratch/H-085/akf_comparison.py",
+      "recovered_sha256": "bf521a1f682793119ebf3d7bb60bf0d700e4f2ee6eeb15d2e9178fdc53487853",
+      "installed_sha256": "bf521a1f682793119ebf3d7bb60bf0d700e4f2ee6eeb15d2e9178fdc53487853",
+      "change": "No source changes"
+    },
+    {
+      "file": "checks.py",
+      "original_path": "scratch/H-085/checks.py",
+      "recovered_sha256": "d939a0c8aa1edbe95c3e1eab094e2a0a2141df83588b5b6e0dd35f69d6313756",
+      "installed_sha256": "d939a0c8aa1edbe95c3e1eab094e2a0a2141df83588b5b6e0dd35f69d6313756",
+      "change": "No source changes"
+    },
+    {
+      "file": "constant_speed.py",
+      "original_path": "scratch/H-085/constant_speed.py",
+      "recovered_sha256": "0c7e3f14fe74fe345912c08e38d797019b39c0da56871f82643568dede1a1d4c",
+      "installed_sha256": "0c7e3f14fe74fe345912c08e38d797019b39c0da56871f82643568dede1a1d4c",
+      "change": "No source changes"
+    },
+    {
+      "file": "constant_speed_v2.py",
+      "original_path": "scratch/H-085/constant_speed_v2.py",
+      "recovered_sha256": "8ce228d838ee478a264ec1a0f4cd1e931c84502524499625cd2546859db1989c",
+      "installed_sha256": "8ce228d838ee478a264ec1a0f4cd1e931c84502524499625cd2546859db1989c",
+      "change": "No source changes"
+    },
+    {
+      "file": "current_interface.py",
+      "original_path": "scratch/H-085/current_interface.py",
+      "recovered_sha256": "7d7ee1ff2dcaa26d61242e4e97396c07bfdf451bbe3b5c357384bdef036eaa98",
+      "installed_sha256": "7d7ee1ff2dcaa26d61242e4e97396c07bfdf451bbe3b5c357384bdef036eaa98",
+      "change": "No source changes"
+    },
+    {
+      "file": "filter_checks.py",
+      "original_path": "scratch/H-085/filter_checks.py",
+      "recovered_sha256": "298f700fc7d581df7b9858758f950e87e53414e6b114a4e034c2f0f190fadc6c",
+      "installed_sha256": "298f700fc7d581df7b9858758f950e87e53414e6b114a4e034c2f0f190fadc6c",
+      "change": "No source changes"
+    },
+    {
+      "file": "filter_probe.py",
+      "original_path": "scratch/H-085/filter_probe.py",
+      "recovered_sha256": "0cc84c9e33c80045255521a1395a34b4992e1fbc70729b8de875429ee913f6ea",
+      "installed_sha256": "0cc84c9e33c80045255521a1395a34b4992e1fbc70729b8de875429ee913f6ea",
+      "change": "No source changes"
+    },
+    {
+      "file": "frozen_schedule.py",
+      "original_path": "scratch/H-085/frozen_schedule.py",
+      "recovered_sha256": "d8f6eb015e9087c3f71aaa3bdee69da6c2b2f75f6964ed911fae7cfaec2bf520",
+      "installed_sha256": "d8f6eb015e9087c3f71aaa3bdee69da6c2b2f75f6964ed911fae7cfaec2bf520",
+      "change": "No source changes"
+    },
+    {
+      "file": "input_statistics.py",
+      "original_path": "scratch/H-085/input_statistics.py",
+      "recovered_sha256": "4ea05b006cc8358af773817e2c5ce0b3da57fdd37b4179a8bc914d1eaaf6de3e",
+      "installed_sha256": "4ea05b006cc8358af773817e2c5ce0b3da57fdd37b4179a8bc914d1eaaf6de3e",
+      "change": "No source changes"
+    },
+    {
+      "file": "msma.py",
+      "original_path": "scratch/H-085/msma.py",
+      "recovered_sha256": "53beec7d4cdfc559d012ab3719d05b26bc61b1150c314042fca0f97efbb5791f",
+      "installed_sha256": "53beec7d4cdfc559d012ab3719d05b26bc61b1150c314042fca0f97efbb5791f",
+      "change": "No source changes"
+    },
+    {
+      "file": "raw_calibrated.py",
+      "original_path": "scratch/H-085/raw_calibrated.py",
+      "recovered_sha256": "f73dc49e6e1f37c3c040feac3cda9155e6bfdff262943fdacdaf596d6b5ed7af",
+      "installed_sha256": "f73dc49e6e1f37c3c040feac3cda9155e6bfdff262943fdacdaf596d6b5ed7af",
+      "change": "No source changes"
+    },
+    {
+      "file": "runner.py",
+      "original_path": "scratch/H-085/runner.py",
+      "recovered_sha256": "49ddfb17e3d4e72bdf43cdaef460790643d9d0c8face0872c867e2a9771868ea",
+      "installed_sha256": "49ddfb17e3d4e72bdf43cdaef460790643d9d0c8face0872c867e2a9771868ea",
+      "change": "No source changes"
+    },
+    {
+      "file": "window_transfer.py",
+      "original_path": "scratch/H-085/window_transfer.py",
+      "recovered_sha256": "f18a4e39cc5c56bb475252036ae706b5cf00c0b2c694e873eea074b00080bbdd",
+      "installed_sha256": "f18a4e39cc5c56bb475252036ae706b5cf00c0b2c694e873eea074b00080bbdd",
+      "change": "No source changes"
+    },
+    {
+      "file": "controlled_collection.py",
+      "original_path": "scratch/H-086/controlled_collection.py",
+      "recovered_sha256": "f7d372ab6373a1113620a53b4038997109c458da5c86adb78eec1c79b9b1919f",
+      "installed_sha256": "b3fc63f1823c81ce510c9715733ce323c0d431b3f2c8c81970051b8fad577a5f",
+      "change": "Remove obsolete sibling scratch import paths; modules now share this directory"
+    },
+    {
+      "file": "integral_controller.py",
+      "original_path": "scratch/H-086/integral_controller.py",
+      "recovered_sha256": "1a97e7bbff4a95a1590b98a254f29d3ce1065910f01505d48973e9ccfc3f2172",
+      "installed_sha256": "1a97e7bbff4a95a1590b98a254f29d3ce1065910f01505d48973e9ccfc3f2172",
+      "change": "No source changes"
+    },
+    {
+      "file": "paper_compare.py",
+      "original_path": "scratch/H-086/paper_compare.py",
+      "recovered_sha256": "c9aa7f6698df20add316cb078d3dfbe9424d7be2ecde7ea0ed16a33921e9473b",
+      "installed_sha256": "2d5f2d0a2574eedb806503b85ce920f26e030cafa1395d2ab72196d1d1dd0ec5",
+      "change": "Remove obsolete sibling scratch import paths; modules now share this directory"
+    },
+    {
+      "file": "paper_motion.py",
+      "original_path": "scratch/H-086/paper_motion.py",
+      "recovered_sha256": "403546961f5cc2f971547fe4c62390060339821340b474c3460e9811956b9570",
+      "installed_sha256": "f90d7ce351a0e103885b05234616ea705950d6f53c8cdc54e5d01a5be1b951ac",
+      "change": "Remove obsolete sibling scratch import paths; modules now share this directory"
+    },
+    {
+      "file": "tracking_diagnostic.py",
+      "original_path": "scratch/H-086/tracking_diagnostic.py",
+      "recovered_sha256": "f0f582a53f1d4dd9c8f62b1051d0dcc1181b09ef6418e13a582eb5421d1f9268",
+      "installed_sha256": "f0f582a53f1d4dd9c8f62b1051d0dcc1181b09ef6418e13a582eb5421d1f9268",
+      "change": "No source changes"
+    },
+    {
+      "file": "noise_comparison.py",
+      "original_path": "scratch/H-087/noise_comparison.py",
+      "recovered_sha256": "fef7c4376910944a900db89c0f0e735ff545ede745c98473da5f0ce43b637985",
+      "installed_sha256": "39d9e36486e7429411a63611d245e372ea8b48dc4c997e5bb3c2a0aa32896ab5",
+      "change": "Remove obsolete sibling scratch import paths; modules now share this directory"
+    }
+  ],
+  "configs": {
+    "scratch/H-085/config.json": "base.json",
+    "scratch/H-085/constant_config.json": "constant_speed.json",
+    "scratch/H-086/controller_config.json": "paper_controller.json",
+    "scratch/H-087/config.json": "noise_comparison.json",
+    "thresholds.json": "thresholds.json"
+  },
+  "config_changes": "Only base/constant configuration and threshold paths remapped; historical run paths intentionally retained as required-data references, not silently substituted.",
+  "verification": {
+    "environment": "Existing Docker piakf:jazzy-mujoco3.3.7, /opt/piakf-venv/bin/python",
+    "kind": "Maintenance checks only; no scientific result rerun",
+    "python_modules_imported": 19,
+    "CLI_help_checks": 14,
+    "filter_property_checks": 37,
+    "signed_nonuniform_current_roundtrip": "passed",
+    "duplicate_timestamp_rejected": true,
+    "KF_calls": 0,
+    "physics_steps": 0
+  },
+  "core_comparison": {
+    "source_run": "runs/H-088/R-20261025T112357Z-core",
+    "files": {
+      "experiment.py": "scratch/H-088/experiment.py",
+      "engineering_checks.py": "scratch/H-088/engineering_checks.py",
+      "evaluation.py": "scratch/H-088/evaluation.py"
+    },
+    "destination": "experiment/",
+    "changes": "Only experiment.py import path adjusted to paper directory; AST-equivalent computational code. Original scratch and Run retained.",
+    "fixed_configuration": "configs/core_comparison.json",
+    "configuration_changes": "Original fixed configuration preserved except run_root/source_run/table_dir generated per new Run.",
+    "binding_files": [
+      "experiment/prepare.py",
+      "experiment/request.template.json"
+    ],
+    "binding_behavior": "Creates config/request for a fresh explicit task/run; no scientific execution, TASK mutation, or overwrite.",
+    "maintenance_verification": {
+      "Docker_imports": 22,
+      "CLI_help_checks": 2,
+      "filter_property_checks": 37,
+      "configuration_equivalence": true,
+      "AST_equivalence_except_import_path": true,
+      "request_generation_and_no_overwrite": "passed",
+      "physics_steps": 0,
+      "KF_calls": 0
+    }
+  }
+}

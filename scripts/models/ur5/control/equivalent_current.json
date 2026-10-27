@@ -1,0 +1,21 @@
+{
+  "joint_names": [
+    "shoulder_pan_joint",
+    "shoulder_lift_joint",
+    "elbow_joint",
+    "wrist_1_joint",
+    "wrist_2_joint",
+    "wrist_3_joint"
+  ],
+  "K_equivalent_Nm_A": [
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "parameter_source": "simulation assumption, joint-side equivalent constant, not UR5 calibration",
+  "noise_enabled": false,
+  "source": "/joint_states effort from qfrc_actuator; only for six rigid direct-drive joints gear=1 without backlash"
+}

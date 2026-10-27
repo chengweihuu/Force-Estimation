@@ -1,0 +1,95 @@
+{
+  "source": "runs/H-097/R-20261027T030209Z-j6candidate/motion",
+  "plots_interval_s": [
+    0,
+    9
+  ],
+  "metrics_interval_s": [
+    2,
+    9
+  ],
+  "reference": "sent quintic trajectory reconstructed, not controller internal reference",
+  "alignment": "source timestamps; each run relative to its recorded trajectory start",
+  "interpolation_of_measured_data": false,
+  "smoothing": false,
+  "matched_packets": 1145,
+  "unmatched_measurement_packets": 0,
+  "feedback_without_measurement": 1,
+  "current": "algebraic joint-side equivalent A, K=1 Nm/A, not native electrical state",
+  "noise": false,
+  "KF": false,
+  "metrics": [
+    {
+      "joint": "J1",
+      "position_RMSE_rad": 0.000286160901632964,
+      "position_bias_rad": 2.5345725570694014e-06,
+      "position_peak_rad": 0.001169384831382611,
+      "velocity_RMSE_rad_s": 0.002610523970003308,
+      "velocity_bias_rad_s": -1.7198195697762263e-06,
+      "velocity_peak_rad_s": 0.012833213858373549,
+      "current_peak_A": 3.7898657447662734,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    },
+    {
+      "joint": "J2",
+      "position_RMSE_rad": 0.010084010999710857,
+      "position_bias_rad": 0.010083235293751864,
+      "position_peak_rad": 0.010672614529432467,
+      "velocity_RMSE_rad_s": 0.0011660692143347013,
+      "velocity_bias_rad_s": 6.074323156566945e-06,
+      "velocity_peak_rad_s": 0.007729215852782106,
+      "current_peak_A": 36.15367052323617,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    },
+    {
+      "joint": "J3",
+      "position_RMSE_rad": 0.009895096957628132,
+      "position_bias_rad": 0.009894755595962439,
+      "position_peak_rad": 0.010148921423881907,
+      "velocity_RMSE_rad_s": 0.001321573030603274,
+      "velocity_bias_rad_s": -1.1102981456437293e-05,
+      "velocity_peak_rad_s": 0.008630506172125463,
+      "current_peak_A": 17.75756280943303,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    },
+    {
+      "joint": "J4",
+      "position_RMSE_rad": 0.00985465441959502,
+      "position_bias_rad": 0.009854204790283554,
+      "position_peak_rad": 0.010105976642913905,
+      "velocity_RMSE_rad_s": 0.0032665607800670543,
+      "velocity_bias_rad_s": -1.3568290317749148e-05,
+      "velocity_peak_rad_s": 0.029681966796675577,
+      "current_peak_A": 1.5121281796743362,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    },
+    {
+      "joint": "J5",
+      "position_RMSE_rad": 0.009767716227130211,
+      "position_bias_rad": -0.00976539763413982,
+      "position_peak_rad": 0.010391102362386384,
+      "velocity_RMSE_rad_s": 0.0027057310836745736,
+      "velocity_bias_rad_s": -1.4388276782376346e-06,
+      "velocity_peak_rad_s": 0.012933964520547942,
+      "current_peak_A": 0.17145344103850083,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    },
+    {
+      "joint": "J6",
+      "position_RMSE_rad": 0.0008275555054988698,
+      "position_bias_rad": -1.8705067393569268e-07,
+      "position_peak_rad": 0.0033796401058439115,
+      "velocity_RMSE_rad_s": 0.0054381333036823635,
+      "velocity_bias_rad_s": 2.1951112761640446e-05,
+      "velocity_peak_rad_s": 0.01999642828565016,
+      "current_peak_A": 0.007198935824789038,
+      "drive_torque_conversion_RMSE_Nm": 0.0,
+      "drive_torque_conversion_peak_Nm": 0.0
+    }
+  ]
+}
