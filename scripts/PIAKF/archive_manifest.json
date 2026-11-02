@@ -1,0 +1,1539 @@
+{
+  "version": 1,
+  "created_at_utc": "2026-11-02T02:34:12.039885+00:00",
+  "scope": "H-100/H-101 EXPLORE stage archive; not claim-level evidence",
+  "original_runs": {
+    "known": "runs/H-100/R-20261101T114944Z-b41a",
+    "learning": "runs/H-100/R-20261101T122752Z-c82d",
+    "static_components": "runs/H-100/R-20261101T125046Z-d37e",
+    "motion": "runs/H-100/R-20261101T130437Z-e61c",
+    "motion_components": "runs/H-100/R-20261101T131510Z-f92b",
+    "gravity": "runs/H-100/R-20261101T135129Z-a83e",
+    "paired": "runs/H-101/R-20261101T140838Z-b7d4",
+    "paired_components": "runs/H-101/R-20261101T141842Z-c59f"
+  },
+  "assets": [
+    {
+      "path": "reference_data/checkpoints/dynamic.pt",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt"
+      ],
+      "bytes": 305858,
+      "sha256": "b80c31756eef752412c6228747dc3e52f4758b5888b744ff518e44588b667655"
+    },
+    {
+      "path": "reference_data/checkpoints/initial.pt",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt"
+      ],
+      "bytes": 306352,
+      "sha256": "3db81cf42b75857309cbf200771904f491555a6dfd4e3be082ffd999278b5d93"
+    },
+    {
+      "path": "reference_data/checkpoints/paired_baseline.pt",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt"
+      ],
+      "bytes": 305922,
+      "sha256": "d613b14cfaa94c718458f59c1eff9c0e4809cfc63343a1f8a4d2b3175db598ae"
+    },
+    {
+      "path": "reference_data/checkpoints/static_augmented.pt",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/model.pt",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/model.pt"
+      ],
+      "bytes": 305922,
+      "sha256": "1fd71400b3fe54ff09508353d8489c85083e5cae881def37c4748a7b1b3ff81d"
+    },
+    {
+      "path": "reference_data/checkpoints/statistics.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/train/statistics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/train/statistics.json"
+      ],
+      "bytes": 986,
+      "sha256": "908cbaa522c5e2ee4b99b866435b30b326b8b920e00a64077c4a76fc6485fb81"
+    },
+    {
+      "path": "reference_data/learning/manifest.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json"
+      ],
+      "bytes": 13833,
+      "sha256": "1234808a0e0fb868083637b595a0719b2aaaea2f2a0933ed2726e61f72aa6ada"
+    },
+    {
+      "path": "reference_data/learning/trajectory_00.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_00.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_00.npz"
+      ],
+      "bytes": 806681,
+      "sha256": "5a3dc10bf7dd22621504bc106d0864d9fb1b875d3a51b6de2b69ec31a9c5a5d9"
+    },
+    {
+      "path": "reference_data/learning/trajectory_01.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_01.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_01.npz"
+      ],
+      "bytes": 805255,
+      "sha256": "0dd06accc96d4b7791c95c568451f3af1804ffcfa4f87d8966f95e9c839fd07d"
+    },
+    {
+      "path": "reference_data/learning/trajectory_02.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_02.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_02.npz"
+      ],
+      "bytes": 802773,
+      "sha256": "9b2ee3fa099f3501f994b4b66e03f74dc5bd4cd98626ed4c2bbe188e62cc8c9c"
+    },
+    {
+      "path": "reference_data/learning/trajectory_03.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_03.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_03.npz"
+      ],
+      "bytes": 805786,
+      "sha256": "2fbad8647018c2a270dc5afa1bbc3b307890e619dc714a8197c8ffa7928af7ab"
+    },
+    {
+      "path": "reference_data/learning/trajectory_04.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz"
+      ],
+      "bytes": 807886,
+      "sha256": "8ff0aad2c1f9e143ade5533a2be79ff23902c64598a3e10f7180bafcd21a3da8"
+    },
+    {
+      "path": "reference_data/learning/trajectory_05.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz"
+      ],
+      "bytes": 805880,
+      "sha256": "664d44ce1d588f06c212ff833dc2e74d4bb4540295c08d52996fb478c9c673dd"
+    },
+    {
+      "path": "reference_data/load/constant/measurements.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/measurements.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/measurements.npz"
+      ],
+      "bytes": 457922,
+      "sha256": "4e52155bdccdd728134ce23b4bbbe564a2426585421ea9db14291e9e978fb11c"
+    },
+    {
+      "path": "reference_data/load/constant/reference.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/reference.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/reference.npz"
+      ],
+      "bytes": 234319,
+      "sha256": "699402f31c8725e304e65647c454e0c2d5063057cde3d334dbb69f7418f8f393"
+    },
+    {
+      "path": "reference_data/load/no_force/measurements.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/measurements.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/measurements.npz"
+      ],
+      "bytes": 332640,
+      "sha256": "489f4a78db79513d3d24b4301b7974ed743be61074b17aedbd98709383c90481"
+    },
+    {
+      "path": "reference_data/load/no_force/reference.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/reference.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/reference.npz"
+      ],
+      "bytes": 195709,
+      "sha256": "8300aaf9aef1e0a8a5f0cead54db4f138ba9fb9f1e54cee7331118609e62186d"
+    },
+    {
+      "path": "reference_data/load/sine/measurements.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/measurements.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/measurements.npz"
+      ],
+      "bytes": 503472,
+      "sha256": "32be92be4a7e73a058934c281b254a0e4b31834a258df3332be6a8c2089993b5"
+    },
+    {
+      "path": "reference_data/load/sine/reference.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/reference.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/reference.npz"
+      ],
+      "bytes": 265636,
+      "sha256": "26091eb24dea0867952e99736fff53864fdd74bd3a531699ba697dbf4bcf31ad"
+    },
+    {
+      "path": "reference_data/shared_dynamic_batches.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/shared_dynamic_batches.npz",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/shared_dynamic_batches.npz"
+      ],
+      "bytes": 133884,
+      "sha256": "343c783d378694005f2bf7bdae7518f5c360a61b719abe52d442663e5b2588d5"
+    },
+    {
+      "path": "reference_data/static_evaluation.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T135129Z-a83e/diagnose/poses.npz",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T135129Z-a83e/diagnose/poses.npz"
+      ],
+      "bytes": 8028,
+      "sha256": "d388ce61e3cdc10816a0daa3e0e1b8bc8864f11017486b3ba533ac644c275452"
+    },
+    {
+      "path": "reference_data/static_training.npz",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/static_training.npz",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/static_training.npz"
+      ],
+      "bytes": 1566,
+      "sha256": "131157281b6a2927db12cadcae55c41982bb738c430114d71bfe2afc9b2aeccc"
+    },
+    {
+      "path": "conclusion/figures/Fx_component_swaps.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_hybrid_comparison.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_hybrid_comparison.png"
+      ],
+      "bytes": 77319,
+      "sha256": "9cf68612324ad5ebdb13791dc3ef75c841630f37a9c8aa988d4538229edade0d"
+    },
+    {
+      "path": "conclusion/figures/Fx_component_swaps.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_hybrid_comparison.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_hybrid_comparison.svg"
+      ],
+      "bytes": 16388,
+      "sha256": "cf835c36091ecafc6c0cc104e45d0016e9162bf9796215547ff4c907e4fade1b"
+    },
+    {
+      "path": "conclusion/figures/Fx_error_cross_terms.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_mse_cross_terms.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_mse_cross_terms.png"
+      ],
+      "bytes": 127628,
+      "sha256": "1d27f7a6aca729c24a95c3bc92551fdaf88f35fcd6d3c02ed9a0d45722004cb2"
+    },
+    {
+      "path": "conclusion/figures/Fx_error_cross_terms.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_mse_cross_terms.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/core_Fx_mse_cross_terms.svg"
+      ],
+      "bytes": 42443,
+      "sha256": "802d530e73494c857b1644bfa33cceb0d14c743ae075f05f76c823a3bf308cc9"
+    },
+    {
+      "path": "conclusion/figures/known_step.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/wrench.png",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/wrench.png"
+      ],
+      "bytes": 94101,
+      "sha256": "2fe98cb04baf5e9ac549b229eb23406e413db90fb2de572ae50073d5e3e9714f"
+    },
+    {
+      "path": "conclusion/figures/load_response_comparison.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/load_response_comparison.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/load_response_comparison.png"
+      ],
+      "bytes": 354050,
+      "sha256": "cd5f3889f9d3ae1ac783e194295a110a38d1854f03d1b367114f13dafeb34833"
+    },
+    {
+      "path": "conclusion/figures/load_response_comparison.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/load_response_comparison.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/load_response_comparison.svg"
+      ],
+      "bytes": 190214,
+      "sha256": "4a628a08cccfdf70e4f01ba1950ab46cfed8df14f17428acf91ff79b33661cc2"
+    },
+    {
+      "path": "conclusion/figures/motion_core_comparison.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/motion_core_comparison.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/motion_core_comparison.png"
+      ],
+      "bytes": 92955,
+      "sha256": "aedb4f04d84c330f9324028f485c93ce80f856fbec9688b5da4901c134c3a957"
+    },
+    {
+      "path": "conclusion/figures/motion_core_comparison.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/motion_core_comparison.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/motion_core_comparison.svg"
+      ],
+      "bytes": 41813,
+      "sha256": "149e9b41b14b44037b7a4725e4cf9ffeb949be6676bdddb407295da3160aaeed"
+    },
+    {
+      "path": "conclusion/figures/paired_learning_curves.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/paired_learning_curves.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/paired_learning_curves.png"
+      ],
+      "bytes": 135218,
+      "sha256": "bd6e141ff402d60f2c716e59faa6dfc24e940ae0c985d03383b8d68bac55958a"
+    },
+    {
+      "path": "conclusion/figures/paired_learning_curves.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/paired_learning_curves.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/paired_learning_curves.svg"
+      ],
+      "bytes": 46703,
+      "sha256": "7a8d23745da7a60c01e594b6e371e2cc2cb182e2a904102ec74dbba783ecc8dd"
+    },
+    {
+      "path": "conclusion/figures/static_gravity_comparison.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/static_gravity_comparison.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/static_gravity_comparison.png"
+      ],
+      "bytes": 69477,
+      "sha256": "a11360d3370c9d1bd807e7e38af2bedb89939ce95d9b7e2c54e601c3c6f9d853"
+    },
+    {
+      "path": "conclusion/figures/static_gravity_comparison.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/static_gravity_comparison.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/static_gravity_comparison.svg"
+      ],
+      "bytes": 30388,
+      "sha256": "4ef346713cecff3eb531b271de470aa6b08c6097a637a24a165e648508e488cc"
+    },
+    {
+      "path": "conclusion/figures/trajectory_05_core_wrench.png",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05_core_wrench.png",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05_core_wrench.png"
+      ],
+      "bytes": 342494,
+      "sha256": "7075e03253e7d041c41a48effc11314f51c4c62e4bd33dc6df24880479255984"
+    },
+    {
+      "path": "conclusion/figures/trajectory_05_core_wrench.svg",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05_core_wrench.svg",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05_core_wrench.svg"
+      ],
+      "bytes": 270776,
+      "sha256": "854b3a4ee9061269dd8465c47636d0441f99afdd2dc15d2e497ae783adff038f"
+    },
+    {
+      "path": "conclusion/metrics/collection.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/collect/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/collect/metrics.json"
+      ],
+      "bytes": 4982,
+      "sha256": "e8a8c8d4a855e29dd13680320884e965eb34bd5ac0ad969fe7f308ea14d762e5"
+    },
+    {
+      "path": "conclusion/metrics/dynamic_diagnostics.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/dynamics-diagnostic.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/dynamics-diagnostic.json"
+      ],
+      "bytes": 1075,
+      "sha256": "bb2ec292341aa0ff514ce33f7d08b05a329920a1a0359d52413bde03e193ffef"
+    },
+    {
+      "path": "conclusion/metrics/dynamic_evaluation.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/metrics.json"
+      ],
+      "bytes": 45447,
+      "sha256": "9e8b3493c08711fa275d1ece1f5075bd5359c2e4c81122fcd6e31a85b6ea5692"
+    },
+    {
+      "path": "conclusion/metrics/dynamic_training.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/train/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/train/metrics.json"
+      ],
+      "bytes": 2532,
+      "sha256": "88385b0ffdc3756ad9d546519e6493953bffd2bc1eca753af80d3107e541a370"
+    },
+    {
+      "path": "conclusion/metrics/dynamic_training_history.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/train/training-history.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/train/training-history.json"
+      ],
+      "bytes": 11492,
+      "sha256": "38d5fbdfb408b5bb06528bb168fad402204ec1bf156d0fccdae9d842a42c2690"
+    },
+    {
+      "path": "conclusion/metrics/known_checks.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/checks/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/checks/metrics.json"
+      ],
+      "bytes": 3411,
+      "sha256": "9a8f91705846cb4797d49814ec67211dd79d8c06429cd2eb916209350ea48e2b"
+    },
+    {
+      "path": "conclusion/metrics/known_simulate.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/simulate/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/metrics.json"
+      ],
+      "bytes": 16223,
+      "sha256": "eec315243ac81b009e4cdcbad4476efe025b0c3293822b0eab76d2c15fef985c"
+    },
+    {
+      "path": "conclusion/metrics/motion_components.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T131510Z-f92b/replay/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T131510Z-f92b/replay/metrics.json"
+      ],
+      "bytes": 77100,
+      "sha256": "ab2f329700837aa05f9536d98c4e68eaa63fc81ffe408709f501aae6954a0530"
+    },
+    {
+      "path": "conclusion/metrics/native_motion.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T130437Z-e61c/replay/metrics.json"
+      ],
+      "bytes": 33353,
+      "sha256": "b0e1101f765ab837ad2e378e8837122c925b90714d2158212ae674cf79698d4a"
+    },
+    {
+      "path": "conclusion/metrics/network_checks.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/network_checks/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T122752Z-c82d/network_checks/metrics.json"
+      ],
+      "bytes": 3068,
+      "sha256": "c318e11d242b5ce6aecb76119ff33ca60240b864e859eead17220c97f7d4fa37"
+    },
+    {
+      "path": "conclusion/metrics/paired_augmented_history.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/training-history.json",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/training-history.json"
+      ],
+      "bytes": 14368,
+      "sha256": "cbfc634d7a0ef25f53bf8c4664f5512d3f92fdc31dcfd317c66f19c5e04d8658"
+    },
+    {
+      "path": "conclusion/metrics/paired_baseline_history.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/training-history.json",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/training-history.json"
+      ],
+      "bytes": 14239,
+      "sha256": "e5d17d842af0144fd09cc8f8fedc1671437d5a75ab2004ad00efa2342d7906af"
+    },
+    {
+      "path": "conclusion/metrics/paired_components.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/metrics.json"
+      ],
+      "bytes": 83443,
+      "sha256": "3493ad69f5d208949b9a14c63eb6da98d7cc93a861d90bfca992e5b73db391be"
+    },
+    {
+      "path": "conclusion/metrics/paired_evaluation.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/metrics.json"
+      ],
+      "bytes": 59003,
+      "sha256": "e1eddd5e8e4c3993634ab67a03b417c39e2eb7f0b085cf8691f85bb9826a4bbf"
+    },
+    {
+      "path": "conclusion/metrics/paired_training.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/train/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/train/metrics.json"
+      ],
+      "bytes": 3789,
+      "sha256": "ef796cbbf6813cd221fd382c401d16103990e7d978f6909a45b6af9761133cf9"
+    },
+    {
+      "path": "conclusion/metrics/static_components.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T125046Z-d37e/replay/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T125046Z-d37e/replay/metrics.json"
+      ],
+      "bytes": 163242,
+      "sha256": "158fde132764c1bb9c70c86f1134a618524b3b2bfabc45a3a75b477e0a076360"
+    },
+    {
+      "path": "conclusion/metrics/static_gravity.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T135129Z-a83e/diagnose/metrics.json",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T135129Z-a83e/diagnose/metrics.json"
+      ],
+      "bytes": 6007,
+      "sha256": "1c0d7df1328d73663f482c44210a5d45f48b23c6cd9e88d5dae35d549bb2e196"
+    },
+    {
+      "path": "conclusion/tables/motion_components.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T131510Z-f92b/replay/all_variants.csv",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T131510Z-f92b/replay/all_variants.csv"
+      ],
+      "bytes": 61228,
+      "sha256": "61ad7d9ae49f84af47c3ac1e6acead56a87b5f1f5ca418bb921e779faea35425"
+    },
+    {
+      "path": "conclusion/tables/native_motion.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/all_windows.csv",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T130437Z-e61c/replay/all_windows.csv"
+      ],
+      "bytes": 18740,
+      "sha256": "62a087c2da932301523bae1fb3f8ca779c31790318751d7c6092b1a3fa7334c9"
+    },
+    {
+      "path": "conclusion/tables/paired_component_mse.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/component_mse.csv",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/component_mse.csv"
+      ],
+      "bytes": 12320,
+      "sha256": "60085ef90b6783401d1ff6c18a36a6b5fc48ad2792356f24928df6d223fb583a"
+    },
+    {
+      "path": "conclusion/tables/paired_component_rms.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/component_rms.csv",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/component_rms.csv"
+      ],
+      "bytes": 2443,
+      "sha256": "70ae7e84d38ee5712543af4f0bffd55ba5f1550e4b60a857a9418e6a7eb188ec"
+    },
+    {
+      "path": "conclusion/tables/paired_components.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/diagnose/all_variants.csv",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T141842Z-c59f/diagnose/all_variants.csv"
+      ],
+      "bytes": 66685,
+      "sha256": "c729282757fe6cb81315619887300129d89881c12e2e470fc3389723d8d0b7b8"
+    },
+    {
+      "path": "conclusion/tables/paired_evaluation.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/all_metrics.csv",
+      "equivalent_original_paths": [
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/all_metrics.csv"
+      ],
+      "bytes": 38878,
+      "sha256": "ef082790c1204431352228fc2baee0bf1fc2dc78238321dda20ac493919030a1"
+    },
+    {
+      "path": "conclusion/tables/static_components.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T125046Z-d37e/replay/all_variants.csv",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T125046Z-d37e/replay/all_variants.csv"
+      ],
+      "bytes": 85500,
+      "sha256": "bf04e9242bb1e3d65d52ab05c1c47897d96dc4e329e1a70db9a4ecbee790578b"
+    },
+    {
+      "path": "conclusion/tables/static_gravity.csv",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T135129Z-a83e/diagnose/all_poses.csv",
+      "equivalent_original_paths": [
+        "runs/H-100/R-20261101T135129Z-a83e/diagnose/all_poses.csv"
+      ],
+      "bytes": 63535,
+      "sha256": "60776d381b51f6ab7016e5211cf923af5a00aafe3f08367b94f134009e731425"
+    },
+    {
+      "path": "reference_data/native/load/no_force/known.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/no_force/known.npz",
+      "source_file_sha256": "f76ff56738dc59255de1ec14aaf52dee9d4860fceebb78c70c3a3f7da531df13",
+      "bytes": 167093,
+      "sha256": "dd38b973a984ff84826e60a887e55e60d4e79db12d5a15baa6cfd1f6fab39a08",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "ae05ebbc05fe61c8083fbc437f3e79127f4be77efb1cb8055edbad86cef3b8c8"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/no_force/initial.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/no_force/initial.npz",
+      "source_file_sha256": "df15bcebd13bbd1c2c4b7383dd694a51da64e56e13c7a657f6d4fce6df06e841",
+      "bytes": 75949,
+      "sha256": "653b15e755d01157220b7344e9c9a68ad26ba1d0ee7ce0cd3c51dcde77feb509",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "fa65f74bbc4c0c04e5b6f2acb5225ffc6fb6d5502a138f111b447c2bdec2656e"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/no_force/trained.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/no_force/trained.npz",
+      "source_file_sha256": "d2768f5b26b4b2afb32bc223157f4689b49745fd712f51b686ba8f7b60e16af4",
+      "bytes": 74500,
+      "sha256": "8f6509c04c76679d9d15d99c688921211c718195012163cfc59c0ba0d10474e0",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "4baf78cab65b29d6cd66c4d82d06afb4796231ef567456a7b2f134f98a6a9155"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/constant/known.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/constant/known.npz",
+      "source_file_sha256": "304185b2600de8205bd4f9a83a532cfbf82e1b4c6a17f49a7142f5e8ccfbdec0",
+      "bytes": 187962,
+      "sha256": "83063784b3dc09a685600ba4e22862793652a245d3ca71335866d87d7f043508",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "b51a806967e96746ac10c6af55af5a84e504e42fe8793b74404a03238d701861"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/constant/initial.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/constant/initial.npz",
+      "source_file_sha256": "1ea040e93f5cd93e85233985f7d0b615663b2d9fa72192f1ae7f9d250fb11fcf",
+      "bytes": 150613,
+      "sha256": "54f4edc9c4a2a5c26446e3d367f185dc2f69b7a4225104123ed52ee121a2a09e",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "a33503cd8bcb0a58adcf30ed5508926884425ddceead860c128aa46707ef92e1"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/constant/trained.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/constant/trained.npz",
+      "source_file_sha256": "dd5a0e593170f2f19fbf925966fa106b2280058b2d8413f41fd4b6edaf71bc2a",
+      "bytes": 144381,
+      "sha256": "3b33eaf51efa6a2428e09c865f6b4e8977844d324719efecbb37a6e79fe71bf0",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "e6a1d273a23f22c90767a8cf218440a68519bdc2aa386b5ec1b5e2cbea090a36"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/sine/known.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/sine/known.npz",
+      "source_file_sha256": "cc12eab4c01992ccee3d7fe247840e5fa105cb4c8effd58b98180634bf14d7ac",
+      "bytes": 186027,
+      "sha256": "55c7f98c5e86bb8053172de6a2d1030c5bae1e76acfc92d4c28785d7cba02578",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "b7e762758d99b99773b47b3b1c0b783dd57ea6487f59a53bb2357b394d346fcc"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/sine/initial.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/sine/initial.npz",
+      "source_file_sha256": "1ce8b02cae26358f990362ef4d6452b77f8303887871cd275f7b6062e5d472e2",
+      "bytes": 176775,
+      "sha256": "27ef2a615436be87878ffd9475f29525d7cf2b9fde0187aa71c42b163ac98554",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "12c178453d707ee8bef46746e6b10238c0cb30fbd21f1bf96913cefd7e5be3e4"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/load/sine/trained.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/evaluate/sine/trained.npz",
+      "source_file_sha256": "a87f3ec13c5cfe95091b57187cb5b87fad82d6edcdc2b25a879ffabbef91c173",
+      "bytes": 173052,
+      "sha256": "843c3dc97a780cec1cbd4cb2617aa9d057c850e11f1efcc8edc5d9378c23bd70",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            4001
+          ],
+          "dtype": "float64",
+          "sha256": "d37d82f441b7cbb7d74e4968a136717dd4b83358e583c8380e82efd4d747aecf"
+        },
+        "wrench": {
+          "shape": [
+            4001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "0560153cde6a25c383f4e78b6f848a0de66fefa37df2616246466e2f6c5b5176"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/motion/trajectory_04/known.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_04/known.npz",
+      "source_file_sha256": "7ba3e7a3ac592c1363b769da799e9daf2ea68c322c99e8a6cd3a9a8f5faf5b33",
+      "bytes": 291810,
+      "sha256": "5fd3692efb7d43db38f9b8a3d2b5990d5b6ea53edc8026738b4bcb37600853d7",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "953f1089214c39e462c5136d545d872dc7599899d9e90bfdacc8b7ba1869d0c0"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/motion/trajectory_04/trained.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_04/trained.npz",
+      "source_file_sha256": "4fc960fc0b21b342da223f1cfafab2ff2793cd305099412243d5c4a490b767d4",
+      "bytes": 290106,
+      "sha256": "4e5c96693a0066de02e05584b739ad1588104a1ce45183b6fd73eb9692c8a7a7",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "be5260a51a2fe85c0a0f24e799204c9c6acfb0772711d1aa751d04769834fc7a"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/motion/trajectory_05/known.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_05/known.npz",
+      "source_file_sha256": "d148a46630ec03228dd775b1f14de22df06a89872ba44f3fcad14051a48669e2",
+      "bytes": 292780,
+      "sha256": "8a88900974b21b246791520e8a751eaeffa46f5e910f682fbee5d216ecb7ac56",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "1786f60374b2763d86a0a7b5fb544454d3d63222a7918f5a28b82462e03104de"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/motion/trajectory_05/trained.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_05/trained.npz",
+      "source_file_sha256": "2e68dc5b6adf1ec44305b7ac399eca6757cd76bc2b5a4dfd4349477c3669ed57",
+      "bytes": 289894,
+      "sha256": "1aad3983a38c510cc97d49c0d9a1afa7cfe8ef7704363b79edabf98869fee15e",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "edab2fc2980c2d43e78c28c9d2acb0bd48841641109e6e006b9bbb716ae91129"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/paired/trajectory_05/baseline.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/baseline.npz",
+      "source_file_sha256": "2e68dc5b6adf1ec44305b7ac399eca6757cd76bc2b5a4dfd4349477c3669ed57",
+      "bytes": 289894,
+      "sha256": "1aad3983a38c510cc97d49c0d9a1afa7cfe8ef7704363b79edabf98869fee15e",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "edab2fc2980c2d43e78c28c9d2acb0bd48841641109e6e006b9bbb716ae91129"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "reference_data/native/paired/trajectory_05/static_augmented.npz",
+      "kind": "array_projection",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/static_augmented.npz",
+      "source_file_sha256": "409e97c92207a6a8f2f816d48c4a4f7bbb7bb8b0f3ae8ceadbc8040946c2652f",
+      "bytes": 289637,
+      "sha256": "79dbed9e8fdaea00229cb901ee0456841f77d4cdea142e72e2a0d2f74c147ff5",
+      "arrays": {
+        "time_s": {
+          "shape": [
+            6001
+          ],
+          "dtype": "float64",
+          "sha256": "41ceb3d52e4cb9a4c1fec185784f11cc9b37c1060d849792da25bf7cf2464563"
+        },
+        "wrench": {
+          "shape": [
+            6001,
+            6
+          ],
+          "dtype": "float64",
+          "sha256": "30b2fc3b6f0f47280728d867d7c44114170c681fbd39a694c56fa605ea6078a4"
+        }
+      },
+      "removed_arrays": "innovation/covariance and other non-regression fields"
+    },
+    {
+      "path": "conclusion/config_snapshots/probe.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T114944Z-b41a/checks/config.snapshot.json",
+      "bytes": 2334,
+      "sha256": "7d0805acecabaf6cd7fdaf59c2e611f4bb6136fd2ffdbc6f5f71ccc5517727f6"
+    },
+    {
+      "path": "conclusion/config_snapshots/learning.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T122752Z-c82d/network_checks/config.snapshot.json",
+      "bytes": 13685,
+      "sha256": "724d1bf855cde8fd6b5aaf5283ba84cc07657ac0bd843d5b21759c53eeaadebc"
+    },
+    {
+      "path": "conclusion/config_snapshots/diagnosis.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T125046Z-d37e/check/config.snapshot.json",
+      "bytes": 4341,
+      "sha256": "39bb42bbce92aad6d51b6933c0fb631220d835d279cc9a2b9717a4499d50df37"
+    },
+    {
+      "path": "conclusion/config_snapshots/motion_evaluation.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T130437Z-e61c/check/config.snapshot.json",
+      "bytes": 2488,
+      "sha256": "bb47b3670f840338ba9ff14220f0a9d5574f0c972fd680a6e3c07e79fa6a7415"
+    },
+    {
+      "path": "conclusion/config_snapshots/motion_diagnosis.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T131510Z-f92b/check/config.snapshot.json",
+      "bytes": 3009,
+      "sha256": "f7fa0e1631dedf8f9585d22815f0df80f7a391ddc6b0eab730b379c8830b9277"
+    },
+    {
+      "path": "conclusion/config_snapshots/static_gravity.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-100/R-20261101T135129Z-a83e/check/config.snapshot.json",
+      "bytes": 556,
+      "sha256": "67262d32be5919c6699d24ef0b6d452b546d22b021d6fed07bbbecb467baff5b"
+    },
+    {
+      "path": "conclusion/config_snapshots/static_constraint.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T140838Z-b7d4/check/config.snapshot.json",
+      "bytes": 5708,
+      "sha256": "8f52c2e7ea3429538c50db17139c050e02b1ee9727cd13c9cf13b03942b6347d"
+    },
+    {
+      "path": "conclusion/config_snapshots/paired_motion_diagnosis.json",
+      "kind": "exact_copy",
+      "original_path": "runs/H-101/R-20261101T141842Z-c59f/check/config.snapshot.json",
+      "bytes": 6029,
+      "sha256": "07f2d3e0095aa0750cca2e8b307aa4fa71a609ac78a6244ab3cb185e787b17e1"
+    }
+  ],
+  "tracked_dependencies": [
+    {
+      "path": "scripts/models/ur5/scene_equivalent_current.xml",
+      "sha256": "27934e7ab42f36ec5963c8970266b39c52f30ea12c52e0e5f2528705c549b324"
+    },
+    {
+      "path": "scripts/models/ur5/control/design.json",
+      "sha256": "a01157fd5e352026af285a2035792440b7cda92ef0d0dd2617504f74587d4b67"
+    },
+    {
+      "path": "scripts/models/ur5/metadata/source.json",
+      "sha256": "27eb9621533974d854a70f69a434a7d22a53accacf6e794113c108cb97ce1b93"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/LICENSE",
+      "sha256": "143077f9f6a8de5a99f78c2c2472801fb53cf240277ef661642f079b9acdfff8"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+      "sha256": "81c2ad265f7140313c305d9bfdf98d5b00f5978e9b01acbf12243602dc4dd151"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+      "sha256": "8e79aa80a532494ba5320c30b40363ff63d228e3d59e2904703dca341dcba2ac"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+      "sha256": "1d62e23a8c3ff9e6334fb157c805e6202037bcfca65bc6a36c5c9ae866751b3b"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+      "sha256": "55c11ac0ad1e144f230849b2033532e8b140b2e818ea497296d08dfb88757440"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+      "sha256": "0a1fd12150140efdee91650dcb4c2d0443065551a9207a2d2dbde58ff1fb4eb7"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+      "sha256": "c1d9f7843366068cb331f3f5c43fa716d3eceeb8c80216eccbbc878905dab123"
+    },
+    {
+      "path": "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl",
+      "sha256": "cf7220397b56f1d3047be9465eea1181d471b40fc82728052e31c97588585b4b"
+    },
+    {
+      "path": "docker/compose.yaml",
+      "sha256": "c3a6076f118de0ef43dfcb3503f132125ff35a548f9229c478c24f11f923e55a"
+    },
+    {
+      "path": "docker/Dockerfile",
+      "sha256": "e41a60d4bb3a29c895e495339bf742c827a574118c8a3acf98ba94b7152b6a41"
+    },
+    {
+      "path": "docker/requirements/requirements-main.txt",
+      "sha256": "adab0a0a8f3a3f3b61fc2d7d2a40300b56680d688d18a5e02574386118db63bb"
+    },
+    {
+      "path": "docker/requirements/requirements-rigid.txt",
+      "sha256": "cfdd941dd66a90a4c8345e274695e4f6b95c30a7e9451659bb11287f103f4027"
+    },
+    {
+      "path": "docker/requirements/requirements-torch.txt",
+      "sha256": "efc58be8668508708ce88e02d6780de1ab3922ab49e727adb0237ae9a8000a4f"
+    }
+  ],
+  "excluded": [
+    "optimizer states",
+    "full covariance and innovation traces",
+    "duplicated input snapshots",
+    "stdout/stderr and CLI dumps",
+    "scratch requests and preparation logs"
+  ],
+  "replay_limits": "Retained source data, checkpoints, current scientific configs and native output arrays support local reconstruction and regression. Removed carrier snapshots prevent complete reconstruction of original per-Run input directories or formal immutable bindings.",
+  "runtime_path_relocations": [
+    {
+      "field": "scripts/PIAKF/configs/diagnosis.json.checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/diagnosis.json.source_run",
+      "before": "runs/H-100/R-20261101T114944Z-b41a/simulate",
+      "after": "scripts/PIAKF/reference_data/load"
+    },
+    {
+      "field": "scripts/PIAKF/configs/diagnosis.json.native_replay",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/evaluate",
+      "after": "scripts/PIAKF/reference_data/native/load"
+    },
+    {
+      "field": "scripts/PIAKF/configs/learning.json.replay_run",
+      "before": "runs/H-100/R-20261101T114944Z-b41a/simulate",
+      "after": "scripts/PIAKF/reference_data/load"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_diagnosis.json.trained_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_diagnosis.json.manifest",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+      "after": "scripts/PIAKF/reference_data/learning/manifest.json"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_diagnosis.json.records[0].path",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+      "after": "scripts/PIAKF/reference_data/learning/trajectory_04.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_diagnosis.json.records[1].path",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+      "after": "scripts/PIAKF/reference_data/learning/trajectory_05.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_diagnosis.json.native_replay",
+      "before": "runs/H-100/R-20261101T130437Z-e61c/replay",
+      "after": "scripts/PIAKF/reference_data/native/motion"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_evaluation.json.trained_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_evaluation.json.initialized_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/initial.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_evaluation.json.manifest",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+      "after": "scripts/PIAKF/reference_data/learning/manifest.json"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_evaluation.json.records[0].path",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+      "after": "scripts/PIAKF/reference_data/learning/trajectory_04.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/motion_evaluation.json.records[1].path",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+      "after": "scripts/PIAKF/reference_data/learning/trajectory_05.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.manifest",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+      "after": "scripts/PIAKF/reference_data/learning/manifest.json"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.records[0].path",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+      "after": "scripts/PIAKF/reference_data/learning/trajectory_05.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.checkpoints.baseline",
+      "before": "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/paired_baseline.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.checkpoints.static_augmented",
+      "before": "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/static_augmented.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.native_reference.baseline",
+      "before": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/baseline.npz",
+      "after": "scripts/PIAKF/reference_data/native/paired/trajectory_05/baseline.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/paired_motion_diagnosis.json.native_reference.static_augmented",
+      "before": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/static_augmented.npz",
+      "after": "scripts/PIAKF/reference_data/native/paired/trajectory_05/static_augmented.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.initial_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/initial.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.statistics",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/statistics.json",
+      "after": "scripts/PIAKF/reference_data/checkpoints/statistics.json"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.previous_baseline_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.training_data_dir",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect",
+      "after": "scripts/PIAKF/reference_data/learning"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.static_evaluation.source",
+      "before": "runs/H-100/R-20261101T135129Z-a83e/diagnose/poses.npz",
+      "after": "scripts/PIAKF/reference_data/static_evaluation.npz"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_constraint.json.load_regression.source_dir",
+      "before": "runs/H-100/R-20261101T114944Z-b41a/simulate",
+      "after": "scripts/PIAKF/reference_data/load"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_gravity.json.trained_checkpoint",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+      "after": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt"
+    },
+    {
+      "field": "scripts/PIAKF/configs/static_gravity.json.training_data_dir",
+      "before": "runs/H-100/R-20261101T122752Z-c82d/collect",
+      "after": "scripts/PIAKF/reference_data/learning"
+    }
+  ],
+  "config_snapshots": [
+    {
+      "active_config": "configs/probe.json",
+      "original_config": "conclusion/config_snapshots/probe.json"
+    },
+    {
+      "active_config": "configs/learning.json",
+      "original_config": "conclusion/config_snapshots/learning.json"
+    },
+    {
+      "active_config": "configs/diagnosis.json",
+      "original_config": "conclusion/config_snapshots/diagnosis.json"
+    },
+    {
+      "active_config": "configs/motion_evaluation.json",
+      "original_config": "conclusion/config_snapshots/motion_evaluation.json"
+    },
+    {
+      "active_config": "configs/motion_diagnosis.json",
+      "original_config": "conclusion/config_snapshots/motion_diagnosis.json"
+    },
+    {
+      "active_config": "configs/static_gravity.json",
+      "original_config": "conclusion/config_snapshots/static_gravity.json"
+    },
+    {
+      "active_config": "configs/static_constraint.json",
+      "original_config": "conclusion/config_snapshots/static_constraint.json"
+    },
+    {
+      "active_config": "configs/paired_motion_diagnosis.json",
+      "original_config": "conclusion/config_snapshots/paired_motion_diagnosis.json"
+    }
+  ],
+  "source_code_checks": [
+    {
+      "path": "scripts/PIAKF/checks.py",
+      "sha256": "d4808441be48fae7bb01e20767c8412800ac1fc8787934d0f8d5d0da3f5cc320",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/diagnosis.py",
+      "sha256": "a68f5d2e50825af76dc81466c244158817ce0c7f012457122fdb485956e97e96",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/dynamics.py",
+      "sha256": "dd2e09c9368496e6351c6d3147fa5dd2e51f90e60e48d0ecbfd3142bc8c8c7f7",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/learning.py",
+      "sha256": "ffdfe98c045cc42f170e941314545c054f88381ff42ae44fa313b7cd79672a72",
+      "original_run": "runs/H-101/R-20261101T140838Z-b7d4",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/learning_checks.py",
+      "sha256": "df110747a484ca9b1a1ea6a4717828c93558c4c736ef4710fa41e734a9d666a7",
+      "original_run": "runs/H-100/R-20261101T122752Z-c82d",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/motion_diagnosis.py",
+      "sha256": "5c088e8ef810732dd4fcc3de8754a0e54da58c1346655759774b1086e5726ae4",
+      "original_run": "runs/H-100/R-20261101T131510Z-f92b",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/motion_evaluation.py",
+      "sha256": "a07718f41fcac3750a78c23e432a16cbe659d16c285cc55053ddbf489dedd91b",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/observer.py",
+      "sha256": "a476160f3fae15fbe88f6e5112beebcaaa987d6f1a21f6f25bbae9965c7de02f",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/paired_motion_diagnosis.py",
+      "sha256": "2c9e6a565f365ac768f7e312896997163f940f7b0a5e6ae7bfa690898f958aef",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/run.py",
+      "sha256": "171aa10293c6ff0c58d679c8b7943e9f2a62d72c4cbd32771ed20ee93a4d3431",
+      "original_run": "runs/H-100/R-20261101T122752Z-c82d",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/simulation.py",
+      "sha256": "9a7cf785bb3dbb4e2e0e53b1153f9c121699772f3097e42cad9131651414ca11",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/static_constraint.py",
+      "sha256": "c6f1c6e5296803ce7c5b6074181dee1c82a3fa46b63df9e6b0bd49ea2f187e9b",
+      "original_run": "runs/H-101/R-20261101T140838Z-b7d4",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/static_gravity.py",
+      "sha256": "3c4ddf4454a2f3d0a1e4d80e7ac073b55f68c39fdd83f596567069184c04522c",
+      "original_run": "runs/H-101/R-20261101T140838Z-b7d4",
+      "matches_original_input_snapshot": true
+    },
+    {
+      "path": "scripts/PIAKF/structured.py",
+      "sha256": "03bc68f24d4e47f080d25d99ae29ceedc3e2dfcc109782617ee02f77265374bd",
+      "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+      "matches_original_input_snapshot": true
+    }
+  ],
+  "commit_files": [
+    "reproductions/PIAKF/HANDOFF.md",
+    "reproductions/PIAKF/PINN机器人动力学估计方法论.md",
+    "scripts/PIAKF/README.md",
+    "scripts/PIAKF/archive_manifest.json",
+    "scripts/PIAKF/checks.py",
+    "scripts/PIAKF/conclusion/archive_verification.json",
+    "scripts/PIAKF/conclusion/config_snapshots/diagnosis.json",
+    "scripts/PIAKF/conclusion/config_snapshots/learning.json",
+    "scripts/PIAKF/conclusion/config_snapshots/motion_diagnosis.json",
+    "scripts/PIAKF/conclusion/config_snapshots/motion_evaluation.json",
+    "scripts/PIAKF/conclusion/config_snapshots/paired_motion_diagnosis.json",
+    "scripts/PIAKF/conclusion/config_snapshots/probe.json",
+    "scripts/PIAKF/conclusion/config_snapshots/static_constraint.json",
+    "scripts/PIAKF/conclusion/config_snapshots/static_gravity.json",
+    "scripts/PIAKF/conclusion/figures/Fx_component_swaps.png",
+    "scripts/PIAKF/conclusion/figures/Fx_component_swaps.svg",
+    "scripts/PIAKF/conclusion/figures/Fx_error_cross_terms.png",
+    "scripts/PIAKF/conclusion/figures/Fx_error_cross_terms.svg",
+    "scripts/PIAKF/conclusion/figures/known_step.png",
+    "scripts/PIAKF/conclusion/figures/load_response_comparison.png",
+    "scripts/PIAKF/conclusion/figures/load_response_comparison.svg",
+    "scripts/PIAKF/conclusion/figures/motion_core_comparison.png",
+    "scripts/PIAKF/conclusion/figures/motion_core_comparison.svg",
+    "scripts/PIAKF/conclusion/figures/paired_learning_curves.png",
+    "scripts/PIAKF/conclusion/figures/paired_learning_curves.svg",
+    "scripts/PIAKF/conclusion/figures/static_gravity_comparison.png",
+    "scripts/PIAKF/conclusion/figures/static_gravity_comparison.svg",
+    "scripts/PIAKF/conclusion/figures/trajectory_05_core_wrench.png",
+    "scripts/PIAKF/conclusion/figures/trajectory_05_core_wrench.svg",
+    "scripts/PIAKF/conclusion/metrics/collection.json",
+    "scripts/PIAKF/conclusion/metrics/dynamic_diagnostics.json",
+    "scripts/PIAKF/conclusion/metrics/dynamic_evaluation.json",
+    "scripts/PIAKF/conclusion/metrics/dynamic_training.json",
+    "scripts/PIAKF/conclusion/metrics/dynamic_training_history.json",
+    "scripts/PIAKF/conclusion/metrics/known_checks.json",
+    "scripts/PIAKF/conclusion/metrics/known_simulate.json",
+    "scripts/PIAKF/conclusion/metrics/motion_components.json",
+    "scripts/PIAKF/conclusion/metrics/native_motion.json",
+    "scripts/PIAKF/conclusion/metrics/network_checks.json",
+    "scripts/PIAKF/conclusion/metrics/paired_augmented_history.json",
+    "scripts/PIAKF/conclusion/metrics/paired_baseline_history.json",
+    "scripts/PIAKF/conclusion/metrics/paired_components.json",
+    "scripts/PIAKF/conclusion/metrics/paired_evaluation.json",
+    "scripts/PIAKF/conclusion/metrics/paired_training.json",
+    "scripts/PIAKF/conclusion/metrics/static_components.json",
+    "scripts/PIAKF/conclusion/metrics/static_gravity.json",
+    "scripts/PIAKF/conclusion/run_index.json",
+    "scripts/PIAKF/conclusion/summary.md",
+    "scripts/PIAKF/conclusion/tables/motion_components.csv",
+    "scripts/PIAKF/conclusion/tables/native_motion.csv",
+    "scripts/PIAKF/conclusion/tables/paired_component_mse.csv",
+    "scripts/PIAKF/conclusion/tables/paired_component_rms.csv",
+    "scripts/PIAKF/conclusion/tables/paired_components.csv",
+    "scripts/PIAKF/conclusion/tables/paired_evaluation.csv",
+    "scripts/PIAKF/conclusion/tables/static_components.csv",
+    "scripts/PIAKF/conclusion/tables/static_gravity.csv",
+    "scripts/PIAKF/configs/diagnosis.json",
+    "scripts/PIAKF/configs/learning.json",
+    "scripts/PIAKF/configs/motion_diagnosis.json",
+    "scripts/PIAKF/configs/motion_evaluation.json",
+    "scripts/PIAKF/configs/paired_motion_diagnosis.json",
+    "scripts/PIAKF/configs/probe.json",
+    "scripts/PIAKF/configs/static_constraint.json",
+    "scripts/PIAKF/configs/static_gravity.json",
+    "scripts/PIAKF/diagnosis.py",
+    "scripts/PIAKF/dynamics.py",
+    "scripts/PIAKF/learning.py",
+    "scripts/PIAKF/learning_checks.py",
+    "scripts/PIAKF/motion_diagnosis.py",
+    "scripts/PIAKF/motion_evaluation.py",
+    "scripts/PIAKF/observer.py",
+    "scripts/PIAKF/paired_motion_diagnosis.py",
+    "scripts/PIAKF/provenance.json",
+    "scripts/PIAKF/reference_data/checkpoints/dynamic.pt",
+    "scripts/PIAKF/reference_data/checkpoints/initial.pt",
+    "scripts/PIAKF/reference_data/checkpoints/paired_baseline.pt",
+    "scripts/PIAKF/reference_data/checkpoints/static_augmented.pt",
+    "scripts/PIAKF/reference_data/checkpoints/statistics.json",
+    "scripts/PIAKF/reference_data/learning/manifest.json",
+    "scripts/PIAKF/reference_data/learning/trajectory_00.npz",
+    "scripts/PIAKF/reference_data/learning/trajectory_01.npz",
+    "scripts/PIAKF/reference_data/learning/trajectory_02.npz",
+    "scripts/PIAKF/reference_data/learning/trajectory_03.npz",
+    "scripts/PIAKF/reference_data/learning/trajectory_04.npz",
+    "scripts/PIAKF/reference_data/learning/trajectory_05.npz",
+    "scripts/PIAKF/reference_data/load/constant/measurements.npz",
+    "scripts/PIAKF/reference_data/load/constant/reference.npz",
+    "scripts/PIAKF/reference_data/load/no_force/measurements.npz",
+    "scripts/PIAKF/reference_data/load/no_force/reference.npz",
+    "scripts/PIAKF/reference_data/load/sine/measurements.npz",
+    "scripts/PIAKF/reference_data/load/sine/reference.npz",
+    "scripts/PIAKF/reference_data/native/load/constant/initial.npz",
+    "scripts/PIAKF/reference_data/native/load/constant/known.npz",
+    "scripts/PIAKF/reference_data/native/load/constant/trained.npz",
+    "scripts/PIAKF/reference_data/native/load/no_force/initial.npz",
+    "scripts/PIAKF/reference_data/native/load/no_force/known.npz",
+    "scripts/PIAKF/reference_data/native/load/no_force/trained.npz",
+    "scripts/PIAKF/reference_data/native/load/sine/initial.npz",
+    "scripts/PIAKF/reference_data/native/load/sine/known.npz",
+    "scripts/PIAKF/reference_data/native/load/sine/trained.npz",
+    "scripts/PIAKF/reference_data/native/motion/trajectory_04/known.npz",
+    "scripts/PIAKF/reference_data/native/motion/trajectory_04/trained.npz",
+    "scripts/PIAKF/reference_data/native/motion/trajectory_05/known.npz",
+    "scripts/PIAKF/reference_data/native/motion/trajectory_05/trained.npz",
+    "scripts/PIAKF/reference_data/native/paired/trajectory_05/baseline.npz",
+    "scripts/PIAKF/reference_data/native/paired/trajectory_05/static_augmented.npz",
+    "scripts/PIAKF/reference_data/shared_dynamic_batches.npz",
+    "scripts/PIAKF/reference_data/static_evaluation.npz",
+    "scripts/PIAKF/reference_data/static_training.npz",
+    "scripts/PIAKF/run.py",
+    "scripts/PIAKF/simulation.py",
+    "scripts/PIAKF/static_constraint.py",
+    "scripts/PIAKF/static_gravity.py",
+    "scripts/PIAKF/structured.py",
+    "scripts/PIAKF/verify_archive.py",
+    "state/CURRENT.md",
+    "state/TASK.md"
+  ],
+  "commit_message": "chore(piakf): archive structured dynamics exploration and handoff",
+  "cleanup_scope": [
+    "runs/H-100",
+    "runs/H-101",
+    "scratch/H-100",
+    "scratch/H-101"
+  ],
+  "state_file_commit_scope": {
+    "state/TASK.md": "Replace the current H-101 task with the repository exact Inactive form after approval.",
+    "state/CURRENT.md": "Stage only the newly approved PIAKF archive pointer block, preserving and excluding pre-existing unrelated CURRENT changes."
+  }
+}

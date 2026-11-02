@@ -1,0 +1,272 @@
+{
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "manifest": "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+  "duration_s": 6.0,
+  "sample_period_s": 0.001,
+  "observer": {
+    "Qp_continuous_diag": [
+      1e-07,
+      1e-07,
+      1e-07,
+      1e-09,
+      1e-09,
+      1e-09
+    ],
+    "Qw_continuous_diag": [
+      1,
+      1,
+      1,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "assumed_velocity_std_rad_s": [
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001
+    ],
+    "initial_wrench_variance": [
+      25,
+      25,
+      25,
+      1,
+      1,
+      1
+    ],
+    "covariance_psd_atol": 1e-10
+  },
+  "derivative_epsilon_s": 1e-05,
+  "windows": {
+    "full": {
+      "start_s": 0.0,
+      "end_s": 6.0,
+      "right_closed": true
+    },
+    "startup": {
+      "start_s": 0.0,
+      "end_s": 0.25,
+      "right_closed": false
+    },
+    "ramp_up": {
+      "start_s": 0.25,
+      "end_s": 1.0,
+      "right_closed": false
+    },
+    "core_motion": {
+      "start_s": 1.0,
+      "end_s": 5.0,
+      "right_closed": false
+    },
+    "ramp_down": {
+      "start_s": 5.0,
+      "end_s": 6.0,
+      "right_closed": true
+    }
+  },
+  "records": [
+    {
+      "id": "trajectory_05",
+      "split": "diagnostic",
+      "path": "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz"
+    }
+  ],
+  "checkpoints": {
+    "baseline": "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt",
+    "static_augmented": "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/model.pt"
+  },
+  "native_reference": {
+    "baseline": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/baseline.npz",
+    "static_augmented": "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/static_augmented.npz"
+  },
+  "prefix_check_frames": 32,
+  "comparison_rtol": 1e-08,
+  "comparison_atol": 1e-07,
+  "variants": [
+    {
+      "id": "baseline",
+      "label": "Base",
+      "mask": 0,
+      "sources": [
+        "baseline",
+        "baseline",
+        "baseline"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_inertia",
+      "label": "Aug M",
+      "mask": 1,
+      "sources": [
+        "static_augmented",
+        "baseline",
+        "baseline"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_gravity",
+      "label": "Aug G",
+      "mask": 2,
+      "sources": [
+        "baseline",
+        "static_augmented",
+        "baseline"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_inertia_gravity",
+      "label": "Aug M+G",
+      "mask": 3,
+      "sources": [
+        "static_augmented",
+        "static_augmented",
+        "baseline"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_friction",
+      "label": "Aug F",
+      "mask": 4,
+      "sources": [
+        "baseline",
+        "baseline",
+        "static_augmented"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_inertia_friction",
+      "label": "Aug M+F",
+      "mask": 5,
+      "sources": [
+        "static_augmented",
+        "baseline",
+        "static_augmented"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "swap_gravity_friction",
+      "label": "Aug G+F",
+      "mask": 6,
+      "sources": [
+        "baseline",
+        "static_augmented",
+        "static_augmented"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "static_augmented",
+      "label": "All augmented",
+      "mask": 7,
+      "sources": [
+        "static_augmented",
+        "static_augmented",
+        "static_augmented"
+      ],
+      "family": "hybrid"
+    },
+    {
+      "id": "known",
+      "label": "Known dynamics",
+      "sources": [
+        "known",
+        "known",
+        "known"
+      ],
+      "family": "reference"
+    },
+    {
+      "id": "baseline_inertia_error",
+      "label": "baseline inertia error",
+      "sources": [
+        "baseline",
+        "known",
+        "known"
+      ],
+      "family": "single_error"
+    },
+    {
+      "id": "baseline_gravity_error",
+      "label": "baseline gravity error",
+      "sources": [
+        "known",
+        "baseline",
+        "known"
+      ],
+      "family": "single_error"
+    },
+    {
+      "id": "baseline_friction_error",
+      "label": "baseline friction error",
+      "sources": [
+        "known",
+        "known",
+        "baseline"
+      ],
+      "family": "single_error"
+    },
+    {
+      "id": "static_augmented_inertia_error",
+      "label": "static_augmented inertia error",
+      "sources": [
+        "static_augmented",
+        "known",
+        "known"
+      ],
+      "family": "single_error"
+    },
+    {
+      "id": "static_augmented_gravity_error",
+      "label": "static_augmented gravity error",
+      "sources": [
+        "known",
+        "static_augmented",
+        "known"
+      ],
+      "family": "single_error"
+    },
+    {
+      "id": "static_augmented_friction_error",
+      "label": "static_augmented friction error",
+      "sources": [
+        "known",
+        "known",
+        "static_augmented"
+      ],
+      "family": "single_error"
+    }
+  ],
+  "hybrid_ids": [
+    "baseline",
+    "swap_inertia",
+    "swap_gravity",
+    "swap_inertia_gravity",
+    "swap_friction",
+    "swap_inertia_friction",
+    "swap_gravity_friction",
+    "static_augmented"
+  ],
+  "signal_names": [
+    "known_residual",
+    "inertia",
+    "gravity",
+    "friction"
+  ],
+  "raw_core_dynamics_diagnostics": true,
+  "disclosures": [
+    "Fixed model weights; no training, physical integration, additional records or reconstructed acceleration",
+    "15 unique counterfactual combinations on trajectory_05, inertia bundle=(M,Mdot,c)",
+    "Known-model J, R(t), P0 and Q shared across the 15 combinations; original native-R endpoints separately regressed",
+    "Shared-KF outputs are linear in these component signals; RMSE is not additive",
+    "MSE correlation matrices contain squared per-axis units and include all signed cross terms",
+    "Previously analyzed trajectory; this diagnosis is not a deployable method or independent causal proof"
+  ]
+}

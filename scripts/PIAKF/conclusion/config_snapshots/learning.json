@@ -1,0 +1,507 @@
+{
+  "seed": 0,
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "control_design": "scripts/models/ur5/control/design.json",
+  "physics_dt_s": 6.25e-05,
+  "control_period_s": 0.0005,
+  "observation_period_s": 0.001,
+  "collection": {
+    "duration_s": 6.0,
+    "ramp_s": 1.0,
+    "fundamental_Hz": 0.25,
+    "harmonics": 5,
+    "amplitude_rad": [
+      0.08,
+      0.08,
+      0.1,
+      0.12,
+      0.1,
+      0.12
+    ],
+    "harmonic_power": 2.0,
+    "trajectories": [
+      {
+        "id": "trajectory_00",
+        "split": "train",
+        "offset_rad": [
+          0.013776874061001924,
+          0.010318176117612099,
+          -0.0031771367667661997,
+          -0.009643329988281466,
+          0.00045098885474434067,
+          -0.0038026345019834297
+        ],
+        "phase_rad": [
+          [
+            1.783159124821581,
+            -1.2358225896100896,
+            -0.14704567381316824,
+            0.5239048051865205,
+            2.5642488839299995
+          ],
+          [
+            0.02944838360869584,
+            -1.3707532506504077,
+            1.6072652170754367,
+            0.7437343407360331,
+            -1.5676148901859928
+          ],
+          [
+            2.5745116551714924,
+            3.033430609559484,
+            1.949152379247634,
+            2.5268831908499,
+            -1.1928780029851
+          ],
+          [
+            1.444075463791438,
+            2.5059748709011576,
+            1.15600513776823,
+            -0.17503248096543222,
+            -2.508868302639403
+          ],
+          [
+            -0.41361055627538645,
+            0.6967234022997073,
+            2.5950249814071276,
+            2.931774274213666,
+            -0.14445183417274388
+          ],
+          [
+            2.295309970741605,
+            -1.5048711963017696,
+            1.9165463609691384,
+            0.30598675032964895,
+            -3.053366049431408
+          ]
+        ]
+      },
+      {
+        "id": "trajectory_01",
+        "split": "train",
+        "offset_rad": [
+          0.008788187456158166,
+          -0.00404705831102925,
+          0.012993799085929323,
+          0.006726128049274034,
+          -0.01995428722742287,
+          -0.00025688534138701424
+        ],
+        "phase_rad": [
+          [
+            2.3097163578546764,
+            -1.6090554156712766,
+            -1.0982733797446915,
+            2.3277394023178166,
+            -1.9410827115764353
+          ],
+          [
+            0.4241824935446177,
+            -1.6423245568556286,
+            2.937642031138095,
+            1.9049327868177839,
+            -0.3269168242822813
+          ],
+          [
+            -2.6361366684364675,
+            -1.1306302640160828,
+            0.04989252841483571,
+            2.7195751248328524,
+            -2.4563619984028273
+          ],
+          [
+            0.3221216073757116,
+            1.2978636155059418,
+            0.2980800370179617,
+            1.9758535750269743,
+            0.2531093674361369
+          ],
+          [
+            2.9143835369661293,
+            0.6483344215190607,
+            0.5505142502853126,
+            -0.345644141839319,
+            0.6049881939734081
+          ],
+          [
+            -0.7231874284977877,
+            0.4753293406740622,
+            -1.3173985898520235,
+            -1.951611840709841,
+            -1.9683364252379139
+          ]
+        ]
+      },
+      {
+        "id": "trajectory_02",
+        "split": "train",
+        "offset_rad": [
+          0.004510927194744267,
+          0.006266375559585154,
+          -0.0009387603196247679,
+          -0.016407025552176255,
+          0.010304156878657472,
+          0.015070814832910989
+        ],
+        "phase_rad": [
+          [
+            2.660181378732436,
+            2.1517410423278367,
+            2.5017955058296595,
+            2.658305369603826,
+            0.25509685190620957
+          ],
+          [
+            -0.6830070599981926,
+            1.2898336417730771,
+            -1.40973239240408,
+            1.958020922592052,
+            2.195885081524458
+          ],
+          [
+            2.482103035898681,
+            0.5642374769303209,
+            2.8259560431775492,
+            0.5007385205723103,
+            -0.3106211620477297
+          ],
+          [
+            1.006851408503624,
+            3.1180799647990556,
+            2.619718934565018,
+            1.8430158588342405,
+            -2.624027904444141
+          ],
+          [
+            0.708637148489895,
+            -0.08517359101442512,
+            0.8177398570418659,
+            2.1681863532964165,
+            -1.614554803929487
+          ],
+          [
+            1.4544896708435058,
+            -2.4056161835351673,
+            -1.7563982475289295,
+            1.8509193995971902,
+            -1.0522064067067753
+          ]
+        ]
+      },
+      {
+        "id": "trajectory_03",
+        "split": "train",
+        "offset_rad": [
+          0.012636523861346383,
+          -0.015975699191356153,
+          -0.014145660443507846,
+          0.007906825607649551,
+          -0.018190637285375507,
+          0.0029546414715666755
+        ],
+        "phase_rad": [
+          [
+            2.576206599265335,
+            0.2148721717111748,
+            1.1346749843514763,
+            -2.973851745619435,
+            0.8482294504262424
+          ],
+          [
+            0.6681439840220333,
+            0.4772264471087513,
+            -0.6835514409022028,
+            -0.8159348188754145,
+            3.0191751592020646
+          ],
+          [
+            -2.912934737570979,
+            -3.0056464527700597,
+            2.8967449661517195,
+            -1.9793796691609251,
+            -2.3631363768476046
+          ],
+          [
+            -1.8185014206328594,
+            1.8896465576977475,
+            2.7455581972862557,
+            -2.998445508888772,
+            -0.4673506621169503
+          ],
+          [
+            -2.503847966542505,
+            -1.508467820999734,
+            -1.7540814206599336,
+            0.9231615241160833,
+            -0.9406307444502566
+          ],
+          [
+            -2.008621864077003,
+            0.022848836104245596,
+            -2.8941689398195254,
+            -2.507485793768951,
+            3.067671912901859
+          ]
+        ]
+      },
+      {
+        "id": "trajectory_04",
+        "split": "development",
+        "offset_rad": [
+          -0.012025768381317482,
+          -0.005657787947535926,
+          0.009263932249014423,
+          0.013533062607736655,
+          0.016739282479813256,
+          -0.013223015756101294
+        ],
+        "phase_rad": [
+          [
+            1.0847326524654068,
+            2.931413212681682,
+            -2.7768478162712293,
+            1.1071084622086804,
+            2.1703667318844744
+          ],
+          [
+            -0.9907795250215257,
+            -1.5664776466976356,
+            0.6081582613084415,
+            -0.3624516158924038,
+            -2.043169437475788
+          ],
+          [
+            -0.1782827749643232,
+            -0.5660810942606114,
+            0.43424814951788715,
+            0.05403621084936994,
+            -1.184719716125455
+          ],
+          [
+            -0.8975424491041863,
+            2.121587729600173,
+            -1.5649362208879218,
+            0.38076240471232925,
+            -3.063452957846044
+          ],
+          [
+            1.5178565787377378,
+            -1.0309666940837543,
+            -2.854473116611091,
+            -1.3767516831389566,
+            -1.632808803328204
+          ],
+          [
+            2.8470956102580116,
+            -0.9284941806624771,
+            -1.3328023687025645,
+            -0.884664968683738,
+            2.807992180298476
+          ]
+        ]
+      },
+      {
+        "id": "trajectory_05",
+        "split": "diagnostic",
+        "offset_rad": [
+          0.0053499140899701016,
+          0.004843073824746691,
+          0.008624774012058252,
+          -0.004479310587499775,
+          -0.0034232804689101094,
+          0.0060333144905338025
+        ],
+        "phase_rad": [
+          [
+            -3.1320156852147667,
+            -1.9332761696107994,
+            -1.04048486412315,
+            -1.6372978102450855,
+            0.8633058983908937
+          ],
+          [
+            -0.7624766615438232,
+            2.358854738782756,
+            0.4282080065263294,
+            -0.5378004707458839,
+            -0.6140740776394855
+          ],
+          [
+            1.2681329276536504,
+            -0.5137977188702103,
+            1.0191068264852214,
+            -2.847667218111563,
+            -0.343362318628186
+          ],
+          [
+            -1.5128218569608358,
+            -2.1508187004913752,
+            0.17324708634210673,
+            -0.08001258825882118,
+            0.3858185264090226
+          ],
+          [
+            1.6052581358479499,
+            2.4119587289667344,
+            -0.03403808590214652,
+            -1.18087286471907,
+            -0.2080222203865838
+          ],
+          [
+            1.9417923902113472,
+            2.3562971039092293,
+            1.962960912771475,
+            -1.9603456850788816,
+            3.1379506646360795
+          ]
+        ]
+      }
+    ],
+    "description": "Explicit seeded small-amplitude Fourier references, not recovered or optimized author trajectories; fixed existing PD gains with reference velocity"
+  },
+  "network": {
+    "widths": [
+      128,
+      128,
+      128
+    ],
+    "activation": "ReLU",
+    "dtype": "float64",
+    "inertia_scale": [
+      1,
+      1,
+      1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "epsilon": 1e-06,
+    "friction_initial": 0.1,
+    "output_weight_std": 0.001,
+    "gravity_head": "direct_vector",
+    "friction_model": "nonnegative_viscous"
+  },
+  "training": {
+    "updates": 1000,
+    "batch_size": 50,
+    "learning_rate": 0.0005,
+    "optimizer": "Adam",
+    "log_every": 100,
+    "evaluation_chunk": 512,
+    "trim_s": 0.25,
+    "scale_floor": 1e-06,
+    "checkpoint_rule": "last_update_only",
+    "loss": "mean squared per-joint normalized point inverse-dynamics residual",
+    "acceleration": "numpy.gradient of actual 1 kHz velocity, edge_order=2, then trim each trajectory; no simulator acceleration labels"
+  },
+  "verification": {
+    "difference_step": 1e-06,
+    "derivative_rtol": 0.0001,
+    "derivative_atol": 1e-07,
+    "gradient_rtol": 0.001,
+    "gradient_atol": 1e-06,
+    "diagnostic_samples": 64
+  },
+  "replay_run": "runs/H-100/R-20261101T114944Z-b41a/simulate",
+  "replay_config": {
+    "model": "scripts/models/ur5/scene_equivalent_current.xml",
+    "control_design": "scripts/models/ur5/control/design.json",
+    "seed": 0,
+    "physics_dt_s": 6.25e-05,
+    "control_period_s": 0.0005,
+    "observation_period_s": 0.001,
+    "duration_s": 4.0,
+    "load_start_s": 1.0,
+    "load_end_s": 3.0,
+    "force_amplitude_N": 20.0,
+    "force_frequency_Hz": 2.0,
+    "scenarios": [
+      "no_force",
+      "constant",
+      "sine"
+    ],
+    "derivative_epsilon_s": 1e-05,
+    "measured_velocity_noise_std_rad_s": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "observer": {
+      "Qp_continuous_diag": [
+        1e-07,
+        1e-07,
+        1e-07,
+        1e-09,
+        1e-09,
+        1e-09
+      ],
+      "Qw_continuous_diag": [
+        1,
+        1,
+        1,
+        0.01,
+        0.01,
+        0.01
+      ],
+      "assumed_velocity_std_rad_s": [
+        0.0001,
+        0.0001,
+        0.0001,
+        0.0001,
+        0.0001,
+        0.0001
+      ],
+      "initial_wrench_variance": [
+        25,
+        25,
+        25,
+        1,
+        1,
+        1
+      ],
+      "covariance_psd_atol": 1e-10
+    },
+    "checks": {
+      "algebra_rtol": 1e-08,
+      "algebra_atol": 1e-10,
+      "derivative_rtol": 0.0001,
+      "derivative_atol": 1e-07,
+      "coordinate_difference_steps_rad": [
+        0.0001,
+        5e-05
+      ],
+      "constraint_torque_atol_Nm": 1e-09,
+      "dynamics_balance_atol_Nm": 1e-07,
+      "actual_torque_atol_Nm": 1e-09
+    },
+    "evaluation": {
+      "transient_exclusion_s": 0.25,
+      "crossing_levels": [
+        0.1,
+        0.9
+      ],
+      "phase_convention": "positive lag means estimate lags applied reference; no time shift in RMSE"
+    },
+    "implementation_choices": {
+      "controller": "Existing design.json PD gains and fixed q_hold_rad, without gravity feedforward or external-force truth",
+      "measurement": "Noise-free q/v and actual qfrc_actuator; torque proxy, not measured current",
+      "nominal": "Independent MuJoCo model with deliberately matching parameters for the prerequisite only",
+      "force_state": "World-axis wrench about tool0, random walk; not assumed constant joint torque",
+      "covariance": "Borrowed local-document illustrative values; not original paper parameters or a calibrated sensor model",
+      "gates": "Numerical and safety gates only; no fitted performance acceptance threshold",
+      "scope": "Known-dynamics prerequisite; no learned dynamics, backlash compensation, or WMA"
+    }
+  },
+  "disclosures": [
+    "EXPLORE local learned-dynamics probe, not original SN7B numeric replication",
+    "Whole trajectories split 4/1/1; statistics from train only; development does not select weights",
+    "Known M/c/G and true acceleration are not training labels",
+    "No forward-backward filtering in this noise-free point-loss reconstruction",
+    "No static loss, TCN, Gaussian compensation, WMA, dropout or parameter search",
+    "Replays use previously analyzed regression logs, not untouched holdout",
+    "Same KF settings and R propagation rule; actual R depends on each model inertia, so it is not a controlled isolation of one dynamic component"
+  ]
+}

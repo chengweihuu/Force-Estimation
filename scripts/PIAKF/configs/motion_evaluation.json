@@ -1,0 +1,98 @@
+{
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "trained_checkpoint": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt",
+  "initialized_checkpoint": "scripts/PIAKF/reference_data/checkpoints/initial.pt",
+  "manifest": "scripts/PIAKF/reference_data/learning/manifest.json",
+  "records": [
+    {
+      "id": "trajectory_04",
+      "split": "development",
+      "path": "scripts/PIAKF/reference_data/learning/trajectory_04.npz"
+    },
+    {
+      "id": "trajectory_05",
+      "split": "diagnostic",
+      "path": "scripts/PIAKF/reference_data/learning/trajectory_05.npz"
+    }
+  ],
+  "models": [
+    "known",
+    "initialized",
+    "trained"
+  ],
+  "duration_s": 6.0,
+  "sample_period_s": 0.001,
+  "observer": {
+    "Qp_continuous_diag": [
+      1e-07,
+      1e-07,
+      1e-07,
+      1e-09,
+      1e-09,
+      1e-09
+    ],
+    "Qw_continuous_diag": [
+      1,
+      1,
+      1,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "assumed_velocity_std_rad_s": [
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001
+    ],
+    "initial_wrench_variance": [
+      25,
+      25,
+      25,
+      1,
+      1,
+      1
+    ],
+    "covariance_psd_atol": 1e-10
+  },
+  "derivative_epsilon_s": 1e-05,
+  "prefix_check_frames": 32,
+  "windows": {
+    "full": {
+      "start_s": 0.0,
+      "end_s": 6.0,
+      "right_closed": true
+    },
+    "startup": {
+      "start_s": 0.0,
+      "end_s": 0.25,
+      "right_closed": false
+    },
+    "ramp_up": {
+      "start_s": 0.25,
+      "end_s": 1.0,
+      "right_closed": false
+    },
+    "core_motion": {
+      "start_s": 1.0,
+      "end_s": 5.0,
+      "right_closed": false
+    },
+    "ramp_down": {
+      "start_s": 5.0,
+      "end_s": 6.0,
+      "right_closed": true
+    }
+  },
+  "disclosures": [
+    "No retraining or new physical stepping; existing small-amplitude no-contact Fourier motions only",
+    "Whole-trajectory continuous KF from t=0, no reset at scoring window",
+    "Both records excluded from gradient updates but already used for development or component diagnostics; not untouched holdout",
+    "Initialized network includes the same train-derived scaling and label-mean initialization",
+    "Native R=Mhat*Sigma_v*Mhat.T varies across models; no shared teacher covariance or component substitution",
+    "Core includes all recorded [1,5) s frames, including reversals; no speed-threshold selection",
+    "No declared scientific performance threshold or claim-level evidence"
+  ]
+}

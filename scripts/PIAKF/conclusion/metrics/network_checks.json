@@ -1,0 +1,128 @@
+{
+  "passed": true,
+  "environment": {
+    "packages": {
+      "mujoco": "3.12.0",
+      "numpy": "1.26.4",
+      "scipy": "1.14.1",
+      "matplotlib": "3.9.4",
+      "torch": "2.9.1+cpu"
+    },
+    "python": "3.12.3",
+    "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+    "physics_steps": 0,
+    "ros_nodes_started": 0,
+    "pytorch_used_for_training": false
+  },
+  "comparisons": {
+    "physical_q_jacobian_0": {
+      "max_abs_error": 4.553649124439119e-18,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "finite_difference_0": {
+      "max_abs_error": 2.695927211939647e-10,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "Christoffel_0": {
+      "max_abs_error": 5.421010862427522e-19,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "velocity_term_0": {
+      "max_abs_error": 2.168404344971009e-19,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "kinetic_gradient_0": {
+      "max_abs_error": 1.0842021724855044e-19,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "symmetry_0": {
+      "max_abs_error": 0.0,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "physical_q_jacobian_1": {
+      "max_abs_error": 6.938893903907228e-18,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "finite_difference_1": {
+      "max_abs_error": 2.7117250025326944e-10,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "Christoffel_1": {
+      "max_abs_error": 4.336808689942018e-19,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "velocity_term_1": {
+      "max_abs_error": 5.421010862427522e-20,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "kinetic_gradient_1": {
+      "max_abs_error": 3.3881317890172014e-20,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "symmetry_1": {
+      "max_abs_error": 0.0,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "physical_q_jacobian_2": {
+      "max_abs_error": 5.204170427930421e-18,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "finite_difference_2": {
+      "max_abs_error": 2.2011316185531482e-10,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "Christoffel_2": {
+      "max_abs_error": 2.168404344971009e-19,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "velocity_term_2": {
+      "max_abs_error": 5.421010862427522e-20,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "kinetic_gradient_2": {
+      "max_abs_error": 4.0657581468206416e-20,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "symmetry_2": {
+      "max_abs_error": 0.0,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    },
+    "parameter_gradient_first_layer": {
+      "max_abs_error": 8.531933631816813e-09,
+      "rtol": 0.001,
+      "atol": 1e-06
+    },
+    "parameter_gradient_output_layer": {
+      "max_abs_error": 4.751559146143336e-10,
+      "rtol": 0.001,
+      "atol": 1e-06
+    },
+    "checkpoint_roundtrip": {
+      "max_abs_error": 0.0,
+      "rtol": 0.0001,
+      "atol": 1e-07
+    }
+  },
+  "comparison_count": 21,
+  "inertia_min_eigenvalue": 0.009987512702071086,
+  "training_updates": 0,
+  "completed_at_utc": "2026-11-01T12:29:31.273587+00:00"
+}

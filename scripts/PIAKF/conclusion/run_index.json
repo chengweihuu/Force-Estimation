@@ -1,0 +1,1715 @@
+[
+  {
+    "label": "known",
+    "original_run": "runs/H-100/R-20261101T114944Z-b41a",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 21157,
+    "steps": [
+      {
+        "id": "checks",
+        "passed": true,
+        "elapsed_ms": 2761
+      },
+      {
+        "id": "simulate",
+        "passed": true,
+        "elapsed_ms": 18396
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing piakf:jazzy-mujoco3.12.0-control0.1.2 via docker/compose.yaml; Python 3.12, MuJoCo 3.12.0, CPU, 2 CPU/4 GiB, network none; no ROS nodes. Imports and algebra must pass inside this environment before physical stepping.",
+      "outputDir": "runs/H-100/R-20261101T114944Z-b41a",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 600000
+      },
+      "inputs": [
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/run.py",
+        "scripts/PIAKF/checks.py",
+        "scripts/PIAKF/configs/probe.json",
+        "scripts/PIAKF/provenance.json",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/control/design.json",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "checks",
+          "relation": "prerequisite",
+          "purpose": "Check declared container imports, KF discretization against matrix exponential and integration, covariance, measured-input interface, known dynamics and tool0 force mapping before any physical step.",
+          "costUnits": 1,
+          "timeoutMs": 120000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/probe.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "checks"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "simulate",
+          "relation": "prerequisite",
+          "purpose": "Run exactly one no-force, constant Fx and 2 Hz sine Fx probe with fixed configuration, no parameter search; preserve unshifted estimates and independent force reference.",
+          "costUnits": 2,
+          "timeoutMs": 300000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/probe.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "simulate",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T114944Z-b41a/checks"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "safety_passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "scenario_count",
+              "op": "eq",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是完整方法所必需的动力学、测量与估力基线。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前只推进最低成本的前置问题：已知动力学的动量 KF 能否在无接触、恒力和正弦外力下产生可解释的工具点估力结果？",
+      "Context": "- 用户已于本会话授权开始论文复现，明确代码放在 `scripts/PIAKF/`、计算在 Docker 内进行。\n- 论文：`reproductions/PIAKF/PIAKF_2026.pdf`，Hu et al., RCIM 101 (2026) 103292，DOI `10.1016/j.rcim.2026.103292`。\n- 方法与缺口：`reproductions/PIAKF/PIAKF_2026_notes.md` §3—8、附录 I；`reproductions/PIAKF/PIAKF_2026_reproduction.md` §1—5。\n- 重点理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §3、§6—8。其 §9 历史局部案例不作为本任务已经验证的结果。\n- 环境入口：`docker/compose.yaml`、`docker/Dockerfile`；声明 MuJoCo 3.12.0、Python 3.12、CPU PyTorch 2.9.1；镜像实际可用性待执行时检查。\n- 只读模型：`scripts/models/ur5/scene_equivalent_current.xml`，来源见 `scripts/models/ur5/metadata/source.json`；姿态与控制参数参考 `scripts/models/ur5/control/design.json`。首轮直接使用模型的关节力矩驱动，不启动 ROS 或电流接口。\n- 参考代码：`scripts/rigid_baseline/reference_kf/momentum_observer.py`；`scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py`。前者的零被动摩擦假设不适用于当前含阻尼模型，禁止未经核对直接沿用。\n- 恢复与执行：`docs/research_workflow.md`；请求已按当前 probe 生成，只执行其中通过前置检查的步骤。\n- Execution request: `scratch/H-100/request.json`\n- 失败记忆：已用 `wiki query PIAKF H-094 动量 换向` 检索，无命中；`state/CURRENT.md` 记载 H-094 原 Run 已不在工作区，不追认其结果。\n- Git 工作树有效且有初始提交；已有大量用户未提交改动，本任务不整理、覆盖或提交这些改动。",
+      "Allowed Changes": "- `scripts/PIAKF/`：按用户指定保存本任务的探索性重实现，仅新增 `dynamics.py`、`observer.py`、`simulation.py`、`run.py`、`checks.py`、`configs/probe.json`、`provenance.json`。代码尚不提升为正式 `src/` 依赖或论文证据。\n- `scratch/H-100/request.json`：仅当前 probe 的执行请求；文件遵守 `scratch/AGENTS.md`。\n- `runs/H-100/<run-id>/`：仅执行器及程序显式输出的日志、测量、参考、估计、指标和图片。\n- `state/TASK.md`：覆盖当前 Progress；计算前补齐精确 request 和 Run 输出指针，不扩大问题与预算。",
+      "Non-goals": "- 当前 probe 不训练网络，不实现 TCN／Gaussian 换向补偿和 WMA，不扫描参数或补跑旧任务。\n- 不新增依赖、重建 Docker 镜像、修改共享机器人／控制参数或其他论文代码。\n- 不宣称原论文数值复现；不更新 CURRENT、Idea、Protocol 或接受科学结论；不创建 Git 提交。\n- 不接入真实机器人，不启动 ROS 驱动或任何真实运动。",
+      "Budget": "- Files: 最多 9 个新增／修改的代码、配置和控制面文件，即 Allowed Changes 中 7 个实现文件、1 个 request 和 TASK；运行产物另存 Run，不写进源码目录。\n- Time / Compute: 首轮实现及检查最多 90 分钟；实验累计墙钟最多 10 分钟，单个 probe 最多 5 分钟；现有 Docker 服务资源上限 2 CPU／4 GiB，无 GPU、无参数扫描。\n- Simulation: 固定 seed 0；无外力、Fx 恒力、Fx 正弦力各 1 条，单条不超过 5 s 仿真时间；先代数和接口检查，失败不进入物理场景。\n- Robot runs: 0",
+      "Done When": "- 当前容器依赖可用性已检查；代码在指定目录，所有运行命令和配置可重放。\n- 外力实际施加于 `tool0`；独立广义外力映射与匹配雅可比的 `J.T @ wrench` 一致，动力学平衡明确包含关节阻尼。\n- KF 的离散 A／B／Q 与独立矩阵指数／积分核对，协方差保持有限、对称半正定；数值比较采用尺度明确的绝对／相对容差并写入 request。\n- 三个场景保存各自同步测量包、独立参考、估计和逐轴误差，包含力幅值、相位／延迟诊断及无外力偏置；不以事后平移改善主 RMSE。\n- 给出首轮可解释性和剩余误差来源，不把基础 KF 完成称为完整 PIAKF 已复现；是否继续学习动力学留给下一项科学决策。",
+      "Stop and Ask": "- 现有镜像不可用，需要构建镜像、新依赖、新模型、共享配置修改或超过预算。\n- 需改变科学问题、作用点／坐标语义，或引入新的科学阈值、补偿启发式及降级策略。\n- 发生非有限数、非正定惯性、非正时间间隔、模型限位／非预期接触／执行器饱和，或 KF／力矩平衡检查失败时停止当前计算，不自动调参放行。\n- 同类 binding、schema、identity、carrier 或 interface 连续失败两次，停止局部补丁，报告并审查执行层边界。\n- 任意真实机器人运动，或拟升级为 VALIDATE／FORMAL。",
+      "Outputs": "- `scripts/PIAKF/dynamics.py`\n- `scripts/PIAKF/observer.py`\n- `scripts/PIAKF/simulation.py`\n- `scripts/PIAKF/run.py`\n- `scripts/PIAKF/checks.py`\n- `scripts/PIAKF/configs/probe.json`\n- `scripts/PIAKF/provenance.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T114944Z-b41a/`；`checks/` 保存前置检查，`simulate/` 保存三条场景及报告；执行器记录与访问诊断留在 Run 根目录。",
+      "Explore Probe Contract": "- 当前最低成本检查：静态核对容器与模型、独立动力学／外力映射和 KF 代数；通过后才运行上述三条短时仿真，不绑定后续训练阶梯。\n- 模型与运行：只读固定 UR5；保留文件内物理步长 62.5 μs，控制 2 kHz、观测 1 kHz；固定基座、无外部接触面交互。若代码必须改变这些条件，先修订并说明。\n- 已知加载：世界系 `tool0` 点；恒力 `Fx=20 N`，正弦 `Fx=20 sin(2π·2t) N`，其余分量为零；各自包含无载起始段，具体作用时段写入 probe 配置。\n- 力矩代理：实际 `qfrc_actuator`，不冒称真实电流测量；plant 与名义模型对象分离。名义动力学真值仅用于这个明确标注的已知模型前置检查，后续学习模型不得隐式调用 plant 真值。\n- 估计器：12 维 `[p;w]`，外力随机游走 `S=0`；使用同一名义惯性构造测量和输入；过程噪声含连续到离散积分的交叉块，Joseph 协方差更新。Q／R／P0 的具体值在观察结果前写入配置，属于重建选择而非作者原值，不自动调参。\n- 停止条件：任一前置检查失败即停，不进入下一步；性能不理想如实记录，不扩充工况以挽救排名。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 动力学与符号 | `scripts/PIAKF/dynamics.py` | q／v 为 rad、rad/s；M、偏置与摩擦边界明确；u=τref+Mdot·v−c−G−τf | 含阻尼的动力学平衡、独立导数检查；不重复计算摩擦 |\n| 测量与参考隔离 | `scripts/PIAKF/simulation.py` | 估计器只读时间戳、q、v、力矩代理；真实 wrench、加速度和 plant 内部量仅供本前置实验独立诊断 | 测量包接口检查；单独参考日志 |\n| 外力与运动学 | `scripts/PIAKF/simulation.py`、`dynamics.py` | 外界作用于机器人；世界系工具点 `[Fx,Fy,Fz,Mx,My,Mz]`；J 线速度行在前 | 独立广义力映射、虚功符号；奇异区段可见 |\n| 动量 KF | `scripts/PIAKF/observer.py` | y=Mhat·v；上一时段 J／u 推进至当前帧；外力由当前动量新息更新 | A／B／Q 独立核对，协方差有限、对称半正定 |\n| 容器与运行输出 | `scripts/PIAKF/run.py`、workflow request | 显式 `--output-dir`；核心不依赖 Task／Run ID；复用现有隔离 Docker 服务，不启动机器人 | 请求、配置快照、环境版本和逐场景日志 |\n| 来源与差异 | `scripts/PIAKF/provenance.json` | 论文 DOI、参考代码、替代 UR5 来源、实际版本和实施假设 | 逐项区分论文原设、重建选择与尚未实现模块 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "learning",
+    "original_run": "runs/H-100/R-20261101T122752Z-c82d",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 68313,
+    "steps": [
+      {
+        "id": "network_checks",
+        "passed": true,
+        "elapsed_ms": 1683
+      },
+      {
+        "id": "collect",
+        "passed": true,
+        "elapsed_ms": 33616
+      },
+      {
+        "id": "train",
+        "passed": true,
+        "elapsed_ms": 13735
+      },
+      {
+        "id": "evaluate",
+        "passed": true,
+        "elapsed_ms": 19279
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; Python 3.12, MuJoCo 3.12.0, torch 2.9.1+cpu; 2 CPU/4 GiB, one numerical thread, network none; no ROS/real robot.",
+      "outputDir": "runs/H-100/R-20261101T122752Z-c82d",
+      "budget": {
+        "maxCostUnits": 10,
+        "maxWallTimeMs": 900000
+      },
+      "inputs": [
+        "scripts/PIAKF/checks.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/learning.py",
+        "scripts/PIAKF/learning_checks.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/run.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/configs/learning.json",
+        "scripts/PIAKF/provenance.json",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/control/design.json",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/reference.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/reference.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/reference.npz"
+      ],
+      "steps": [
+        {
+          "id": "network_checks",
+          "relation": "prerequisite",
+          "purpose": "Check structured inertia positivity, physical-q derivatives against autograd and finite differences, parameter gradients and checkpoint roundtrip before collecting data.",
+          "costUnits": 1,
+          "timeoutMs": 60000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/learning.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "network-checks"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "comparison_count",
+              "op": "eq",
+              "value": 21
+            }
+          ]
+        },
+        {
+          "id": "collect",
+          "relation": "prerequisite",
+          "purpose": "Collect six fixed 6 s no-contact trajectories once, with whole-trajectory 4/1/1 split, actual motion and actual drive torque only.",
+          "costUnits": 2,
+          "timeoutMs": 180000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/learning.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "collect",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/network_checks"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 6
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 576000
+            }
+          ]
+        },
+        {
+          "id": "train",
+          "relation": "direct",
+          "purpose": "Fit one structured inertia/gravity/viscous-friction model using train-only statistics and offline velocity derivatives, freeze update 1000 without selecting on force logs.",
+          "costUnits": 3,
+          "timeoutMs": 480000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/learning.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "train",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/collect",
+            "--data-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/collect"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "updates",
+              "op": "eq",
+              "value": 1000
+            }
+          ]
+        },
+        {
+          "id": "evaluate",
+          "relation": "direct",
+          "purpose": "After freezing, diagnose held-out trajectory dynamics and replay identical prior force logs through known, initialized and trained nominal models with the same KF settings; report all axes, including adverse results.",
+          "costUnits": 4,
+          "timeoutMs": 180000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/run.py",
+            "--config",
+            "scripts/PIAKF/configs/learning.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "evaluate",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/train",
+            "--training-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/train",
+            "--data-dir",
+            "/workspace/runs/H-100/R-20261101T122752Z-c82d/collect"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "scenario_count",
+              "op": "eq",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是学习惯性／重力／黏性摩擦及接入同一动量 KF 的局部探索。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前推进下一项已批准问题：仅从无接触运动与驱动力矩训练的结构化动力学，接入同一动量 KF 后能否保持可解释的估力？已知模型仅作诊断对照，不形成学习收益的正式主张。",
+      "Context": "- 用户已于本会话授权开始论文复现，明确代码放在 `scripts/PIAKF/`、计算在 Docker 内进行。\n- 论文：`reproductions/PIAKF/PIAKF_2026.pdf`，Hu et al., RCIM 101 (2026) 103292，DOI `10.1016/j.rcim.2026.103292`。\n- 方法与缺口：`reproductions/PIAKF/PIAKF_2026_notes.md` §3—8、附录 I；`reproductions/PIAKF/PIAKF_2026_reproduction.md` §1—5。\n- 重点理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §3、§6—8。其 §9 历史局部案例不作为本任务已经验证的结果。\n- 环境入口：`docker/compose.yaml`、`docker/Dockerfile`；声明 MuJoCo 3.12.0、Python 3.12、CPU PyTorch 2.9.1；镜像实际可用性待执行时检查。\n- 只读模型：`scripts/models/ur5/scene_equivalent_current.xml`，来源见 `scripts/models/ur5/metadata/source.json`；姿态与控制参数参考 `scripts/models/ur5/control/design.json`。首轮直接使用模型的关节力矩驱动，不启动 ROS 或电流接口。\n- 参考代码：`scripts/rigid_baseline/reference_kf/momentum_observer.py`；`scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py`。前者的零被动摩擦假设不适用于当前含阻尼模型，禁止未经核对直接沿用。\n- 恢复与执行：`docs/research_workflow.md`；请求已按当前 probe 生成，只执行其中通过前置检查的步骤。\n- Execution request: `scratch/H-100/request.json`\n- 旧请求及输入快照保留在旧 Run；当前学习 probe 使用新的 Run，不沿旧绑定运行。\n- 既有基线与独立重放输入：`runs/H-100/R-20261101T114944Z-b41a/simulate/` 三条测量／参考；已用于分析，不称为封存测试集。\n- 用户本轮批准实现结构化动力学并替换已知模型；阶段保持 EXPLORE。\n- 失败记忆：已用 `wiki query PIAKF H-094 动量 换向` 检索，无命中；`state/CURRENT.md` 记载 H-094 原 Run 已不在工作区，不追认其结果。\n- Git 工作树有效且有初始提交；已有大量用户未提交改动，本任务不整理、覆盖或提交这些改动。",
+      "Allowed Changes": "- `scripts/PIAKF/`：保留既有基线，新增 `structured.py`、`learning.py`、`learning_checks.py`、`configs/learning.json`；按需修改 `run.py`、`provenance.json`，其余既有文件仅作必要接口修复，维持物理与测量规则。\n- `scratch/H-100/request.json`：当前已批准 probe 的执行请求；旧 Run 的 request.snapshot.json 不改。\n- `runs/H-100/<run-id>/`：仅执行器及显式 output_dir 产物；测量、训练权重、优化历史、诊断和重放报告均在此保存。\n- `state/TASK.md`：本次已批准范围／预算修订；执行前补齐请求和精确输出指针，之后只覆盖 Progress。",
+      "Non-goals": "- 不实现 TCN、Gaussian 补偿、WMA，不扩充接触机制，不做参数扫描或重训以追求排名。\n- 不使用仿真 M／G／c 或真实加速度监督网络；不使用外力日志参与梯度更新、归一化或检查点选择。\n- 不新增依赖或镜像，不修改共享机器人、控制增益与其他论文代码；不改旧 Run 或删除不利结果。\n- 不升级 VALIDATE／FORMAL，不更新 CURRENT、Idea、Protocol，不提交 Git，不启动真实机器人或 ROS 驱动。",
+      "Budget": "- Files: 本轮最多 8 个代码／配置／控制面文件：4 个新增实现／配置，run.py、provenance.json、TASK 和 request；运行产物另计。\n- Time / Compute: 本轮实现与检查最多 90 分钟；执行累计墙钟最多 15 分钟，现有 Docker 2 CPU／4 GiB，无 GPU。\n- Simulation / Training: seed 0；6 条各 6 s 无接触轨迹，仅采集一次，4／1／1 按整条划分训练／开发／独立轨迹诊断；一个模型，Adam 1000 次更新、batch 50、学习率 5e-4，固定最后一步，不早停、不调参。已有三条力加载日志仅重放，不再运行受力物理仿真。\n- Robot runs: 0",
+      "Done When": "- 三层128 ReLU、float64 网络输出21维下三角因子和6维重力，非负黏性摩擦可训练；M 对称正定，物理 q 坐标导数与自动微分／有限差分相符，权重梯度可核对。\n- 完整保存六条安全无接触测量与分组清单；训练仅使用 train 的 q／v／tau 和离线速度差分，归一化统计只来自训练轨迹。\n- 完成固定1000次更新并冻结权重；保存初始／最终力矩误差和开发曲线，不把定额训练等同充分收敛。\n- 以训练外轨迹诊断动力学分量，M／G／c 真值不进入训练；在相同三条既有测量上重放已知模型与学习模型的同一个 KF。\n- 报告所有方向的无接触假力、加载误差、相位／幅值、串扰和实际耗时；无论收益、退化或无结论均保留。",
+      "Stop and Ask": "- 新依赖、镜像、共享模型／控制增益修改，超出文件、时间或计算预算，或改变研究问题、阶段、作用点与坐标语义。\n- 任何数值／梯度／单位检查失败即停，不进入更贵步骤；非有限数、非正定惯性、限位、非预期接触、饱和立即停止，不调参数放行。\n- 连续两次同类 binding／schema／carrier／interface 失败时先审查执行层，不做第三次局部补丁。\n- 训练结束后指标差，仅报告，不自动加轮数、改损失、改归一化或调 KF。",
+      "Outputs": "- `scripts/PIAKF/structured.py`\n- `scripts/PIAKF/learning.py`\n- `scripts/PIAKF/learning_checks.py`\n- `scripts/PIAKF/configs/learning.json`\n- `scripts/PIAKF/run.py`\n- `scripts/PIAKF/provenance.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T122752Z-c82d/`；network_checks、collect、train、evaluate 四步。旧 `runs/H-100/R-20261101T114944Z-b41a/` 原样保留。",
+      "Explore Probe Contract": "- 先做最低成本的网络结构、物理坐标链式导数、反向梯度和保存／加载检查，失败不采集；再依次采集、定额训练、冻结诊断／重放。\n- 模型、驱动和单位沿用既有基线：只读 UR5、物理步长62.5 μs，控制2 kHz、反馈1 kHz，世界系 tool0 点外界作用于机器人，wrench 线性分量在前。\n- 采集：现有 PD 增益，参考为固定随机系数的五阶 Fourier 小幅运动，含平滑启动／停止；实际运动反馈与实际 qfrc_actuator 为训练数据，不把指令导数当真实加速度。轨迹系数、分组和种子在计算前写进 learning.json。\n- 训练：点式逆动力学损失，a 仅由1 kHz实际速度做离线中心差分，裁掉首尾各0.25 s；不使用离线真值分量，也不混入加载日志。此为可实施重建目标，不追认作者完整训练损失。\n- 结构：M=D(LL^T+epsilon I)D，D=diag(1,1,1,0.1,0.1,0.1)，epsilon=1e-6，Softplus 对角；独立重力输出头；摩擦为学习的非负黏性系数，初值0.1，与当前无干摩擦 plant 边界一致，不宣称复现原文完整摩擦模型。\n- 输入位置、重力输出及力矩损失逐轴尺度仅从训练集计算，1e-6数值下界写入配置；固定最后1000次更新后的权重，开发数据只画曲线，不选最优点。\n- 对照：同一已批准 KF、相同 Q／P0 设定与速度噪声假设，R 仍按各自 M 传播；实际 R 可能不同，报告该混杂，不声称只隔离某个动力学分量的受控收益。\n- 已知加载重放：原三条测量日志和独立参考；已参与分析，只作开发／回归，不作为未见工况泛化。单条未参与训练的 Fourier 轨迹只诊断局部动力学泛化。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 结构化动力学核心 | `structured.py::StructuredDynamics` | 物理q、v、可选a；M、dM、Mdot、c、G、摩擦；核心不依赖 MuJoCo 或任务ID | 解析链式对照 autograd／有限差分，Christoffel／能量恒等式，权重梯度 |\n| 模型与几何隔离 | `structured.py::LearnedDynamics` | 仅接收冻结权重与测量q／v；MuJoCo仅算运动学J，禁止调用其质量或偏置量 | 加载与输入接口检查；冻结模型不读取 plant 真值 |\n| 无接触采集 | `learning.py` | 真实q／v／驱动力矩与独立采样时钟；不含M／G／c监督 | 既有guard，动力学参考只在诊断阶段读取 |\n| 训练与冻结 | `learning.py` | 按轨迹分组；train统计与速度差分；固定1000步 | 明确数据清单、优化历史、最终权重和非有限检查 |\n| 冻结重放 | `learning.py`、既有 `MomentumKF` | 同一测量包分别交给已知和学习模型；真力仅用于输出评价 | 全方向误差、响应、串扰、协方差与耗时 |\n| 容器与来源 | `run.py`、request、provenance | 明确output_dir，复用现有CPU容器，保存当前实现偏离 | 分步预算、日志、输入快照及失败即停止 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "static_components",
+    "original_run": "runs/H-100/R-20261101T125046Z-d37e",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 18677,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 2142
+      },
+      {
+        "id": "replay",
+        "passed": true,
+        "elapsed_ms": 16535
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; Python 3.12, MuJoCo 3.12.0, CPU torch 2.9.1; 2 CPU/4 GiB, one numerical thread, no network; frozen weights and logs only; zero training updates and physical steps.",
+      "outputDir": "runs/H-100/R-20261101T125046Z-d37e",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 600000
+      },
+      "inputs": [
+        "scripts/PIAKF/diagnosis.py",
+        "scripts/PIAKF/configs/diagnosis.json",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/checks.py",
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/reference.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/no_force/known.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/no_force/trained.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/reference.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/constant/known.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/constant/trained.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/reference.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/sine/known.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/evaluate/sine/trained.npz"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Use 16 fixed frames per trace to verify structure-preserving component selectors, positive inertia, signed torque-error decomposition and identical covariance recursion before full teacher replay.",
+          "costUnits": 1,
+          "timeoutMs": 60000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 8
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "replay",
+          "relation": "direct",
+          "purpose": "Run all 8 fixed component substitutions with common covariance over original logs, reproduce native-R endpoints, preserve six-direction metrics and make PNG/SVG figures and full CSV tables without tuning.",
+          "costUnits": 2,
+          "timeoutMs": 300000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "replay",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T125046Z-d37e/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "scenario_count",
+              "op": "eq",
+              "value": 3
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 8
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是冻结学习模型的动力学分量替换诊断，服务于已有估力问题。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前推进下一项已批准问题：仅从无接触运动与驱动力矩训练的结构化动力学，接入同一动量 KF 后能否保持可解释的估力？已知模型仅作诊断对照，不形成学习收益的正式主张。",
+      "Context": "- 用户已于本会话授权开始论文复现，明确代码放在 `scripts/PIAKF/`、计算在 Docker 内进行。\n- 论文：`reproductions/PIAKF/PIAKF_2026.pdf`，Hu et al., RCIM 101 (2026) 103292，DOI `10.1016/j.rcim.2026.103292`。\n- 方法与缺口：`reproductions/PIAKF/PIAKF_2026_notes.md` §3—8、附录 I；`reproductions/PIAKF/PIAKF_2026_reproduction.md` §1—5。\n- 重点理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §3、§6—8。其 §9 历史局部案例不作为本任务已经验证的结果。\n- 环境入口：`docker/compose.yaml`、`docker/Dockerfile`；声明 MuJoCo 3.12.0、Python 3.12、CPU PyTorch 2.9.1；镜像实际可用性待执行时检查。\n- 只读模型：`scripts/models/ur5/scene_equivalent_current.xml`，来源见 `scripts/models/ur5/metadata/source.json`；姿态与控制参数参考 `scripts/models/ur5/control/design.json`。首轮直接使用模型的关节力矩驱动，不启动 ROS 或电流接口。\n- 参考代码：`scripts/rigid_baseline/reference_kf/momentum_observer.py`；`scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py`。前者的零被动摩擦假设不适用于当前含阻尼模型，禁止未经核对直接沿用。\n- 恢复与执行：`docs/research_workflow.md`；请求已按当前 probe 生成，只执行其中通过前置检查的步骤。\n- Execution request: `scratch/H-100/request.json`\n- 当前教师诊断使用新Run；旧Run输入、请求和结果快照保持。\n- 旧请求及输入快照保留在旧 Run；当前学习 probe 使用新的 Run，不沿旧绑定运行。\n- 既有基线与独立重放输入：`runs/H-100/R-20261101T114944Z-b41a/simulate/` 三条测量／参考；已用于分析，不称为封存测试集。\n- 冻结权重：`runs/H-100/R-20261101T122752Z-c82d/train/model.pt`；已有三组重放：同Run的 `evaluate/`。\n- 用户本轮批准诊断假力来源，并要求给出图表；阶段保持 EXPLORE。\n- 失败记忆：已用 `wiki query PIAKF H-094 动量 换向` 检索，无命中；`state/CURRENT.md` 记载 H-094 原 Run 已不在工作区，不追认其结果。\n- Git 工作树有效且有初始提交；已有大量用户未提交改动，本任务不整理、覆盖或提交这些改动。",
+      "Allowed Changes": "- `scripts/PIAKF/diagnosis.py`、`scripts/PIAKF/configs/diagnosis.json`：新增本轮离线诊断与制图；不改既有网络、KF和训练实现。\n- `scratch/H-100/request.json`：当前诊断的精确执行请求；旧Run的请求、输入、权重和结果不改。\n- `runs/H-100/<run-id>/`：仅执行器及显式output_dir产物，保存诊断数组、全部组合指标、CSV表、PNG／SVG图和报告。\n- `state/TASK.md`：本次已批准诊断范围／预算修订；执行前补齐请求与精确Run，之后只覆盖Progress。",
+      "Non-goals": "- 不训练、调参、改权重，不采集新轨迹，不运行物理推进，不实现TCN／Gaussian／WMA。\n- 不把教师分量替换当作可部署估计器或算法收益；不据单次诊断宣称唯一成因。\n- 不新增依赖、模型、镜像、公共接口；不改旧Run，不删除不利结果。\n- 不升级阶段，不更新CURRENT、Idea或Protocol，不提交Git，不运行ROS或真实机器人。",
+      "Budget": "- Files: 最多4个新增／修改的实现、配置和控制面文件，即diagnosis.py、diagnosis.json、TASK、request；运行产物另计。\n- Time / Compute: 本轮实现与检查最多60分钟；实验累计墙钟最多10分钟，现有Docker 2 CPU／4 GiB，无GPU，固定一条数值线程。\n- Replay: 只用原3条各4 s日志。三组动力学的2^3=8种固定组合；另重放原生R下的已知／学习两端作一致性核对，不做搜索或重复试验。\n- Robot runs: 0",
+      "Done When": "- 全已知／全学习两端在原生R下重现旧冻结重放；8组教师诊断使用相同J、Q、R(t)、P0和时间戳，协方差递推相符。\n- 惯性矩阵、Mdot和c来自同一来源；仅重力与摩擦可以独立选择，保持动力学结构，不静默拆开惯性及其导数。\n- 离线真加速度仅用于验证关节误差分解 ΔM·a+Δc+ΔG+Δfriction 与完整模型误差一致；不进入KF接口。\n- 三场景所有方向保存full／startup／steady及加载指标、峰值与偏置，表中力N和力矩Nm分开，不混成总分。\n- 交付启动段六方向曲线、无载峰值与RMSE柱状图、关节误差分解图、惯性对角诊断图、完整CSV与可重放报告；图表同时保留改善和退化。",
+      "Stop and Ask": "- 新依赖、模型、镜像，修改权重、KF参数、坐标、作用点，或超出文件／时间／计算预算。\n- 一致性或代数检查失败即停止，不进入完整重放；非有限数、非正定惯性或协方差异常停止，不调容差放行。\n- 连续两次同类binding／schema／carrier／interface失败时先审查执行层，不做第三个局部补丁。\n- 需要新增科学问题、升级阶段或将本诊断提升为正式结论时。",
+      "Outputs": "- `scripts/PIAKF/diagnosis.py`\n- `scripts/PIAKF/configs/diagnosis.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T125046Z-d37e/`：check与replay两步，replay保存全部图表与报告；所有旧Run保持。",
+      "Explore Probe Contract": "- 权重、三条测量与真力参考均冻结；只诊断已有模型误差，不重新拟合。原日志已经分析过，不称为封存测试。\n- 三个替换因子：inertia bundle=(M,Mdot,c)，gravity=G，friction=Bv。每组使用学习或已知来源，固定枚举8种组合。主图展示全学习、单项替换和全已知5组；CSV保留全部8组。\n- 公共协方差：诊断R(t)=M_known(t)·Sigma_v·M_known(t)^T，P0动量块=R0，其余Q和外力初值不变；所有组共用。此为使用仿真真值的离线教师诊断，不是部署配置。\n- 保留原生R的两端回归核对：R由各自M传播，已知／学习输出与上一Run相符。不得将公共R的排序直接混入上一轮原生R结果。\n- 时间窗固定：full=[0,4]s，startup=[0,0.25)s，steady=[1,3)s。恒力与正弦的loaded评价沿用原定义；全程使用原始时间戳，不平移曲线。\n- 最低成本检查：每条日志取16个固定索引检查分量选择、惯性正定、误差分解、R及共享协方差递推；通过后完整重放一次并制图。\n- 数值核对：rtol=1e-8、atol=1e-7用于分解／重放回归；协方差半正定容差沿用1e-10；这些是实现检查，不是性能门槛。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 冻结分量与结构 | `diagnosis.py` | 网络和KnownDynamics各自给出一致(M,Mdot,c)；G和friction独立来源 | 两端选择、正定与结构来源检查 |\n| 数据隔离 | 既有Measurement与KF kernel | KF只接收q／v／tau与所选名义量；真a仅在离线误差分解使用 | 校验包字段与调用位置，真力仅评分 |\n| 公共协方差诊断 | 既有correct／discretize | J、Q、R(t)、P0共同；变更只来自固定分量选择 | 递推P相符及原生R两端旧日志回归 |\n| 离线误差分解 | `diagnosis.py` | Nm单位，ΔM·a、Δc、ΔG、Δfriction；和为模型误差 | 独立完整残差核对，不把相关项的RMSE相加 |\n| 图表与复现 | `diagnosis.py`、request | 原始时间轴；N与Nm分开；全部组合CSV和PNG／SVG | 步骤预算、快照、数值与文件完整性 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "motion",
+    "original_run": "runs/H-100/R-20261101T130437Z-e61c",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 22241,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 1710
+      },
+      {
+        "id": "replay",
+        "passed": true,
+        "elapsed_ms": 20531
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; Python 3.12, MuJoCo 3.12.0, CPU torch 2.9.1; 2 CPU/4 GiB, one numerical thread, network none; frozen models and existing motion records, no physical steps or training.",
+      "outputDir": "runs/H-100/R-20261101T130437Z-e61c",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 300000
+      },
+      "inputs": [
+        "scripts/PIAKF/motion_evaluation.py",
+        "scripts/PIAKF/configs/motion_evaluation.json",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/checks.py",
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Validate four-field motion records, source identity, zero external-wrench manifest, predetermined time windows and nonzero recorded core motion; run only 32 continuous prefix frames per model and record.",
+          "costUnits": 1,
+          "timeoutMs": 60000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/motion_evaluation.py",
+            "--config",
+            "scripts/PIAKF/configs/motion_evaluation.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "model_count",
+              "op": "eq",
+              "value": 3
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "replay",
+          "relation": "direct",
+          "purpose": "Continuously replay both 6 s existing no-contact motion traces through known/initialized/frozen-trained native KFs; score all fixed windows without resets or speed filtering, and export six-direction curves, bars, motion plots and complete CSV.",
+          "costUnits": 2,
+          "timeoutMs": 180000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/motion_evaluation.py",
+            "--config",
+            "scripts/PIAKF/configs/motion_evaluation.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "replay",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T130437Z-e61c/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "model_count",
+              "op": "eq",
+              "value": 3
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是冻结网络在既有训练外持续运动轨迹上的无接触假力评价。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前推进下一项已批准问题：仅从无接触运动与驱动力矩训练的结构化动力学，接入同一动量 KF 后能否保持可解释的估力？已知模型仅作诊断对照，不形成学习收益的正式主张。",
+      "Context": "- 用户已于本会话授权开始论文复现，明确代码放在 `scripts/PIAKF/`、计算在 Docker 内进行。\n- 论文：`reproductions/PIAKF/PIAKF_2026.pdf`，Hu et al., RCIM 101 (2026) 103292，DOI `10.1016/j.rcim.2026.103292`。\n- 方法与缺口：`reproductions/PIAKF/PIAKF_2026_notes.md` §3—8、附录 I；`reproductions/PIAKF/PIAKF_2026_reproduction.md` §1—5。\n- 重点理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §3、§6—8。其 §9 历史局部案例不作为本任务已经验证的结果。\n- 环境入口：`docker/compose.yaml`、`docker/Dockerfile`；声明 MuJoCo 3.12.0、Python 3.12、CPU PyTorch 2.9.1；镜像实际可用性待执行时检查。\n- 只读模型：`scripts/models/ur5/scene_equivalent_current.xml`，来源见 `scripts/models/ur5/metadata/source.json`；姿态与控制参数参考 `scripts/models/ur5/control/design.json`。首轮直接使用模型的关节力矩驱动，不启动 ROS 或电流接口。\n- 参考代码：`scripts/rigid_baseline/reference_kf/momentum_observer.py`；`scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py`。前者的零被动摩擦假设不适用于当前含阻尼模型，禁止未经核对直接沿用。\n- 恢复与执行：`docs/research_workflow.md`；请求已按当前 probe 生成，只执行其中通过前置检查的步骤。\n- Execution request: `scratch/H-100/request.json`\n- 当前持续运动评价使用新Run，不沿旧绑定继续；旧结果与快照保持。\n- 当前教师诊断使用新Run；旧Run输入、请求和结果快照保持。\n- 旧请求及输入快照保留在旧 Run；当前学习 probe 使用新的 Run，不沿旧绑定运行。\n- 既有基线与独立重放输入：`runs/H-100/R-20261101T114944Z-b41a/simulate/` 三条测量／参考；已用于分析，不称为封存测试集。\n- 冻结权重：`runs/H-100/R-20261101T122752Z-c82d/train/model.pt`；已有三组重放：同Run的 `evaluate/`。\n- 用户本轮批准评价持续运动中的无接触假力，要求图表；阶段保持 EXPLORE。\n- 动态测量：`runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz` 与 `trajectory_05.npz`；manifest确认无外力。两者均未用于梯度更新，但已用于开发／动力学诊断，不称为封存测试。\n- 初始化权重：同Run的 `train/initial.pt`；当前冻结权重：`train/model.pt`。\n- 失败记忆：已用 `wiki query PIAKF H-094 动量 换向` 检索，无命中；`state/CURRENT.md` 记载 H-094 原 Run 已不在工作区，不追认其结果。\n- Git 工作树有效且有初始提交；已有大量用户未提交改动，本任务不整理、覆盖或提交这些改动。",
+      "Allowed Changes": "- `scripts/PIAKF/motion_evaluation.py`、`scripts/PIAKF/configs/motion_evaluation.json`：新增冻结模型运动假力评价与制图；不改既有网络、KF或训练代码。\n- `scratch/H-100/request.json`：当前精确执行请求；旧Run的输入、请求、权重和产物保持。\n- `runs/H-100/<run-id>/`：仅显式output_dir的原始重放、六方向指标、运动记录图、PNG／SVG及CSV／报告。\n- `state/TASK.md`：本次已批准范围／预算修订；执行前补齐请求与Run，之后只覆盖Progress。",
+      "Non-goals": "- 不重训、调参、改权重或KF参数，不做教师分量替换、不新增物理仿真或接触工况。\n- 不以速度阈值筛掉难例；不在核心段重置滤波器，不平移输出，不根据已观察估力修改时间窗。\n- 不新增依赖、镜像、模型或公共接口，不修改旧Run，不删除不利结果。\n- 不升级阶段、更新CURRENT／Idea／Protocol、提交Git或启动ROS／真实机器人。",
+      "Budget": "- Files: 本轮最多4个实现、配置及控制面文件：motion_evaluation.py、motion_evaluation.json、TASK、request；运行产物另计。\n- Time / Compute: 实现与检查最多45分钟；累计执行墙钟最多5分钟；现有Docker 2 CPU／4 GiB，无GPU，固定单数值线程。\n- Replay: trajectory_04与trajectory_05各6001帧，仅重放已知模型、初始化网络、冻结训练网络三组；检查通过后各执行一次完整重放；0训练更新、0物理步。\n- Robot runs: 0",
+      "Done When": "- 校验四字段测量包、1 kHz时间轴、轨迹身份及manifest无外力记录；确认核心段各关节实际有运动，记录速度与位置跨度，不构造事后运动筛选阈值。\n- 三组均使用同一原生MomentumKF及原有Q／P0设定和R=Mhat·Sigma_v·Mhat^T规则；实际R可能不同，明确这一比较限制。\n- 所有组从t=0连续递推；固定full、startup、ramp_up、core_motion、ramp_down五窗口，力N和力矩Nm分开报告各方向RMSE、偏置和峰值。\n- 输出两条轨迹完整及核心段六方向曲线、核心RMSE／峰值柱状图、实际运动图、完整CSV及报告；保留全部不利结果，不用启动峰单独评价网络。",
+      "Stop and Ask": "- 新依赖、模型、镜像、数据、重训、KF调参，或超出当前文件／时间／计算预算。\n- 包含未声明数据、身份／时钟不一致、非有限数、非正定惯性或协方差异常时停止，不调容差放行。\n- 连续两次同类binding／schema／carrier／interface失败时先审查执行层，不做第三个局部补丁。\n- 需要新研究问题、阶段变化或接受正式结论时。",
+      "Outputs": "- `scripts/PIAKF/motion_evaluation.py`\n- `scripts/PIAKF/configs/motion_evaluation.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T130437Z-e61c/`：check和replay两步；replay保存六方向图、实际运动图、全窗口CSV和报告；旧Run不改。",
+      "Explore Probe Contract": "- 当前最低成本检查：时间轴／身份／manifest、窗口覆盖、模型加载及少量连续前缀递推；通过后完整重放两条既有轨迹，不采新数据。\n- 数据：无接触五阶Fourier小幅运动，原物理步62.5 μs／控制2 kHz／反馈1 kHz；仅使用记录的t／q／v／驱动力矩。真力为原采集设计与manifest声明的零，不由KF输出推定。\n- 冻结：当前trained=model.pt；initialized=initial.pt，含相同训练集统计量但0梯度更新；known=独立匹配MuJoCo名义模型，仅作诊断对照。\n- KF：沿用原生MomentumKF，不更改Q、初始外力不确定性或协方差规则，不使用共同教师R。每条从第0帧初始化一次，之后连续到6 s；核心段不重置。\n- 时间窗：full=[0,6]，startup=[0,0.25)，ramp_up=[0.25,1)，core_motion=[1,5)，ramp_down=[5,6]秒；不通过速度大小或结果好坏改变样本集合。\n- 所有方向在核心段分别报告RMSE、Bias、绝对峰值，并保留启动段与全程指标。两个独立记录不合并成统计重复或全局泛化承诺。\n- 数值安全沿用协方差半正定1e-10及既有输入检查；不添加科学性能通过阈值，指标较差也如实报告。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 记录准入 | `motion_evaluation.py` | 四字段测量包与既有manifest；不含真实惯性／加速度输入 | 轨迹身份、帧数、时钟、零外力标签、运动跨度 |\n| 原生估计器 | 既有MomentumKF与Known／LearnedDynamics | 同一t／q／v／tau分别进入三组；wrench为世界系tool0点，线性分量在前 | 正定性、协方差、有限性；不修改既有内核 |\n| 连续递推与分窗 | `motion_evaluation.py` | t=0初始化，完整轨迹递推；核心仅改变评分窗口 | 每组处理帧数与时间轴一致，窗口事先固定 |\n| 图表与产物 | `motion_evaluation.py`、request | 全六方向、两条实际运动轨迹、N与Nm分开；表含全部窗口 | PNG／SVG、CSV、完整估计及可重放报告 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "motion_components",
+    "original_run": "runs/H-100/R-20261101T131510Z-f92b",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 16612,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 1795
+      },
+      {
+        "id": "replay",
+        "passed": true,
+        "elapsed_ms": 14817
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; Python 3.12, MuJoCo 3.12.0, CPU torch 2.9.1; 2 CPU/4 GiB, one numerical thread, network none; frozen weights and existing no-contact moving records only.",
+      "outputDir": "runs/H-100/R-20261101T131510Z-f92b",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 300000
+      },
+      "inputs": [
+        "scripts/PIAKF/motion_diagnosis.py",
+        "scripts/PIAKF/configs/motion_diagnosis.json",
+        "scripts/PIAKF/motion_evaluation.py",
+        "scripts/PIAKF/diagnosis.py",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/checks.py",
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+        "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_04/known.npz",
+        "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_04/trained.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+        "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_05/known.npz",
+        "runs/H-100/R-20261101T130437Z-e61c/replay/trajectory_05/trained.npz",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Use 32 continuous prefix frames of each fixed moving record to check structure-preserving endpoints, common covariance recursion and native-R output regression before complete diagnosis.",
+          "costUnits": 1,
+          "timeoutMs": 60000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/motion_diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/motion_diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 8
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "replay",
+          "relation": "direct",
+          "purpose": "Enumerate all eight frozen inertia/gravity/friction replacements on both complete motion traces using common covariance; preserve native-R endpoint regression and fixed-window six-direction metrics, plots and complete CSV without tuning.",
+          "costUnits": 2,
+          "timeoutMs": 180000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/motion_diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/motion_diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "replay",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T131510Z-f92b/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 8
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是两条既有持续运动轨迹上的冻结动力学分量替换诊断。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前推进下一项已批准问题：仅从无接触运动与驱动力矩训练的结构化动力学，接入同一动量 KF 后能否保持可解释的估力？已知模型仅作诊断对照，不形成学习收益的正式主张。",
+      "Context": "- 用户本轮批准定位持续运动残差中的惯性、重力和摩擦作用；继续提供图表，阶段保持EXPLORE。\n- 理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §3、§6—8；论文DOI `10.1016/j.rcim.2026.103292`。不宣称SN7B原始数值复现。\n- 冻结模型：`runs/H-100/R-20261101T122752Z-c82d/train/model.pt`，只读，不重新训练或选择检查点。\n- 动态测量与manifest：同Run的 `collect/trajectory_04.npz`、`collect/trajectory_05.npz`、`collect/manifest.json`；原采集无外力，未用于梯度更新，但已用于开发／动力学诊断，不称为封存测试。\n- 原生R的运动重放：`runs/H-100/R-20261101T130437Z-e61c/replay/`，known.npz和trained.npz用于端点回归核对。\n- 只读UR5：`scripts/models/ur5/scene_equivalent_current.xml`；来源 `scripts/models/ur5/metadata/source.json`。\n- 接口：`diagnosis.py`已有结构一致分量选择、Known／Learned分量计算和共享R的KF kernel；`motion_evaluation.py`已有四字段包与时间窗准入。\n- 已有Docker环境：`docker/compose.yaml`，MuJoCo3.12.0、Python3.12、CPU PyTorch2.9.1；不启动ROS或真实机器人。\n- Execution request: `scratch/H-100/request.json`\n- 当前运动分量诊断使用新Run；所有旧Run及快照保持，不沿旧绑定继续。\n- 失败记忆：`wiki query PIAKF H-100 运动 摩擦`无命中；Git有效，用户已有未提交修改保持。",
+      "Allowed Changes": "- `scripts/PIAKF/motion_diagnosis.py`、`scripts/PIAKF/configs/motion_diagnosis.json`：新增持续运动的教师分量诊断与制图；只复用已有核心，不修改网络、KF或训练实现。\n- `scratch/H-100/request.json`：当前精确请求；旧Run输入／请求／权重／产物不改。\n- `runs/H-100/<run-id>/`：显式output_dir的全部组合估计、指标、PNG／SVG、CSV与报告。\n- `state/TASK.md`：本次批准的范围／预算修订；执行前补齐请求与Run，之后只覆盖Progress。",
+      "Non-goals": "- 不重训、调参、改权重或KF核心，不采数据、不运行物理推进、不实现TCN／Gaussian／WMA。\n- 不把教师替换当作部署方案或唯一因果解释；不把各项RMSE变化相加为贡献百分比。\n- 不重置核心段状态、不平移时间戳、不以速度阈值删样本、不按结果改时间窗。\n- 不新增依赖、镜像、模型或长期接口；不修改旧Run或删除不利结果。\n- 不升级阶段、更新CURRENT／Idea／Protocol、提交Git或启动ROS／真实机器人。",
+      "Budget": "- Files: 本轮最多4个实现、配置和控制面文件：motion_diagnosis.py、motion_diagnosis.json、TASK、request；运行产物另计。\n- Time / Compute: 实现与检查最多45分钟；执行累计墙钟最多5分钟；已有Docker 2 CPU／4 GiB，无GPU，单数值线程。\n- Replay: 两条各6001帧的既有运动日志；三组动力学来源的2^3=8个固定组合，另保留原生R的已知／学习端点回归核对；0训练更新、0物理步，不搜索。\n- Robot runs: 0",
+      "Done When": "- 原生R的两端重现上一轮对应轨迹的known／trained结果；公共R下8组的协方差递推一致。\n- (M,Mdot,c)来自同一个来源，保持结构一致；G与friction分别选取，不单独拆开惯性及其导数。\n- 核心[1,5)s的全六方向RMSE、偏置、峰值与全窗口指标保存；连续从0递推，不在核心段重新初始化。\n- 提供核心运动六方向曲线、误差柱状图、完整8组CSV和报告，保留改善、退化及组合交互。",
+      "Stop and Ask": "- 新依赖、模型、镜像、重训、调参、修改科学含义，或超出文件／时间／计算预算。\n- 数据／身份／时钟不符，原生回归或公共协方差核对失败、非有限数、非正定惯性或协方差异常，均停止，不调容差放行。\n- 连续两次同类binding／schema／carrier／interface失败，先审查执行层，不做第三个局部补丁。\n- 需要新问题、升级阶段或接受正式结论时。",
+      "Outputs": "- `scripts/PIAKF/motion_diagnosis.py`\n- `scripts/PIAKF/configs/motion_diagnosis.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T131510Z-f92b/`：check与replay两步，replay保存所有分量组合与图表报告；所有旧Run保持。",
+      "Explore Probe Contract": "- 最低成本检查：每条记录前32个连续帧，核对分量两端、公共协方差和原生R回归；通过后完整诊断一次并制图。\n- 数据与坐标：仍为trajectory_04／05，1 kHz四字段记录，外界作用于世界系tool0点的wrench为零；没有独立记录的真加速度，不重构加速度后冒称独立残差依据。\n- 三因子：inertia bundle=(M,Mdot,c)，gravity=G，friction=Bv；固定全部8组，主图展示学习、单项替换和全已知5组；不更改当前模型权重。\n- 公共协方差：诊断R(t)=M_known·Sigma_v·M_known^T，所有组共享P0、Q和J(t)；这是教师诊断，不是部署协方差调优。\n- 原生R回归：仅已知与学习两端，R各自随M传播，和上一轮运动重放比较；共同R的结果不静默混入原生R排名。\n- 所有组从第0帧连续到6 s；full=[0,6]、startup=[0,.25)、ramp_up=[.25,1)、core_motion=[1,5)、ramp_down=[5,6]，不筛速度、不移曲线。\n- 力与力矩分开，指标为逐方向RMSE、Bias和绝对峰值。单项替换只说明该固定模型与轨迹上的反事实变化，允许相互抵消与交互。\n- 回归数值rtol=1e-8、atol=1e-7；协方差沿用1e-10安全容差；不预设科学性能门槛。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 包与轨迹 | 既有motion_evaluation.load_record | 四字段、1 kHz、manifest零外力、固定身份与窗口 | 既有准入与完整样本数检查 |\n| 分量替换 | 既有diagnosis.dynamic_arrays／choose_components | M／Mdot／c成组，G与friction独立；无a输入KF | 正定性、来源两端与冻结权重 |\n| 共享协方差KF | 既有diagnosis.run_kf | 同J／Q／R(t)／P0，连续从0递推；无教师真力输入 | 协方差相符和原生R端点回归 |\n| 图表报告 | motion_diagnosis.py与request | 全8组、六方向、五窗口；N和Nm分开；PNG／SVG及CSV | 预检查、预算、快照、数值及产物完整性 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "gravity",
+    "original_run": "runs/H-100/R-20261101T135129Z-a83e",
+    "task_id": "H-100",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 4718,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 1648
+      },
+      {
+        "id": "diagnose",
+        "passed": true,
+        "elapsed_ms": 3070
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-100",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; MuJoCo3.12.0/Python3.12/CPU torch2.9.1; 2CPU/4GiB, one numerical thread, network none. Algebraic static diagnosis only, no integration, training, ROS or real hardware.",
+      "outputDir": "runs/H-100/R-20261101T135129Z-a83e",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 180000
+      },
+      "inputs": [
+        "scripts/PIAKF/static_gravity.py",
+        "scripts/PIAKF/configs/static_gravity.json",
+        "scripts/PIAKF/configs/learning.json",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/checks.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_00.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_01.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_02.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_03.npz",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Check three static poses, training-coordinate binding, zero-speed learned terms, and MuJoCo inverse/forward equilibrium before full diagnosis.",
+          "costUnits": 1,
+          "timeoutMs": 30000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/static_gravity.py",
+            "--config",
+            "scripts/PIAKF/configs/static_gravity.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "pose_count",
+              "op": "eq",
+              "value": 3
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "diagnose",
+          "relation": "direct",
+          "purpose": "Compare frozen gravity predictions with MuJoCo on all 49 predetermined axis-offset static configurations; retain training coverage flags, all signed joint errors, group metrics and PNG/SVG without training or integration.",
+          "costUnits": 2,
+          "timeoutMs": 90000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/static_gravity.py",
+            "--config",
+            "scripts/PIAKF/configs/static_gravity.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "diagnose",
+            "--prerequisite-dir",
+            "/workspace/runs/H-100/R-20261101T135129Z-a83e/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "pose_count",
+              "op": "eq",
+              "value": 49
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-100\n- Stage: EXPLORE\n\n- Research objects: PIAKF_2026 在 Docker／UR5 上的方法重实现；当前 probe 是冻结权重的多姿态静止重力诊断。",
+      "Question": "在明确声明替代机器人、反馈和动力学边界的 Docker 仿真中，能否重建 PIAKF 的方法链，并检验抑制内部误差时是否仍保留真实外力？当前推进下一项已批准问题：仅从无接触运动与驱动力矩训练的结构化动力学，接入同一动量 KF 后能否保持可解释的估力？已知模型仅作诊断对照，不形成学习收益的正式主张。",
+      "Context": "- 用户批准先检查多个独立静止姿态的重力预测，诊断训练覆盖与分量约束；保持H-100／EXPLORE，不改变训练处理。\n- 理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §4.5、§8.1；静止、零外力、黏性摩擦模型下tau=G(q)。\n- 冻结权重：`runs/H-100/R-20261101T122752Z-c82d/train/model.pt`。\n- 训练范围参照：同Run的collect/trajectory_00.npz至trajectory_03.npz、manifest.json，以及`scripts/PIAKF/configs/learning.json`；只读位置与时间，不增加梯度或用真值监督。\n- 前轮诊断：`runs/H-100/R-20261101T131510Z-f92b/replay/report.md`；重力替换能改变运动假力，但未建立训练收益结论。\n- 只读模型：`scripts/models/ur5/scene_equivalent_current.xml`；已存在Docker／MuJoCo3.12.0／CPU torch2.9.1。\n- Execution request: `scratch/H-100/request.json`\n- Git有效；既有无关未提交改动不触碰。失败记忆`wiki query PIAKF H-100 重力 静止 泛化`无命中。",
+      "Allowed Changes": "- `scripts/PIAKF/static_gravity.py`、`scripts/PIAKF/configs/static_gravity.json`：新增静止姿态参考计算、冻结网络诊断与图表；复用既有网络和模型加载，不修改训练／网络／KF。\n- `scratch/H-100/request.json`：本轮执行请求；旧Run、权重和快照保持。\n- `state/TASK.md`：本次已批准范围／预算修订；启动后只更新Progress。\n- `runs/H-100/R-20261101T135129Z-a83e/`：明确output_dir的配置、姿态、参考／预测、指标、CSV和PNG／SVG。",
+      "Non-goals": "- 不重训、不调参、不改网络、损失或KF；不把MuJoCo分量真值加入训练。\n- 不积分推进、不收集新的运动轨迹，不启动ROS或真实机器人。\n- 不以单个轴向扫描概括全工作空间，不把包围盒内等同于训练分布内，不将力矩误差直接换算成末端力。\n- 不新增依赖、镜像或共享接口，不修改旧Run／CURRENT／Idea／Protocol，不升级阶段或提交Git。",
+      "Budget": "- Files: 最多4个实现／配置／控制面文件：static_gravity.py、static_gravity.json、request、TASK；产物另计。\n- Time / Compute: 实现检查最多45分钟；总计算墙钟最多3分钟；已有Docker 2 CPU／4 GiB、单数值线程，无GPU。\n- Probe: 先3姿态前置检查，再固定49姿态一次完整静态计算；0训练更新、0物理积分步、0 KF运行，无扫描调参。\n- Robot runs: 0",
+      "Done When": "- 参考重力以MuJoCo零速度bias计算，和零速度／零加速度逆动力学及平衡驱动的正动力学残差一致，无接触约束或驱动力矩饱和。\n- 网络在零速度／零加速度时预测总力矩等于其重力头，c／Mdot／摩擦为零，惯性正定且全部数值有限。\n- 保存49个声明姿态、训练位置范围参照与包围盒标记；按中心／近邻／扩展组及训练包围盒内外报告逐关节RMSE、偏置、峰值。\n- 提供重力误差热图、分组柱状图及轴向误差曲线PNG／SVG，全部逐姿态逐关节CSV和报告；不预设性能通过门槛。",
+      "Stop and Ask": "- 数值或参考平衡检查失败、接触约束、驱动饱和、非正定惯性、训练包或时钟不符时停止，不调容差放行。\n- 新依赖、重训、采运动数据、修改科学含义或超出文件／时间／计算预算。\n- 两次同类binding／schema／carrier／interface失败先审查执行层，不做第三个局部补丁。\n- 需升级阶段、接受正式结论或真实机器人运动时。",
+      "Outputs": "- `scripts/PIAKF/static_gravity.py`\n- `scripts/PIAKF/configs/static_gravity.json`\n- `scratch/H-100/request.json`\n- `runs/H-100/R-20261101T135129Z-a83e/`：check和diagnose两步，后者含poses.npz、all_poses.csv、metrics.json、report.md与3幅PNG／SVG。",
+      "Explore Probe Contract": "- 当前问题仍是无接触学习动力学能否用于可解释估力；本轮只检查其重力分量的姿态泛化，没有新训练treatment。\n- 姿态中心使用冻结checkpoint的训练q_center；近邻为逐关节单轴偏移[-.1,-.05,.05,.1]rad共24个，扩展[-.4,-.2,.2,.4]rad共24个，另有中心1个，共49。预检中心、J2偏移.05和.4rad。\n- 训练范围参照采用既有四条训练轨迹、按原训练trim=.25s规则处理的位置；检查其均值／标准差与checkpoint一致。包围盒内只说明逐坐标范围覆盖，不代表动力学可辨识或独立测试通过。\n- 所有姿态v=a=0、零外力；仅调用MuJoCo forward／inverse代数计算、不调用mj_step。静止平衡tau_ref=G_known是诊断参考，不是实际控制采集或训练标签。\n- 数值比较沿用现有algebra_rtol=1e-8、dynamics_balance_atol_Nm=1e-7；性能仅报告不设新阈值。\n- 计算对照G_known与G_learned，单位逐关节N·m；不运行KF、不构造末端假力或将结果提升为正式证据。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 姿态与训练范围 | static_gravity.py／config | 49固定姿态；训练位置范围与checkpoint归一化参照 | 训练身份、trim、中心／尺度一致，唯一姿态 |\n| 静止参考 | 既有load_model／MuJoCo | v=a=0，G=qfrc_bias，tau_inverse=G，平衡驱动 | 无接触／饱和、被动力矩零，动力学残差一致 |\n| 冻结网络 | 既有load_network／dynamics | G预测及零速度项，权重不变 | SPD、有限数、零项与总力矩检查 |\n| 报告 | static_gravity.py／request | 全姿态CSV、分组指标、PNG／SVG | 3姿态预检通过才全量；明确外推及诊断边界 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "paired",
+    "original_run": "runs/H-101/R-20261101T140838Z-b7d4",
+    "task_id": "H-101",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 55016,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 2392
+      },
+      {
+        "id": "train",
+        "passed": true,
+        "elapsed_ms": 20602
+      },
+      {
+        "id": "evaluate",
+        "passed": true,
+        "elapsed_ms": 32022
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-101",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2; Python3.12/MuJoCo3.12.0/CPU torch2.9.1, 2CPU/4GiB, one numerical thread, network none; no physics integration, ROS or real robot. One paired seed0 fixed-budget comparison.",
+      "outputDir": "runs/H-101/R-20261101T140838Z-b7d4",
+      "budget": {
+        "maxCostUnits": 6,
+        "maxWallTimeMs": 300000
+      },
+      "inputs": [
+        "scripts/PIAKF/static_constraint.py",
+        "scripts/PIAKF/static_gravity.py",
+        "scripts/PIAKF/learning.py",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/motion_evaluation.py",
+        "scripts/PIAKF/checks.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/configs/static_constraint.json",
+        "scripts/PIAKF/configs/learning.json",
+        "scripts/PIAKF/configs/motion_evaluation.json",
+        "runs/H-100/R-20261101T122752Z-c82d/train/initial.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+        "runs/H-100/R-20261101T122752Z-c82d/train/statistics.json",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_00.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_01.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_02.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_03.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_04.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+        "runs/H-100/R-20261101T135129Z-a83e/diagnose/poses.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/no_force/reference.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/constant/reference.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/measurements.npz",
+        "runs/H-100/R-20261101T114944Z-b41a/simulate/sine/reference.npz",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Check original training normalization and initialization, three static equilibrium poses and one discarded finite-gradient update per arm before paying for full training.",
+          "costUnits": 1,
+          "timeoutMs": 30000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/static_constraint.py",
+            "--config",
+            "scripts/PIAKF/configs/static_constraint.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "static_pose_count",
+              "op": "eq",
+              "value": 3
+            },
+            {
+              "field": "discarded_training_updates",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "main_training_updates",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "train",
+          "relation": "prerequisite",
+          "purpose": "Train paired dynamic-only and static-augmented arms from the same original initial checkpoint for exactly 1000 updates each, sharing dynamic minibatches; require baseline parameter regression before training the augmented arm; retain final checkpoints and learning curves.",
+          "costUnits": 2,
+          "timeoutMs": 90000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/static_constraint.py",
+            "--config",
+            "scripts/PIAKF/configs/static_constraint.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "train",
+            "--prerequisite-dir",
+            "/workspace/runs/H-101/R-20261101T140838Z-b7d4/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "main_training_updates",
+              "op": "eq",
+              "value": 2000
+            },
+            {
+              "field": "arm_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "static_pose_count",
+              "op": "eq",
+              "value": 25
+            },
+            {
+              "field": "paired_dynamic_batch_schedule",
+              "op": "eq",
+              "value": true
+            }
+          ]
+        },
+        {
+          "id": "evaluate",
+          "relation": "direct",
+          "purpose": "Freeze both final models and compare 48 non-training static configurations, two complete moving records and three original loading records through unchanged native KF; retain every direction, original window, paired metric and PNG/SVG without selection or tuning.",
+          "costUnits": 3,
+          "timeoutMs": 180000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/static_constraint.py",
+            "--config",
+            "scripts/PIAKF/configs/static_constraint.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "evaluate",
+            "--prerequisite-dir",
+            "/workspace/runs/H-101/R-20261101T140838Z-b7d4/train",
+            "--training-dir",
+            "/workspace/runs/H-101/R-20261101T140838Z-b7d4/train"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "arm_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "primary_static_pose_count",
+              "op": "eq",
+              "value": 48
+            },
+            {
+              "field": "motion_trajectory_count",
+              "op": "eq",
+              "value": 2
+            },
+            {
+              "field": "load_scenario_count",
+              "op": "eq",
+              "value": 3
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-101\n- Stage: EXPLORE\n\n- Research objects: PIAKF／UR5仿真中，增加多姿态静止平衡监督的固定预算单因素训练对照。",
+      "Question": "在相同网络、初始权重、四条运动训练轨迹、动态minibatch顺序、优化器与1000次更新预算下，额外加入25个姿态的静止平衡力矩监督，是否降低未用于该监督的静态姿态重力预测误差，并降低两条既有持续运动轨迹核心[1,5)s的Fx假力？同时报告其余五方向与既有已知加载响应的退化或改善，不以无接触输出变小替代真实外力响应。",
+      "Context": "- 用户已批准上一轮提出的“原训练与加入多姿态静止约束的单因素对照”。训练treatment实质变化，按state/AGENTS.md创建H-101，取代H-100当前行动；不表示接受H-100为正式结论，也不执行关闭提交。\n- 上一轮已完成TASK准备；用户本轮明确批准实现与执行固定设计，阶段保持EXPLORE。\n- 比较配置：`scripts/PIAKF/configs/static_constraint.json`；实现：`scripts/PIAKF/static_constraint.py`。\n- Execution request: `scratch/H-101/request.json`\n- 当前唯一Run：`runs/H-101/R-20261101T140838Z-b7d4`，check→train→evaluate；旧Run只读。\n- 理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §4.5、§8；静止监督仅在无外力、v=a=0、仅黏性摩擦条件下成立。\n- H-100静止诊断：`runs/H-100/R-20261101T135129Z-a83e/diagnose/report.md`与poses.npz；既有运动诊断：`runs/H-100/R-20261101T130437Z-e61c/replay/report.md`。这些记录已分析，不称为封存测试。\n- 初始化、归一化与原baseline：`runs/H-100/R-20261101T122752Z-c82d/train/initial.pt`、statistics.json、model.pt；只读保留。\n- 动态数据：同Run的collect/trajectory_00.npz至05.npz及manifest.json；四条训练，04开发，05诊断；预处理按`scripts/PIAKF/configs/learning.json`。\n- 加载回归：`runs/H-100/R-20261101T114944Z-b41a/simulate/`的no_force／constant／sine；不是新的运动接触独立验证。\n- 复用接口：`scripts/PIAKF/learning.py`、structured.py、static_gravity.py、motion_evaluation.py、diagnosis.py、observer.py、simulation.py；核心不修改。\n- 只读UR5：`scripts/models/ur5/scene_equivalent_current.xml`；既有Docker 2 CPU／4 GiB、MuJoCo3.12.0、CPU torch2.9.1。\n- Git基线有效，HEAD=`35bdaafa430a24ab9c53b9df90d0592ce5bacc3d`；既有无关未提交修改不触碰。失败记忆`wiki query PIAKF 静止约束 重力 训练`无命中。",
+      "Allowed Changes": "- 准备轮仅：`state/TASK.md`与`scripts/PIAKF/configs/static_constraint.json`。\n- 后续执行轮：新增`scripts/PIAKF/static_constraint.py`，在当前配置内绑定精确CLI／产物；保留科学设计，复用现有核心而不修改。\n- 后续请求：`scratch/H-101/request.json`，只列实际必要的check／train／evaluate步骤；执行前生成明确UTC Run ID和outputDir，再补入TASK的Context与Outputs。\n- 后续产物：`runs/H-101/<run-id>/`，必须显式output_dir；旧H-100数据、权重、请求、快照、Run不改。\n- TASK执行前可补齐runner／request／Run指针；执行启动后只更新Progress。",
+      "Non-goals": "- 不修改网络层数、激活、尺度、摩擦形式、动态损失、优化器或KF，不额外训练历史model.pt。\n- 不改变种子、更新数、静止权重、姿态集合或窗口来追逐已观察结果；不选最佳checkpoint，不搜索超参数。\n- 不将静止平衡代数标签称为实测控制保持数据，不称新增监督后仍是仅运动力矩监督。\n- 不把训练重合姿态混入主要静态泛化指标，不把旧开发／诊断记录冒称未使用holdout。\n- 不新增依赖、镜像、共享长期接口，不运行物理积分、ROS或真实机器人。\n- 不更新CURRENT／Idea／Protocol、不接受正式结论、不升级阶段或提交Git。",
+      "Budget": "- Files: 最多4个实现／配置／控制面文件：static_constraint.py、static_constraint.json、TASK、scratch/H-101/request.json；运行产物另计。准备轮只改其中TASK与配置。\n- Time / Compute: 后续实现检查最多90分钟；实验累计墙钟最多5分钟；已有Docker 2 CPU／4 GiB、单数值线程、无GPU。\n- Training: 两组各1000次正式更新，另预检两组各1次更新后丢弃；seed=0，batch=50，Adam lr=.0005，不重试或扩预算。\n- Data: 既有四条动态训练轨迹；新增25个静止平衡代数标签；已有48个非重合静止评价姿态、两条6001帧运动日志、三条既有加载日志；0新增物理积分步。\n- Robot runs: 0",
+      "Done When": "- 准备轮：TASK与静止对照配置已写入，JSON／路径／设计一致性检查通过，明确尚未训练。\n- 后续执行：两组同初始化、归一化和动态batch序列；baseline复现旧1000次训练终点，数值回归rtol=1e-8／atol=1e-7；保留两组最终checkpoint与训练曲线。\n- 新增静止标签满足无接触、无饱和、零速度／加速度，MuJoCo逆／正动力学平衡核对通过；不使用M／c／摩擦真值监督。\n- 在48个未加入静止监督的既有诊断姿态上报告逐关节重力RMSE／Bias／峰值，中心重合姿态单列；两条运动核心Fx RMSE分别报告，并保留所有方向和五个窗口。\n- 既有三条加载日志用两组冻结模型回归，报告幅值、误差、响应与串扰变化；保留退化，不给自动科学胜负标签。\n- 提供配对学习曲线、静态重力／持续运动／加载响应PNG与SVG、完整CSV与报告；单seed／旧诊断集的探索局限写清。",
+      "Stop and Ask": "- 预检、数据身份、静态平衡、原baseline回归、正定性或有限数检查失败即停；不调整容差、删除姿态或重训放行。\n- 新依赖、扩大计算、改变treatment／endpoint／population／种子／权重／窗口或修改既有核心。\n- 出现同类binding／schema／carrier／interface失败两次，先做执行层审查，不做第三个局部补丁。\n- 需要升级阶段、接受结果或真实机器人运动时。",
+      "Outputs": "- `state/TASK.md`\n- `scripts/PIAKF/configs/static_constraint.json`\n- `scripts/PIAKF/static_constraint.py`\n- `scratch/H-101/request.json`\n- `runs/H-101/R-20261101T140838Z-b7d4/`：check、train、evaluate三步，保留两组权重、配对batch、曲线、CSV与报告，不复用旧Run。",
+      "Explore Probe Contract": "- 单因素处理：baseline的L=L_dynamic；增强组L=L_dynamic+1.0*L_static。两组从同一旧initial.pt重新训练，不以旧最终权重续训。\n- 动态loss／数据／trim／原始四条训练轨迹统计量不变；静态loss按25个独立姿态等权、逐关节使用原torque_scale归一化，全25姿态每次更新参加增强组loss；baseline静态权重为0。\n- 新静态训练姿态：旧训练q_center处1个，分别对六关节单轴偏移[-.3,-.075,.075,.3]rad共24个；总25个，v=a=0、零外力。\n- 标签为MuJoCo代数平衡驱动力矩tau_eq=G(q)，属于合成静态重力监督，不是从原运动日志筛得，也不是实测控制器保持数据。先核对无接触、限幅、逆动力学和平衡正动力学；不引入直接惯性／科氏／摩擦监督。\n- 最低成本预检：3个静态姿态、两组各1次梯度更新（丢弃）检查loss／梯度／零静止项；通过后才付出完整2000次更新。正式baseline回归通过后才进入增强模型性能评价。\n- 共享隐藏层不冻结，静止监督可能间接影响惯性；两组KF保留同一native R传播规则，实际R可随各自M改变，评价的是该训练处理对既有完整pipeline的影响。\n- 静态主要评价：既有49个诊断姿态去除中心，与本轮静止训练姿态交集应为0，共48个；中心单列为训练内拟合。已观察旧姿态不是新的封存测试。\n- 运动主要endpoint：04／05各自core[1,5)s的Fx RMSE，不混合N与N·m；全六方向RMSE／Bias／峰值及五个原窗口为次要描述，连续KF从0开始，不重置、不平移、不筛速度。\n- 静态endpoint为逐关节重力误差向量，不用总力矩loss替代。已知加载使用旧no_force／constant／sine日志；不据此宣称独立运动加载响应合格。\n- 本轮不预设科学性能通过阈值，不自动判胜、不产生ProtocolOutcome；固定预算后完整报告改善、无变化和退化，不根据结果增加更新或改lambda。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 配对训练 | 新static_constraint.py复用learning／structured | 同初始权重、动态batch／统计量、1000更新；仅静态loss系数不同 | batch序列一致、原baseline回归、最终checkpoint |\n| 静态监督 | 新binding复用static_gravity／MuJoCo | 25个固定合成平衡标签，物理项和来源明确 | 3姿态前置检查、无接触／饱和、力矩平衡 |\n| 冻结评价 | 复用静态／motion／KF函数 | 48非重合静态、2运动、3既有加载；原窗口／坐标／Q／R规则 | 重合检查、SPD／协方差／有限数、所有方向留存 |\n| 调度与产物 | 后续scratch/H-101/request.json | check→train→evaluate；明确output_dir，不依赖TASK ID进入科学核心 | 预算／输入快照／基线失败即停、PNG／SVG／CSV |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  },
+  {
+    "label": "paired_components",
+    "original_run": "runs/H-101/R-20261101T141842Z-c59f",
+    "task_id": "H-101",
+    "stage": "EXPLORE",
+    "status": "completed",
+    "elapsed_ms": 13468,
+    "steps": [
+      {
+        "id": "check",
+        "passed": true,
+        "elapsed_ms": 1623
+      },
+      {
+        "id": "diagnose",
+        "passed": true,
+        "elapsed_ms": 11845
+      }
+    ],
+    "original_request": {
+      "version": 1,
+      "taskId": "H-101",
+      "stage": "EXPLORE",
+      "hardware": "local-compute",
+      "environment": "Existing Docker piakf:jazzy-mujoco3.12.0-control0.1.2, MuJoCo3.12.0/Python3.12/CPU torch2.9.1;2CPU/4GiB,one numerical thread,network none;frozen weights and existing trajectory05;no training,physical integration,ROS or real robot.",
+      "outputDir": "runs/H-101/R-20261101T141842Z-c59f",
+      "budget": {
+        "maxCostUnits": 3,
+        "maxWallTimeMs": 180000
+      },
+      "inputs": [
+        "scripts/PIAKF/paired_motion_diagnosis.py",
+        "scripts/PIAKF/diagnosis.py",
+        "scripts/PIAKF/motion_evaluation.py",
+        "scripts/PIAKF/structured.py",
+        "scripts/PIAKF/dynamics.py",
+        "scripts/PIAKF/observer.py",
+        "scripts/PIAKF/simulation.py",
+        "scripts/PIAKF/checks.py",
+        "scripts/PIAKF/configs/paired_motion_diagnosis.json",
+        "runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt",
+        "runs/H-101/R-20261101T140838Z-b7d4/train/static_augmented/model.pt",
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/baseline.npz",
+        "runs/H-101/R-20261101T140838Z-b7d4/evaluate/trajectory_05/static_augmented.npz",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/manifest.json",
+        "runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz",
+        "scripts/models/ur5/scene_equivalent_current.xml",
+        "scripts/models/ur5/metadata/source.json",
+        "docker/compose.yaml",
+        "docker/Dockerfile",
+        "docker/requirements/requirements-main.txt",
+        "docker/requirements/requirements-torch.txt",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/base.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/shoulder.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/upperarm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/forearm.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist1.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist2.stl",
+        "scripts/models/ur5/vendor/ur_description/meshes/ur5/collision/wrist3.stl"
+      ],
+      "steps": [
+        {
+          "id": "check",
+          "relation": "prerequisite",
+          "purpose": "Regress both native-R endpoints and check shared covariance and additive signal identities over 32 continuous prefix frames before full diagnosis.",
+          "costUnits": 1,
+          "timeoutMs": 30000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/paired_motion_diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/paired_motion_diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 15
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 1
+            },
+            {
+              "field": "processed_frames",
+              "op": "eq",
+              "value": 32
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        },
+        {
+          "id": "diagnose",
+          "relation": "direct",
+          "purpose": "Compare 15 frozen inertia/gravity/friction combinations on the entire trajectory05; retain six-axis window metrics, exact error-signal MSE self/cross terms, raw core dynamics diagnostics, PNG/SVG and complete CSV without training or tuning.",
+          "costUnits": 2,
+          "timeoutMs": 120000,
+          "argv": [
+            "docker",
+            "compose",
+            "-f",
+            "docker/compose.yaml",
+            "run",
+            "--rm",
+            "--no-deps",
+            "--pull",
+            "never",
+            "-T",
+            "--volume",
+            "{output_dir}:{output_dir}",
+            "piakf",
+            "python",
+            "scripts/PIAKF/paired_motion_diagnosis.py",
+            "--config",
+            "scripts/PIAKF/configs/paired_motion_diagnosis.json",
+            "--output-dir",
+            "{output_dir}",
+            "--stage",
+            "diagnose",
+            "--prerequisite-dir",
+            "/workspace/runs/H-101/R-20261101T141842Z-c59f/check"
+          ],
+          "resultFile": "metrics.json",
+          "pass": [
+            {
+              "field": "passed",
+              "op": "eq",
+              "value": true
+            },
+            {
+              "field": "variant_count",
+              "op": "eq",
+              "value": 15
+            },
+            {
+              "field": "trajectory_count",
+              "op": "eq",
+              "value": 1
+            },
+            {
+              "field": "processed_frames",
+              "op": "eq",
+              "value": 6001
+            },
+            {
+              "field": "training_updates",
+              "op": "eq",
+              "value": 0
+            },
+            {
+              "field": "environment.physics_steps",
+              "op": "eq",
+              "value": 0
+            }
+          ]
+        }
+      ]
+    },
+    "original_task_guard": {
+      "Identity": "- Task ID: H-101\n- Stage: EXPLORE\n\n- Research objects: PIAKF／UR5静止监督配对研究；当前probe是同一轨迹05上冻结模型的分量变化与误差抵消诊断。",
+      "Question": "在相同网络、初始权重、四条运动训练轨迹、动态minibatch顺序、优化器与1000次更新预算下，额外加入25个姿态的静止平衡力矩监督，是否降低未用于该监督的静态姿态重力预测误差，并降低两条既有持续运动轨迹核心[1,5)s的Fx假力？同时报告其余五方向与既有已知加载响应的退化或改善，不以无接触输出变小替代真实外力响应。",
+      "Context": "- 用户批准冻结两组权重，定位轨迹05估力退化的惯性、摩擦与误差抵消来源。本轮是H-101既有训练处理的诊断延伸，训练treatment和阶段均不变。\n- 两组固定1000更新权重：`runs/H-101/R-20261101T140838Z-b7d4/train/baseline/model.pt`与同目录static_augmented/model.pt；只读不重训。\n- 原生R回归参考：同Run的evaluate/trajectory_05/baseline.npz与static_augmented.npz；原Fx核心RMSE=.554835／.622936 N。\n- 测量：`runs/H-100/R-20261101T122752Z-c82d/collect/trajectory_05.npz`和manifest.json；已多次诊断，不是封存测试。\n- 原运动评价配置：`scripts/PIAKF/configs/motion_evaluation.json`；理论：`reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md` §6—8。\n- 复用`diagnosis.dynamic_arrays／run_kf`和`motion_evaluation.load_record／window_mask`；不修改网络或KF核心。\n- 只读模型`scripts/models/ur5/scene_equivalent_current.xml`；既有Docker 2CPU／4GiB、MuJoCo3.12.0、CPU torch2.9.1、单数值线程。\n- 新probe配置：`scripts/PIAKF/configs/paired_motion_diagnosis.json`；实现：`scripts/PIAKF/paired_motion_diagnosis.py`。\n- Execution request: `scratch/H-101/request.json`\n- 唯一新Run：`runs/H-101/R-20261101T141842Z-c59f/`；所有旧Run、快照、权重保持。\n- Git有效；既有无关修改不触碰。失败记忆`wiki query PIAKF H-101 轨迹05 静止监督 退化`无命中。",
+      "Allowed Changes": "- 新增`scripts/PIAKF/paired_motion_diagnosis.py`和configs/paired_motion_diagnosis.json，复用已有核心进行分量诊断与制图。\n- 更新`scratch/H-101/request.json`为本轮精确check／diagnose请求，旧Run的请求快照不改。\n- 更新`state/TASK.md`当前已批准范围、预算与指针；启动后只改Progress。\n- 新Run`runs/H-101/R-20261101T141842Z-c59f/`的显式output_dir产物。",
+      "Non-goals": "- 不重训、不改权重、网络、损失、KF或观测噪声参数，不新增物理运动数据或加速度重构。\n- 不扩展至轨迹04或其他数据；不重置核心段状态、不移时间戳、不筛样本。\n- 不把教师共同R或混合分量当作部署方案，不将RMSE变化加成贡献百分比，不宣称唯一因果解释。\n- 不新增依赖、镜像或长期接口，不改旧Run／CURRENT／Idea／Protocol、不升级阶段或提交Git。\n- 不启动ROS或真实机器人。",
+      "Budget": "- Files: 本轮最多4个实现／配置／控制面文件：paired_motion_diagnosis.py、paired_motion_diagnosis.json、request、TASK；运行输出另计。\n- Time / Compute: 实现检查最多45分钟；总计算墙钟最多3分钟；既有Docker 2CPU／4GiB、单数值线程、无GPU。\n- Probe: trajectory_05一条6001帧日志；先32帧预检，再15个固定组合完整重放；另2组原生R端点回归；0训练更新、0物理积分步，不调参。\n- Robot runs: 0",
+      "Done When": "- 两个原生R端点重现上一Run对应wrench；15组合共同协方差递推一致。\n- 惯性、Mdot、c成组交换；G与黏性摩擦分别交换，J为同一已知几何。\n- 保存8个baseline／augmented混合组合、全known、两模型各3个单独误差分量组合，共15组。\n- 在共同R下核对全时域估计信号的线性重构，保存基准残差与惯性／重力／摩擦误差传递信号，以及核心段逐方向MSE自项与交叉项矩阵；不调用真实加速度。\n- 保留六方向五窗口RMSE／Bias／峰值、原生与共同R的端点差别、全部NPZ／CSV、PNG／SVG和报告。",
+      "Stop and Ask": "- 数据／时钟／身份、原生回归、线性重构、协方差、有限数或正定性检查失败即停止，不改容差或重放放行。\n- 新依赖、重训、调参、修改科学处理或超出文件／时间／计算预算。\n- 两次同类binding／schema／carrier／interface失败先做执行层审查，不做第三个局部补丁。\n- 需要阶段升级、正式接受或真实机器人运动时。",
+      "Outputs": "- `scripts/PIAKF/paired_motion_diagnosis.py`\n- `scripts/PIAKF/configs/paired_motion_diagnosis.json`\n- `scratch/H-101/request.json`\n- `runs/H-101/R-20261101T141842Z-c59f/`：check和diagnose；保存15组wrench／新息、六方向五窗口指标、450行组合CSV、分量信号／MSE交叉项与图表报告。",
+      "Explore Probe Contract": "- 保留H-101原研究问题，本轮不增加训练处理；只诊断既有单因素对照的运动退化。\n- 固定三个可交换组：inertia=(M,Mdot,c)、gravity=G、friction=Bv。8个两模型全因子组合，加known全部和两模型各自的三组单独误差（其余项known），共15个唯一组合。\n- J、Q、R(t)=M_known Sigma_v M_known^T和P0固定共享；共同R是教师诊断，原生R=M_model Sigma_v M_model^T另作两端回归，不能混入同一性能排序。\n- 用known输出作基准残差；单分量误差传递信号定义为“仅该分量采用指定模型的估计－known估计”。已知基准＋三信号应重构各模型共同R输出，8混合结果也应按分量变化线性重构。\n- 核心[1,5)s逐方向C_ij=mean(signal_i*signal_j)，四信号为known残差、惯性、重力、摩擦；MSE=sum_ij C_ij，自项和交叉项分别报告。交叉项为负可抵消；这不是RMSE可加的因果贡献分配。\n- 原记录无独立加速度；不重构加速度、不声称关节真实力矩残差分解。所有KF从0连续至6s；full／startup／ramp_up／core_motion／ramp_down沿用原窗口。\n- 预检前32帧，检查端点回归、共同协方差及信号重构；通过后完整运行一次。数值rtol=1e-8／atol=1e-7，协方差容差1e-10；无科学性能门槛。",
+      "Execution Contract": "| Requirement | Owner / Interface | Inputs / Outputs / Scientific Invariants | Verification |\n|---|---|---|---|\n| 测量与端点 | 既有load_record／run_kf | 原trajectory05四字段、固定窗口、两组权重 | 原生R回归与完整时钟／身份 |\n| 分量交换 | 新binding复用dynamic_arrays | 惯性成组、重力／摩擦独立、15唯一组合 | 来源端点、SPD与共同协方差 |\n| 误差抵消 | 新诊断层 | 固定KF映射下的估计信号与逐轴MSE矩阵 | 全时域重构、MSE求和一致；单位分轴 |\n| 报告与运行 | 新脚本／request | 显式output_dir、全部改善和退化、PNG／SVG／CSV | 32帧先行、预算、快照不变 |"
+    },
+    "limitations": "Original input snapshots and raw carrier logs are not retained; original paths in historical requests are identifiers, not current runtime paths."
+  }
+]

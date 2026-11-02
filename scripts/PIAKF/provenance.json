@@ -1,0 +1,70 @@
+{
+  "paper": {
+    "title": "Physics-informed adaptive Kalman filter for contact force estimation in industrial robots considering model uncertainty",
+    "authors": [
+      "Hongbo Hu",
+      "Jia Ma",
+      "Yuhan Lu",
+      "Chungang Zhuang"
+    ],
+    "doi": "10.1016/j.rcim.2026.103292",
+    "local_pdf": "reproductions/PIAKF/PIAKF_2026.pdf",
+    "author_code": "Not obtained; this is a local reimplementation, not redistributed author software",
+    "original_platform": "MATLAB/Simscape and SIASUN SN7B experiments"
+  },
+  "local_theory": "reproductions/PIAKF/面向机器人外力估计的结构化动力学学习与动量 Kalman 滤波.md",
+  "reference_implementations": [
+    "scripts/rigid_baseline/reference_kf/momentum_observer.py",
+    "scripts/rigid_baseline/reference_kf/oracle_kf.py"
+  ],
+  "robot_source": "scripts/models/ur5/metadata/source.json",
+  "robot_upstream_commit": "c2ae8652b6e9c1f9f3fedac48d63bef93d3cb9ba",
+  "robot_license_reference": "scripts/models/ur5/vendor/ur_description/LICENSE",
+  "model_boundary": "Existing UR5 rigid model, ideal joint-side torque motors, viscous damping, no dry friction or backlash; shared files are not modified",
+  "equations": "x=[p;w], y=Mhat*v, u=tau_ref+Mdot_hat*v-c_hat-G_hat-tau_f_hat; S=0 with integrated continuous process noise",
+  "frame": "Wrench ON robot, world components, about moving tool0 point, linear components first",
+  "changes_from_paper": [
+    "UR5/MuJoCo replace SN7B/Simscape",
+    "Known-model prerequisite precedes any learned-dynamics implementation",
+    "An independent matching nominal model is disclosed; plant truth is not a measurement input",
+    "Actual actuator torque replaces current-derived torque with electrical/transmission errors",
+    "Nonzero wrench process noise and declared local covariance values replace the paper simulation settings",
+    "Frozen-coefficient closed-form discretization and Joseph covariance update",
+    "Directional finite differences for known-model Mdot; not the paper neural chain-derivative timing method",
+    "New learning probe uses a disclosed point inverse-dynamics loss and whole-trajectory 4/1/1 split",
+    "Learned viscous friction matches the substitute plant, rather than the full printed Stribeck-style expression",
+    "No dropout is inferred from the undefined paper sparsity probability; static equilibrium supervision is a separate paired variant",
+    "Dynamic-only training excludes simulator component labels; the separate static-augmented variant adds synthetic equilibrium torque labels; regression logs are previously analyzed data"
+  ],
+  "not_implemented": [
+    "TCN event model",
+    "Gaussian error model",
+    "Variable-window WMA",
+    "Four-method ablation",
+    "SN7B numerical replication",
+    "Paper complete friction and training specification"
+  ],
+  "scientific_status": "EXPLORE H-100/H-101 finite-condition reconstruction; archived observations, no claim-level evidence or full-paper completion",
+  "runtime_versions": {
+    "python": "3.12.3",
+    "mujoco": "3.12.0",
+    "numpy": "1.26.4",
+    "scipy": "1.14.1",
+    "torch": "2.9.1+cpu",
+    "matplotlib": "3.9.4",
+    "image": "piakf:jazzy-mujoco3.12.0-control0.1.2",
+    "image_id": "sha256:60362f5b84c36e35e00d0e495e4bc2a70553f0af58541ebdc0345d93d9dd5c23"
+  },
+  "local_reference_implementations_for_learning": [
+    "scripts/rigid_baseline/model_comparison/pinn_support/structured_dynamics.py"
+  ],
+  "implemented_learning_scope": {
+    "network": "Three 128-node ReLU hidden layers; float64; 21-dimensional triangular inertia factor and direct six-dimensional gravity; learned nonnegative viscous friction",
+    "derivative": "Explicit physical-q chain rule, checked against autograd and finite differences",
+    "training": "Original dynamic-only: four no-contact trajectories, 1000 Adam updates, finite-difference acceleration; separate paired static variant: same initialization, data order and updates, plus 25 synthetic equilibrium torque labels with lambda=1",
+    "inference": "Learned dynamic quantities; MuJoCo only for tool0 kinematics in learned adapter; same MomentumKF backend",
+    "validation_status": "Executed known-dynamics checks, network checks, collection/training/replay and frozen component diagnostics; retained metrics and run index under conclusion/"
+  },
+  "archive_manifest": "scripts/PIAKF/archive_manifest.json",
+  "handoff": "reproductions/PIAKF/HANDOFF.md"
+}

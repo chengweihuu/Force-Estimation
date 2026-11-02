@@ -1,0 +1,152 @@
+{
+  "stage": "EXPLORE",
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "learning_config": "scripts/PIAKF/configs/learning.json",
+  "initial_checkpoint": "scripts/PIAKF/reference_data/checkpoints/initial.pt",
+  "statistics": "scripts/PIAKF/reference_data/checkpoints/statistics.json",
+  "previous_baseline_checkpoint": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt",
+  "training_data_dir": "scripts/PIAKF/reference_data/learning",
+  "training": {
+    "seed": 0,
+    "updates_per_arm": 1000,
+    "dynamic_batch_size": 50,
+    "optimizer": "Adam",
+    "learning_rate": 0.0005,
+    "checkpoint_rule": "last_update_only",
+    "log_every": 100,
+    "shared_dynamic_batch_schedule": true,
+    "normalization": "original four dynamic training trajectories only; frozen for both arms",
+    "dynamic_loss": "mean squared per-joint normalized point inverse-dynamics residual",
+    "static_loss": "mean over all 25 equally weighted static poses and six joints of ((Ghat - equilibrium_drive_torque) / original_torque_scale)^2",
+    "arms": [
+      {
+        "id": "baseline",
+        "static_loss_weight": 0.0
+      },
+      {
+        "id": "static_augmented",
+        "static_loss_weight": 1.0
+      }
+    ]
+  },
+  "static_training": {
+    "center": "original frozen training q_center",
+    "include_center": true,
+    "axis_offsets_rad": [
+      -0.3,
+      -0.075,
+      0.075,
+      0.3
+    ],
+    "pose_count": 25,
+    "velocity_rad_s": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "acceleration_rad_s2": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "external_wrench": [
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "label_source": "MuJoCo algebraic equilibrium drive torque, checked against inverse and forward dynamics; synthetic gravity supervision, not measured controller holding data",
+    "pose_weighting": "uniform over distinct configurations; no replicated samples"
+  },
+  "static_evaluation": {
+    "source": "scripts/PIAKF/reference_data/static_evaluation.npz",
+    "primary": "48 non-center previously diagnosed configurations, disjoint from new static training poses",
+    "exclude_training_overlap_from_primary": true,
+    "expected_primary_pose_count": 48,
+    "report_center_separately": true,
+    "metrics": [
+      "per_joint_rmse_Nm",
+      "per_joint_bias_Nm",
+      "per_joint_absolute_error_peak_Nm"
+    ],
+    "status": "Previously analyzed diagnostic configurations, not untouched holdout"
+  },
+  "motion_evaluation": {
+    "config": "scripts/PIAKF/configs/motion_evaluation.json",
+    "record_ids": [
+      "trajectory_04",
+      "trajectory_05"
+    ],
+    "primary_window_s": [
+      1.0,
+      5.0
+    ],
+    "primary_window_right_closed": false,
+    "primary_endpoint": "Fx RMSE on each complete core-motion window, reported separately by trajectory",
+    "secondary_endpoints": "all six components: RMSE, bias and absolute error peak, all original five windows",
+    "KF": "original native R=Mhat Sigma_v Mhat^T rule, original Q and initial covariance rule; continuous from t=0 without resets or tuning",
+    "status": "Existing development/diagnostic trajectories; excluded from dynamic gradient updates but previously analyzed"
+  },
+  "load_regression": {
+    "source_dir": "scripts/PIAKF/reference_data/load",
+    "scenarios": [
+      "no_force",
+      "constant",
+      "sine"
+    ],
+    "config": "learning_config.replay_config",
+    "purpose": "Report known-load amplitude/error/delay and cross-axis changes as regression checks, not independent moving-contact validation"
+  },
+  "checks": {
+    "precheck_static_pose_count": 3,
+    "precheck_training_updates_per_arm": 1,
+    "precheck_updates_are_discarded": true,
+    "baseline_regression_rtol": 1e-08,
+    "baseline_regression_atol": 1e-07,
+    "static_balance_rtol": 1e-08,
+    "static_balance_atol_Nm": 1e-07,
+    "nonfinite_or_nonpositive_mass": "stop",
+    "contact_or_equilibrium_actuator_saturation": "stop"
+  },
+  "reporting": {
+    "scientific_pass_threshold": null,
+    "decision": "Report paired changes in gravity and motion endpoints, retain every direction of deterioration; no automatic overall-win or scientific-acceptance label",
+    "artifacts": [
+      "paired_learning_curves.png/svg",
+      "static_gravity_comparison.png/svg",
+      "motion_core_comparison.png/svg",
+      "load_response_comparison.png/svg",
+      "per_arm_checkpoints",
+      "all_metrics.csv",
+      "report.md"
+    ]
+  },
+  "budget": {
+    "implementation_minutes": 90,
+    "max_compute_wall_time_ms": 300000,
+    "cpu_limit": 2,
+    "memory_GiB": 4,
+    "numerical_threads": 1,
+    "gradient_updates_total_main": 2000,
+    "gradient_updates_total_discarded_precheck": 2,
+    "new_physics_integration_steps": 0,
+    "real_robot_runs": 0,
+    "hyperparameter_search": false
+  },
+  "disclosures": [
+    "A new treatment adds 25 synthetic static equilibrium labels and one fixed loss term; architecture, dynamic data, initialization, dynamic batch schedule and update count stay paired",
+    "Static labels supply additional gravity information from the simulator; no direct inertia, Coriolis or friction labels enter training",
+    "Shared hidden layers allow gravity supervision to change learned inertia indirectly; no shared-layer freezing is introduced",
+    "One seed and previously analyzed evaluation records support an EXPLORE comparison only",
+    "Actual native KF R can differ between arms through learned M; this estimates the effect of the trained model in the unchanged pipeline",
+    "User approved execution of this fixed design; use explicit staged request and retain all outcomes without hyperparameter changes"
+  ]
+}

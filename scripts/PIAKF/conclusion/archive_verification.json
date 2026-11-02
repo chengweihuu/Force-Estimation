@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "checked_at_utc": "2026-11-02T03:04:36.894415+00:00",
+  "files": {
+    "assets_verified": 84,
+    "retained_bytes": 14149003,
+    "tracked_dependencies_verified": 16,
+    "original_scientific_modules_unchanged": 14,
+    "scientific_configurations_unchanged": 8,
+    "python_syntax_checked": 15,
+    "local_links_checked": 56,
+    "original_sources_compared": false
+  },
+  "runtime": {
+    "environment": {
+      "packages": {
+        "mujoco": "3.12.0",
+        "numpy": "1.26.4",
+        "scipy": "1.14.1",
+        "matplotlib": "3.9.4",
+        "torch": "2.9.1+cpu"
+      },
+      "python": "3.12.3",
+      "platform": "Linux-7.0.0-38-generic-x86_64-with-glibc2.39",
+      "physics_steps": 0,
+      "ros_nodes_started": 0,
+      "pytorch_used_for_training": false
+    },
+    "array_projections_verified": 15,
+    "checkpoints_verified": 4,
+    "prefix_frames": 32,
+    "diagnostic_combinations": 15,
+    "native_R_regression": {
+      "baseline": 1.1262102361797588e-12,
+      "static_augmented": 3.4994229736184934e-13
+    },
+    "shared_covariance_max_abs_difference": 0.0,
+    "signal_reconstruction_max_abs_difference": 2.382538610845586e-13,
+    "training_updates": 0,
+    "physics_steps": 0
+  }
+}

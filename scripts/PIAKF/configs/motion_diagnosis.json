@@ -1,0 +1,136 @@
+{
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "trained_checkpoint": "scripts/PIAKF/reference_data/checkpoints/dynamic.pt",
+  "manifest": "scripts/PIAKF/reference_data/learning/manifest.json",
+  "records": [
+    {
+      "id": "trajectory_04",
+      "split": "development",
+      "path": "scripts/PIAKF/reference_data/learning/trajectory_04.npz"
+    },
+    {
+      "id": "trajectory_05",
+      "split": "diagnostic",
+      "path": "scripts/PIAKF/reference_data/learning/trajectory_05.npz"
+    }
+  ],
+  "duration_s": 6.0,
+  "sample_period_s": 0.001,
+  "observer": {
+    "Qp_continuous_diag": [
+      1e-07,
+      1e-07,
+      1e-07,
+      1e-09,
+      1e-09,
+      1e-09
+    ],
+    "Qw_continuous_diag": [
+      1,
+      1,
+      1,
+      0.01,
+      0.01,
+      0.01
+    ],
+    "assumed_velocity_std_rad_s": [
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001,
+      0.0001
+    ],
+    "initial_wrench_variance": [
+      25,
+      25,
+      25,
+      1,
+      1,
+      1
+    ],
+    "covariance_psd_atol": 1e-10
+  },
+  "derivative_epsilon_s": 1e-05,
+  "windows": {
+    "full": {
+      "start_s": 0.0,
+      "end_s": 6.0,
+      "right_closed": true
+    },
+    "startup": {
+      "start_s": 0.0,
+      "end_s": 0.25,
+      "right_closed": false
+    },
+    "ramp_up": {
+      "start_s": 0.25,
+      "end_s": 1.0,
+      "right_closed": false
+    },
+    "core_motion": {
+      "start_s": 1.0,
+      "end_s": 5.0,
+      "right_closed": false
+    },
+    "ramp_down": {
+      "start_s": 5.0,
+      "end_s": 6.0,
+      "right_closed": true
+    }
+  },
+  "disclosures": [
+    "Frozen moving-trace oracle diagnostic, not a deployable estimator",
+    "M, Mdot and c swapped as one bundle; gravity and viscous friction independent",
+    "All 8 variants share known-model R(t), P0, Q and J; native-R endpoints are separately regressed",
+    "Continuous KF from t=0 with fixed core [1,5) s; no threshold-based selection or timestamp shift",
+    "No independent true acceleration in records; no reconstructed acceleration attribution",
+    "Two previously analyzed local no-contact traces only, not untouched holdout",
+    "No training, tuning, physical stepping or additive causal-importance claim"
+  ],
+  "native_replay": "scripts/PIAKF/reference_data/native/motion",
+  "prefix_check_frames": 32,
+  "variants": [
+    {
+      "mask": 0,
+      "id": "learned"
+    },
+    {
+      "mask": 1,
+      "id": "oracle_inertia"
+    },
+    {
+      "mask": 2,
+      "id": "oracle_gravity"
+    },
+    {
+      "mask": 3,
+      "id": "oracle_inertia_gravity"
+    },
+    {
+      "mask": 4,
+      "id": "oracle_friction"
+    },
+    {
+      "mask": 5,
+      "id": "oracle_inertia_friction"
+    },
+    {
+      "mask": 6,
+      "id": "oracle_gravity_friction"
+    },
+    {
+      "mask": 7,
+      "id": "known"
+    }
+  ],
+  "main_variants": [
+    "learned",
+    "oracle_inertia",
+    "oracle_gravity",
+    "oracle_friction",
+    "known"
+  ],
+  "comparison_rtol": 1e-08,
+  "comparison_atol": 1e-07
+}

@@ -1,0 +1,25 @@
+{
+  "model": "scripts/models/ur5/scene_equivalent_current.xml",
+  "trained_checkpoint": "runs/H-100/R-20261101T122752Z-c82d/train/model.pt",
+  "training_data_dir": "runs/H-100/R-20261101T122752Z-c82d/collect",
+  "training_config": "scripts/PIAKF/configs/learning.json",
+  "near_offsets_rad": [
+    -0.1,
+    -0.05,
+    0.05,
+    0.1
+  ],
+  "extended_offsets_rad": [
+    -0.4,
+    -0.2,
+    0.2,
+    0.4
+  ],
+  "precheck_pose_ids": [
+    "center",
+    "near_J2_p0.05",
+    "extended_J2_p0.4"
+  ],
+  "comparison_rtol": 1e-08,
+  "comparison_atol_Nm": 1e-07
+}
